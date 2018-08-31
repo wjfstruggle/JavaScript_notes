@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var obj1 = {
+				name: 'wu',
+			};
+			var obj2 = obj1;
+			obj1.name = 'jianfeng';
+			console.log(obj1.name,obj2.name) // 引用类型的特点
+			console.log(obj1==obj2)// true
+			
+			// 全局变量与局部变量
+			var message = 'hello world'
+			alert(window.message) // hello world
+		</script>
+	</body>
+</html>

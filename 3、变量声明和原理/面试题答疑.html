@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 01-02-01、var a=b=c=d=1是什么意思？如果接下来在写一句a=9;a,b,c的值分别是多少？
+			var a = b=c=d = 1; // 声明a变量，值为1，后面为隐式声明全局变量
+			alert(a);
+			a=9;
+			alert(b)
+			alert(c)
+			alert(d)
+			原始数据类型,其值是不会改变的
+		</script>
+	</body>
+</html>
