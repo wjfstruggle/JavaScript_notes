@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var message = "some thing"
+			var s = true
+			var obj1 = {}
+			function show() {
+			}
+			console.log(typeof message) // string
+			console.log(typeof 12) // number
+			console.log(typeof obj) // undefined
+			console.log(typeof s) // boolean
+			console.log(typeof obj1) // object
+			console.log(typeof show) // function
+			
+			//
+			console.log("开始2次typeof");
+		    console.log(typeof typeof qqqq);
+		    console.log(typeof typeof 222);
+		    console.log(typeof typeof "222");
+		    console.log(typeof typeof {});
+		    console.log(typeof typeof null);
+		    console.log(typeof typeof function(){});
+		    
+		    // alert(null == undefined) // true
+		    var test1;
+		      var test2=undefined;
+		      console.log(test1==undefined);//true，变量声明了，但是没有定义；
+		      console.log(test1=="undefined");//false,"undefined"是一个字符串，含有undefined的字符；而不是undefined类型；
+		      console.log(test2==undefined);//true，变量声明了，但是没有被定义，undefined是变量的默认值；我们声不需要显示的把某个变量设置为undefined，因为没有赋值的变量，默认就是undefined;可以试验下，这里的两个等于号和三个等于号的区别，2个是比较（会隐式转换类型，===是不转化类型的，是绝对相等）
+		      console.log(test1);//undefined
+		      console.log(test2);//undefined
+		      console.log(test3);//Error，
+		</script>
+	</body>
+</html>

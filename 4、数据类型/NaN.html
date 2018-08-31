@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//NaN和任何值都不相等，包括NaN本身
+			console.log(NaN == NaN) //false
+			
+			//任何不能被转化为数值的值都返回true
+			console.log(isNaN(10)) //false
+			console.log(isNaN(NaN))// true
+			console.log(isNaN("10")) //false
+			console.log(isNaN("bule")) //true
+			console.log(isNaN(true)) //false
+		</script>
+	</body>
+</html>

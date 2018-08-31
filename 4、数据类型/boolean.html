@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var message = "hello world"
+			var name = ''
+			var messageBoolean = Boolean(message)
+			var nameBoolean = Boolean(name)
+			console.log( typeof message) // string
+			console.log(typeof messageBoolean) // boolean
+			console.log(Boolean('')) // false
+			console.log(Boolean('aaa')) // true
+			console.log(Boolean(true)) //true
+			console.log(Boolean(12)) // 非0数值都为true
+			console.log(Boolean(0)) // false
+			console.log(Boolean(NaN)) // false
+			// 任何对象都为true，null为false
+			console.log(Boolean({})) //true
+			console.log(Boolean(null)) //false
+			console.log(Boolean(undefined)) // false
+		</script>
+	</body>
+</html>
