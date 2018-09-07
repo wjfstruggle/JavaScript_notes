@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//可以在上面执行,因为预解释的时候声明+定义就已经完成了
+			console.log(show(2, 45))
+
+			function show(num1, num2) {
+				console.log(num1, num2)
+				return num1 + num2;
+				console.log(num1, num2) // return后面语句不执行，
+			}
+		</script>
+		<!----------------------------------->
+		<script type="text/javascript">
+			console.log(obj); //->undefined
+			var obj = {
+				name: "zhangsan",
+				age: 25
+			};
+
+			function fn(num1, num2) { //代码执行到这一行的时候直接的跳过这一块的代码,因为在预解释的时候我们已经完成了声明加定义
+				var total = num1 + num2;
+				console.log(total);
+			}
+			var num1 = 12;
+			fn(num1, 100); //执行fn，把全局变量num1的值赋值给形参num1，把100赋值给形参num2
+		</script>
+		<script type="text/javascript">
+			// 预解释的思路
+			var a,
+				b = 0,
+				fn = function() {
+					var a = b = 2; // a是局部，b是全局变量
+				}
+			fn();
+			console.log(a, b) // undefined 2
+		</script>
+		<script type="text/javascript">
+			fn(); //->2
+			function fn() {
+				console.log(1);
+			}
+			fn(); //->2
+			var fn = 13; //var fn;跳过  fn=13(在预解释的时候没有执行这句话赋值的操作)
+			fn(); //->13() Error:fn is not a function
+			function fn() {
+				console.log(2);
+			}
+			fn();
+		</script>
+		<script type="text/javascript">
+			// 匿名函数
+			// 匿名函数之自执行函数:定义和执行一起完成了；函数内的声明，只是在函数内使用；
+			var num = 30;
+			(function(num) {
+				var testStr = "test" + num;
+				this.num *= 3;
+//				var num = 10;
+				console.log(num)
+				var num = 20
+				console.log(num); // 20
+				console.log(testStr); // test30
+			})(num);
+			console.log(testStr); // testStr is not defined
+		</script>
+		<script type="text/javascript">
+			// 面试题
+			var num = 20;
+			var obj = {
+				num: 30,
+				fn: (function(num) {
+					this.num *= 3;
+					num += 15;
+					var num = 45;
+					return function() {
+						//this.num *= 4;
+						num += 20;
+						console.log(num);
+					}
+				})(num) //->把全局变量num的值20赋值给了自执行函数的形参,而不是obj下的30,如果想是obj下的30,我们需要写obj.num
+			};
+			var fn = obj.fn;
+			//fn(); //->65
+			// obj.fn(); //->85
+			console.log(window.num, obj.num); //->240、120
+		</script>
+	</body>
+
+</html>

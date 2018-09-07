@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function fn() {
+				name = 12;
+			}
+			fn();
+			console.log(name) // 12
+		</script>
+		<script type="text/javascript">
+			// 查找上一级作用域
+			var total = 12;
+
+			function fn() {
+				var total = 20;
+				return function() {
+					console.log(total); // 20
+				}
+			}
+			var f = fn();
+			f();
+		</script>
+		<script type="text/javascript">
+			// 立即执行函数
+			var total = 12;
+
+			function fn() {
+				var total = 20;
+				return function() {
+					console.log(total); // 20
+				}
+			}
+			var f = fn();
+			~ function() {
+				var total = 30;
+				f();
+			}()
+		</script>
+		<script type="text/javascript">
+			var a = 0;
+			var b = "0";
+
+			function fn() {
+				console.log(a); // 0　
+				console.log(b); // undefined
+				console.log(typeof a); // number
+				console.log(typeof b);　 //undefined
+				a = "1";　　
+				var b = 1;　　
+				console.log(a); //1
+				console.log(b);　 // 1
+				console.log(typeof a); //string
+				console.log(typeof b); //number
+			}
+			fn();
+
+			// ------------------------------
+			// 预解释的范围
+			var a = "window";
+			console.log(a); //window
+			function father() {　　
+				console.log(a); //undefined
+				　　
+				var a = "father";　　
+				console.log(a); //father
+				　　
+				function children() {　　
+					console.log(b); //undefined
+					　　
+					console.log(a); //father
+					　　
+					var b = "flag";　　
+					a = "children";　　
+					console.log(a); //children
+					　
+				}　
+				children();　
+				console.log(a); //children
+			}
+			father();
+			console.log(a); //window
+		</script>
+		<script type="text/javascript">
+			var a = 1;
+			function fn() {
+				console.log(a) // undefined
+				var a = 2
+			}
+			fn();
+		</script>
+	</body>
+
+</html>
