@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var colors = ["red", "green", "yellow", "blue"]
+			var removed = colors.splice(0,2)
+			console.log(colors) // ["yellow", "blue"]
+			console.log(removed)// ["red", "green]
+		</script>
+		<script type="text/javascript">
+			var colors = ["red", "green", "yellow", "blue","pink","black"]
+			// 从第2的位置开始插入字符串"1","2","3"
+			var pushes = colors.splice(2,0, "1","2","3") 
+			console.log(colors) // ["red,green,1,2,3,yellow,blue,pink,black"] 
+			console.log(pushes)// [""]
+		</script>
+		<script type="text/javascript">
+			var colors = ["red", "green", "yellow", "blue","pink","black"]
+			// 从第0个开始删除2个字符串，并插入字符串"1","2","3"
+			var pushes = colors.splice(0,2, "1","2","3") 
+			console.log(colors) // ["1", "2", "3", "yellow", "blue", "pink", "black"]  
+			console.log(pushes)// [""]
+		</script>
+	</body>
+</html>

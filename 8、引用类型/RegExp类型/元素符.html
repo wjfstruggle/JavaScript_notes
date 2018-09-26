@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var str = /[.]\d+$/
+			console.log(str.test(".456"))// true
+			console.log(str.test("[.]456")) //false
+			
+			var str1 = /^[\d]\d+[+]/
+			console.log(str1.test('85+')) // true
+			
+			// [] 最多只能一个，无论是/^[\d+]$/还是/^[\d]$/
+			var str2 = /^[\d+]$/
+			console.log(str2.test("0")) // false
+			console.log(str2.test("-1")) //true
+		</script>
+		<script type="text/javascript">
+			// - 1、**有效数字的正则(可以是 正数、负数、零、小数 )**
+			//- 1)、"."可以出现也可以不出现,但是一旦出现,后面必须跟着一位或者多位数字
+			//- 2)、最开始可以有+/- 也可以没有
+			//- 3)、整数部分,一位数可以是0-9之间的一个,多位数不能以0开头
+			var str6 = /^[+-]?(\d|([1-9]\d+))(\.\d+)?$/
+			console.log(str6.test("+222.2222"))
+		</script>
+		<script type="text/javascript">
+		//		- 2、年龄介于18~65之间
+		//	- 18~65可以分为三份；18-19  20-59  60-65
+		//	- 因为1开头的不能是12，15，14这些；
+		//	- 6开头的不能是66，68这些；
+		//	- 2和5开头，后面可以随便，0-9都可以；
+		var str9 = /^(1[8-9]|[2-5]\d|6[0-5])/
+		var str10 = /1[2-5]\d/
+		console.log(str9.test("60"))
+		console.log(str10.test("2"))
+		</script>
+		<script type="text/javascript">
+//			- 3、验证邮箱的正则(简版)
+//	- 左边:数字、字母、下环线、.、-
+		</script>
+	</body>
+</html>

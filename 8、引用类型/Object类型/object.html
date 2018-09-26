@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function ObjectDisplay(args) {
+				var ouput = ''
+				if (typeof args.name == "string") {
+					ouput += "name:" + args.name + "\n" 
+				}
+				if (typeof args.age == "Number") {
+					ouput += "age:" + args.age + "\n"
+				}
+				console.log(ouput);
+			}
+			ObjectDisplay({
+				name: "nicholas",
+				age: 20
+			})
+			
+			// 用于检查给定的属性在当前对象的事列中是否存在。参数的属性名（propertyName）必须是以字符串形式指定的（o.hasOwnProperty("name")）
+			var str = ObjectDisplay.hasOwnProperty("name")
+			alert(str)
+		</script>
+	</body>
+</html>

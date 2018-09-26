@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var colors = ["red", "blue", "green"]
+			console.log(colors[0]) // red
+			console.log(colors.length) // 3
+			colors[3] = "yellow"
+			console.log(colors[3])// 新增第四项,如果设置某个值的索引超过了数组现有项数,数组就会自动增加到该索引值加 1 的长度（就这个例子而言，索引是 3，因此数组长度就是 4）
+			console.log(colors) // "red,blue,green,yellow"
+		</script>
+	</body>
+</html>

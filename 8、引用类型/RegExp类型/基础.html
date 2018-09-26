@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var name = "zhuan";
+			// var reg = /^\d+"+name+"\d+$/g;
+			var reg = new RegExp("^\\d+" + name + "\\d+$", "g");
+
+			console.log(reg);
+			console.dir(reg); //顺着原型链查找有哪些方法
+			console.dir(RegExp.prototype); //正则类的原型
+		</script>
+	</body>
+
+</html>

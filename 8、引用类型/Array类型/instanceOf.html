@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var arr = [];
+			if (arr instanceof Array) {
+				console.log("arr 是 Array的构造函数")
+			}
+		</script>
+		<script type="text/javascript">
+			var value = {}
+			if (Array.isArray(value) ) {
+			console.log("arr 是 Array的构造函数")
+			} else {
+				console.log("no")
+				value.toLocaleString()
+			}
+		</script>
+	</body>
+</html>

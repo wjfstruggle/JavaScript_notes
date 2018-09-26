@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var text = "mom and dad and baby"
+			var pattern = /mom (and dad (and baby)?)?/gi
+			var matctes = pattern.exec(text)
+			// index		匹配项在字符串中的位置
+			console.log(matctes.index) // 0
+			console.log(matctes.input) // "mom and dad and baby"
+			console.log(matctes[0])// "mom and dad and baby"
+			console.log(matctes[1])//  and dad and baby
+			console.log(matctes[2]) // and baby
+		</script>
+		<script type="text/javascript">
+			// 全局模式和非全局模式，exec（）返回的字符串不一样
+			var text = "cat, bat, sat, fat";
+			var pattern = /.at/;
+			var str = pattern.exec(text)
+			console.log(str.index) // 0
+			console.log(str[0]) // cat
+			console.log(str[1]) // undefined
+			console.log(pattern.lastIndex)// 0
+			
+			var pattern2 = /.at/g;
+			var str = pattern2.exec(text)
+			console.log(str.index) // 0
+			console.log(str[0]) // cat
+			console.log(pattern2.lastIndex)// 3
+			
+			str2 = pattern2.exec(text)
+			console.log(str2.index)// 5
+			console.log(str2[0])// bat
+			console.log(pattern2.lastIndex)// 8
+		</script>
+	</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+//			 var reg1=/\d+/g,
+//		        str1="zhu2015an2016zhu2017",
+//		        ary=[],
+//		        res=reg1.exec(str1);
+//		        while(res) {
+//		        	ary.push(res[0])
+//		        	res = reg1.exec(str1)
+//		        }
+//		        console.log(ary)// "2015,2016,2017"
+		</script>
+		<script type="text/javascript">
+//			var reg = /\d+?/g;
+//			var str = "zhu2015an2016zhu2017";
+//			
+//			console.log(reg.exec(str));//->["2", index: 3, input: "zhu2015an2016zhu2017"]
+//			
+//			var ary = [],
+//			    res = reg.exec(str);
+//			while (res) {
+//			       ary.push(res[0]);
+//			       res = reg.exec(str);
+//			    }
+//			console.log(ary);//["0", "1", "5", "2", "0", "1", "6", "2", "0", "1", "7"]
+		</script>
+		<script type="text/javascript">
+			var reg = /\d+?/g;
+			var str = "zhu2015an2016zhu2017";
+			var ary = str.match(reg)
+			console.log(ary)
+		</script>
+	</body>
+</html>
