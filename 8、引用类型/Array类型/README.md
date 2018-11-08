@@ -86,13 +86,14 @@ toString()返回数组中每个值以字符串的形式以逗号隔开的字符�
 
 valueOf() 返回的还是数组
 
-
-		<script type="text/javascript">
-			var colors = ["red","bule","green"]
-			console.log(colors.toString()) //red,bule,green  
-			console.log(colors.valueOf()) // ["red", "bule", "green"] 
-			console.log(colors.toLocaleString()) // red,bule,green  
-		</script>
+```JavaScript
+<script type="text/javascript">
+	var colors = ["red","bule","green"]
+	console.log(colors.toString()) //red,bule,green  
+	console.log(colors.valueOf()) // ["red", "bule", "green"] 
+	console.log(colors.toLocaleString()) // red,bule,green  
+</script>
+```
 		
 
 <a name="栈方法"></a>
@@ -103,14 +104,15 @@ valueOf() 返回的还是数组
 - push()入栈
 	
 	- push() 接收任意个参数，把他们添加到数组的尾部，修改数组的长度。
-		
-			<script type="text/javascript">
-				var arr = [1,2,3,4,5,6,7,8]
-				console.log(arr, arr.length) // [1, 2, 3, 4, 5, 6, 7, 8] 8 
-				arr.push(9,10)
-				console.log(arr,arr.length) // [1, 2, 3, 4, 5, 6, 7, 8] 8 
-			</script>
 
+```JavaScript		
+<script type="text/javascript">
+	var arr = [1,2,3,4,5,6,7,8]
+	console.log(arr, arr.length) // [1, 2, 3, 4, 5, 6, 7, 8] 8 
+	arr.push(9,10)
+	console.log(arr,arr.length) // [1, 2, 3, 4, 5, 6, 7, 8] 8 
+</script>
+```
 - pop()出栈
 
 	- pop()方法从数组末尾移除最后一项，减少数组的长度，返回删除的项。
@@ -323,3 +325,122 @@ valueOf() 返回的还是数组
 			
 - forEach()
 	- 针对数组中每一项运行传入的函数，这个方法没有返回值，本质上与for循环迭代一样
+	
+### 练习
+
+```javascript
+//1.移除数组 arr[1, 2, 3, 4, 2] 中的2。不要直接修改数组 arr，结果返回新的数组
+			var arr = [1, 2, 3, 4, 2]
+			var arr1 = arr.filter(function(item) {
+				if(item !== 2) {
+					return item;
+				}
+			})
+			console.log("原素组：" + arr, "移除2中的新数组：" + arr1)
+
+			// 方法二,改变原数组（删除原数组时，长度会变化）
+			for(var i = 0; i < arr.length; i++) {
+				if(arr[i] == 2) {
+					arr.splice(i, 1) // 删除
+					i-- // 抵消后面的i++,下次循环依然是当前位置
+				}
+			}
+			console.log(arr)
+			//2.定义一个函数,能在数组 arr[1, 2, 3, 4, 2] 的 "2"后面添加元素 "Melon"。不要直接修改数组 arr，结果返回新的数组
+			var arr2 = [1, 2, 3, 4, 2]
+			var new_arr = []
+
+			function insert(arr) { // 用的参数也是拷贝地址，修改数据时需要注意影响原数组
+				for(var i = 0; i < arr.length; i++) {
+					new_arr.push(arr[i])
+					if(arr[i] == 2) {
+						new_arr.push("Melon"); // 在2指定下的索引添加元素
+					}
+				}
+				console.log(new_arr)
+			}
+			insert(arr2)
+			//3.统计数组 arr[1, 2, 3, 4, 2] 中2出现的次数
+			var time = 0;
+			var arr3 = [1, 2, 3, 4, 2, 4]
+			arr3.map(function(item) {
+				if(item == 2) {
+					return time++
+				}
+			})
+			console.log("2出现的次数" + time + "次")
+
+			// 方法二
+			var time = 0;
+			for(var i = 0; i < arr3.length; i++) {
+				if(arr3[i] == 2) {
+					time++
+				}
+			}
+			console.log("2出现的次数" + time + "次")
+
+			// 方法三
+
+			//4.找出数组 arr[1, 2, 3, "melon", 4, "melon", 2, 4, "melon"] 中重复出现过的元素,并用数组将重复元素装起来输出
+			var arr4 = [1, 2, 3, "melon", 4, "melon", 2, 4, "melon"]
+
+			function repeatArr(arr) {
+				var arr4_re = []
+				arr.sort().sort(function(a, b) {
+					// arr[0]与arr[1]作比较，相等就是重复元素
+					if(a == b && arr4_re.indexOf(a) == -1) {
+						arr4_re.push(a)
+					}
+				})
+				return arr4_re;
+			}
+			console.log(repeatArr(arr4))
+
+			// 方法二
+//			var arr4 = [1, 2, 3, "melon", 4, "melon", 2, 4, "melon"]
+//			function a() {
+//				var new_arr = []
+//				for(var i = 0; i < arr4.length; i++) {
+//					for(var j = i + 1; i < arr4.length; j++) {
+//						if(arr4[i] == arr4[j] && new_arr.indexOf(arr4[i]) == -1) {
+//							new_arr.push(arr4[i])
+//						}
+//					}
+//				}
+//				console.log(new_arr)
+//			}
+//			a()
+			//5.在arr里面输出年龄小于17的对象
+			var arr5 = [{
+					name: "111",
+					sex: "boy",
+					age: 18
+				},
+				{
+					name: "222",
+					sex: "girl",
+					age: 17
+				},
+				{
+					name: "333",
+					sex: "boy",
+					age: 16
+				},
+				{
+					name: "444",
+					sex: "girl",
+					age: 15
+				},
+				{
+					name: "555",
+					sex: "boy",
+					age: 20
+				}
+			]
+			var arr5 = arr5.filter(function(item, index) {
+				if(item.age < 17) {
+					return item
+				}
+			})
+			console.log(arr5)
+```

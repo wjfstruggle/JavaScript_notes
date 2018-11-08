@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 函数作用域
+			var num1 = 20,
+				num2 = 3,
+				name = "jack"
+
+			// 本函数定义在全局作用域
+			function multiply() {
+				return num1 * num2;
+			}
+			multiply() // 60
+			
+			// 嵌套函数的列子
+			
+			function getScore(){
+				var num1 = 2;
+				var num2 = 3;
+				function add() {
+					return name + " secore " + (num1 + num2)
+				}
+				return add();
+			}
+			getScore() // "jacksecore5"
+		</script>
+	</body>
+
+</html>
