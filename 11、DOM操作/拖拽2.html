@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.box {
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				background-color: skyblue;
+				cursor: -webkit-grab;
+			}
+			
+			html,
+			body {
+				position: relative;
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box"></div>
+		<script type="text/javascript">
+			var box = document.querySelector(".box");
+			var sw = false; //开关，默认是关闭
+			box.addEventListener("mousedown", function(e) {
+				// 获取鼠标在当前元素位置
+				var mouseX = e.clientX - box.offsetLeft;
+				var mouseY = e.clientY - box.offsetTop;
+				sw = true;
+				console.log(mouseX, mouseY)
+				document.addEventListener("mousemove", function(e) {
+					var left = e.clientX - mouseX;
+					var top = e.clientY - mouseY;
+					// 判断元素位置是否超出文档。
+					if(left < 0) {
+						left = 0;
+					} else if(left > document.body.clientWidth - box.offsetWidth) {
+						left = document.body.clientWidth - box.offsetWidth;
+					}
+					if(top < 0) {
+						top = 0;
+					} else if(top > document.body.clientHeight - box.offsetHeight) {
+						top = document.body.clientHeight - box.offsetHeight
+					}
+					if(sw) {
+						box.style.left = left + "px";
+						box.style.top = top + "px";
+					}
+
+				})
+				document.addEventListener("mouseup", function() {
+					sw = false;
+				})
+			})
+		</script>
+	</body>
+
+</html>

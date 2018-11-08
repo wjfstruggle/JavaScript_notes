@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box {
+				width: 100px;
+				height: 100px;
+				background: skyblue;
+				color: #0000FF;
+			}
+			.active{
+				background: red;
+				width: 500px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box" data-type="type">
+			111
+		</div>
+		<button onclick="cla()">点击切换</button>
+		
+		<script type="text/javascript">
+			var div = document.getElementsByClassName("box")[0];
+			div.id = "box"
+			console.log(div.className, div.nodeName) // box DIV
+			
+			// 获取
+			// getAttribute获取属性
+			console.log(div.getAttribute("id")) // box
+			console.log(div.getAttribute("data-type")) // type
+			
+			// 设置
+			// setAttribute()设置属性
+			console.log("设置属性"+div.setAttribute("style", "color:red"));
+			
+			// 删除属性，连属性名也去掉
+			console.log(div.removeAttribute("style"))
+			
+			//通过类名控制样式
+			div.className += " box1"
+			
+			// div.classList表示元素包含的class的列表， value表示原本class的值。
+			console.log(div.classList)
+			
+			// 添加类名
+			div.classList.add("fz30")
+			
+			// 移除类名
+			div.classList.remove("box1");
+			
+			var btn = div.getElementsByTagName("button")[0];
+			function cla() {
+//				// 判断active类名是否存在
+//				if (div.className.indexOf("active") == -1) {
+//					div.classList.add("active")
+//				} else {
+//					div.classList.remove("active")
+//				}
+				// 方法二
+				div.classList.toggle("active")
+			}
+			
+			// 添加行内样式
+			div.style.fontSize = "40px";
+			
+			console.log(window.getComputedStyle(div))
+//			console.log(div.currentStyle)
+			
+			function getStyle(element, style) {
+				if (window.getComputedStyle) {
+					if (style == "float") {
+						style = "cssFloat"
+					}
+					return window.getComputedStyle(element)[style]
+				} else {
+					// ie7以下的方法
+					if (style == "float") {
+						style = "styleFloat"
+					}
+					return element.currentStyle[style]
+				}
+			}
+			// 最终样式 浮动的属性名在不同的浏览器会不一样
+			// 变形transform的值以矩阵方式显示
+			console.log(getStyle(div, "color"))
+		</script>
+	</body>
+
+</html>

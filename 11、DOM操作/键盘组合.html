@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#div {
+				width: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script>
+			window.onload = function() {
+				var oValue = document.getElementById("value");
+				var oDiv = document.getElementById("div");
+
+				document.onkeydown = function(ev) {
+					var oEvent = ev || window.event;
+					if(oEvent.ctrlKey && oEvent.keyCode == 13) {
+						oDiv.innerHTML += oValue.value + "<br>";
+						oValue.value = "";
+					}
+				}
+
+			}
+		</script>
+		<input type="text" placeholder="请输入" id="value">
+		<div id="div"></div>
+	</body>
+
+</html>

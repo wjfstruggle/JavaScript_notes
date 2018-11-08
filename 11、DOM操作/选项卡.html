@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>选项卡</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#box {
+				width: 300px;
+				border: 1px solid #000;
+				margin: 10px auto;
+			}
+			
+			#tab {
+				display: flex;
+				overflow: hidden;
+				background: #333;
+			}
+			
+			#tab li {
+				flex: 1;
+				list-style: none;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			#tab li a {
+				text-decoration: none;
+				padding: 0 25px;
+				color: #fff;
+			}
+			
+			#tab li.sec {
+				background: #ddd;
+				/*border-bottom: 3px solid #333;*/
+			}
+			
+			#tab li.sec a {
+				color: #333;
+			}
+			
+			#text {
+				width: 100%;
+				height: 200px;
+				background: #f2f2f2;
+				text-align: center;
+			}
+			
+			#text>div{
+				display: none;
+				line-height: 150px;
+			}
+			
+			#text>div.active {
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			<ul id="tab">
+				<li class="sec">
+					<a href="#">新闻</a>
+				</li>
+				<li>
+					<a href="#">音乐</a>
+				</li>
+				<li>
+					<a href="#">视频</a>
+				</li>
+			</ul>
+			<div id="text">
+				<div class="active">
+					<h1>新闻内容</h1></div>
+				<div>
+					<h1>音乐内容</h1></div>
+				<div>
+					<h1>视频内容</h1></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			// 选项卡：点击按钮显示对应的选项卡，列如点击第一个，显示卡片1，其余隐藏。
+			var tab = document.getElementById("tab")[0];
+			var li = document.getElementsByTagName("li")
+			var text = document.getElementById("text");
+			var div = text.getElementsByTagName("div");
+//			for(let i = 0; i < li.length; i++) {
+//				li[i].onclick = function() {
+//					for(let i = 0; i < li.length; i++) {
+//						div[i].className = '';
+//						li[i].className = ''
+//					}
+//					div[i].className = "active";
+//					li[i].className = 'sec'
+//				}
+//			}
+			// 方法二
+//			for (var  i = 0; i < li.length; i++) {
+//				li[i].onclick = function() {
+//					//问题一：  变量污染
+//					console.log(i)
+//					for (var j = 0; j < div.length; j++){
+//						if (i == j) {
+//							div[j].className = "active";
+//						} else {
+//							div[j].className = "";
+//						}
+//					}
+//				}
+//			}
+			// 方法三
+			var index = 0; //  表示当前展示的下标
+			for (let  i = 0; i < li.length; i++) {
+				li[i].addEventListener("click",function() {
+					if (i !== index) {
+						div[i].className = "active";
+						li[i].className = "sec";
+						div[index].className = "";
+						li[index].className = "";
+						index = i; // 更新表示下标的数据
+					}
+				})
+			}
+		</script>
+	</body>
+
+</html>

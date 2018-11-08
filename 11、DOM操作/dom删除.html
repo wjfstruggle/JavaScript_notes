@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>dom删除</title>
+	</head>
+	<body>
+		<ul>
+			<li>01</li>
+			<li>02</li>
+			<li>03</li>
+			<li>04</li>
+			<li>05</li>
+		</ul>
+		<ul>
+			<li><button onclick="del(this)">点击删除1</button></li>
+			<li><button onclick="del(this)">点击删除2</button></li>
+			<li><button onclick="del(this)">点击删除3</button></li>
+			<li><button onclick="del(this)">点击删除4</button></li>
+			<li><button onclick="del(this)">点击删除5</button></li>
+		</ul>
+		<input type="" name="username" id="username" value="username" />
+		<script type="text/javascript">
+			var ul = document.getElementsByTagName("ul")[0];
+			// 删除子节点
+//			ul.removeChild(ul.firstElementChild)
+//			
+//			// 删除自身
+//			ul.remove()
+
+			// Dom中的this指的是触发事件的对象(元素)
+			function del(el) {
+				console.log(el)
+				el.parentElement.remove()
+			}
+		var input = document.getElementsByName("username")[0]
+		console.log(input.value)
+		</script>
+	</body>
+</html>

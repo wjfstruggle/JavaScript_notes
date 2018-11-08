@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+        <title>Document</title>
+        <style>
+            .card{
+                width: 150px;
+                height: 100px;
+                text-align: center;
+                line-height: 100px;
+                display: none;
+            }
+            .active{
+                display: block;
+            }
+            .card:nth-of-type(1){
+                background: skyblue;
+            }
+            .card:nth-of-type(2){
+                background: pink;
+            }
+            .card:nth-of-type(3){
+                background: orange;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <button>选项卡1</button>
+        <button>选项卡2</button>
+        <button>选项卡3</button>
+
+        <div class="card active">卡片1</div>
+        <div class="card">卡片2</div>
+        <div class="card">卡片3</div>
+    
+        <script>
+            // 点击按钮显示对应的选项卡，例如点击第一个，显示卡片1，其余隐藏
+            var btn = document.querySelectorAll("button");
+            var card = document.getElementsByClassName(".card");
+            var index = 0;    // 表示当前展示的下标
+
+            for(let i = 0; i<btn.length;i++){      
+        		btn[i].onclick = function () {
+        			if (i !== index) {
+        				card[i].classList.add("active");
+        				card[i].classList.remove("active");
+        				index = i;
+        			}
+        		}
+            }
+
+
+        </script>
+    </body>
+</html>

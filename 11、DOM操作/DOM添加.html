@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>dom添加</title>
+	</head>
+	<body>
+		<ul>
+			<li>01</li>
+			<li>02</li>
+			<li>03</li>
+			<li>04</li>
+			<li>05</li>
+			<li>
+			</li>
+		</ul>
+		<script type="text/javascript">
+			var ul = document.getElementsByTagName("ul")[0]
+			
+			// 创建li
+			var newLi = document.createElement("li")
+			
+			// appendChild(newLi)// 在对尾插入
+			ul.appendChild(newLi)// 在对尾插入
+			
+			// insertBefore(新节点， 插入到某个元素之前)
+			var newLi = document.createElement("li")
+			ul.insertBefore(newLi, ul.children[2])
+			
+			// 第二个参数为null时，则插入对尾
+			// 若插入元素已存在父节点中，insertBefore会更新这个元素的位置
+			ul.insertBefore(newLi, null)
+			
+			// 克隆节点
+			
+			// 浅拷贝，默认浅拷贝
+			var newUl = ul.cloneNode();
+			document.body.appendChild(newUl)
+			
+			// 深拷贝cloneNode(布尔值)，true，连同子元素的结构都进行克隆
+			var newUl = ul.cloneNode(true);
+			document.body.appendChild(newUl)
+			
+			// 添加文本
+			// innerText 只更改元素的文本
+			newLi.innerText = "这是新加的li标签"
+			// innerHTML如果包含HTML代码，就会将代码部分解析并输出HTML结构
+			newLi.innerHTML = "<h1>这是新加的li标签<h1/>"
+			
+			// outerHTML和innerHTML对比，作用在元素本身
+			newLi.outerHTML = "<h1>这是新加的li标签<h1/>" // <h1>这是新加的li标签</h1>
+		</script>
+	</body>
+</html>
