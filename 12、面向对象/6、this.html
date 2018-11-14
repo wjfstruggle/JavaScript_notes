@@ -38,7 +38,7 @@
 					console.log('对象', this)
 				}
 			}
-			obj1.fun1() // 当前对象
+			obj1.fun1() // 当前对象, {name: "obj1", fun1: ƒ}
 			
 			var obj2 = {
 				name: 'obj2',
@@ -52,7 +52,9 @@
 				},
 				fun3() {
 					setTimeout(()=> {
-						console.log('箭头函数',this) // 箭头函数this的指向只和上下文有关
+						console.log('箭头函数',this) 
+						// 箭头函数this的指向只和上下文有关,
+						//{name: "obj2", fun2: ƒ, fun3: ƒ}
 						/*
 						 箭头函数有几个使用注意点。
 
