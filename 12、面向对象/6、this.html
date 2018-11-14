@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>this</title>
+		<style type="text/css">
+			body {
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 全局函数this
+			function show() {
+				console.log(this)
+			}
+			window.show() // window对象
+			
+			// 局部
+			function fun2() {
+				function fun1() {
+					console.log('局部',this) // 指的都是window对象
+				}
+				fun1()
+			}
+			fun2();
+			
+			// 匿名函数
+			(function() {
+				console.log('匿名函数',this) // window对象
+			})()
+			
+			// 对象上的this，就会挂载当前对象
+			var obj1 = {
+				name: 'obj1',
+				fun1: function() {
+					console.log('对象', this)
+				}
+			}
+			obj1.fun1() // 当前对象
+			
+			var obj2 = {
+				name: 'obj2',
+				fun2: function() {
+					console.log(this) // obj2
+					var _this = this; // 保存this的指向
+					setTimeout(function () {
+						console.log('对象', this) // window
+						console.log('obj2', _this) // obj2
+					}, 1000)
+				},
+				fun3() {
+					setTimeout(()=> {
+						console.log('箭头函数',this) // 箭头函数this的指向只和上下文有关
+						/*
+						 箭头函数有几个使用注意点。
+
+							（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
+							
+							（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
+							
+							（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。*/
+					}, 1000)
+				}
+			}
+//			obj2.fun2() // window
+			console.clear()
+			// dom操作
+			document.body.addEventListener('click', function() {
+				console.log('dom',this) // body
+			})
+			
+			// 某个处理函数
+			
+			var obj4 = {
+				name: 'jack',
+				fun4: handle
+			}
+			function handle(name, callback) {
+				console.log(this) // obj4
+				callback();
+			}
+			obj4.fun4('click', function() { // 匿名函数
+				console.log('hahaha')
+				console.log(this) // window
+			})
+		</script>
+	</body>
+</html>

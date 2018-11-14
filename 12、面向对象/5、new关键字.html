@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>new关键字</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var obj1 = {
+				name: 'obj1',
+				age: 11
+			}
+			Object.defineProperty(obj1, 'six',{
+				value: 'man',
+				enumerable: false
+			})
+			// 获取所以属于对象自身的属性
+			Object.getOwnPropertyNames(obj1) // ["name", "age", "six"]
+			// 返回对象本身具有的可枚举属性。
+			Object.keys(obj1)//["name", "age"]
+			
+			// new
+			function Man() {
+				this.name = name;
+				console.log(this)
+			}
+			var m = new Man()
+			
+			/*
+			 new的过程
+			 	1、创建一个空对象
+			 	2、给空对象添加__proto__属性和constructor属性
+			 	3、this的指向改到空对象上
+			 	4、返回空对象
+			 * */
+		</script>
+	</body>
+
+</html>

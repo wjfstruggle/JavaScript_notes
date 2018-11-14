@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>原型的方法和属性</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 添加属性与方法
+			function Gadget(name, color) {
+				this.name = name;
+				this.color = color;
+				this.wathAreYou = function() {
+					return 'i am a ' + this.color + " " + this.name;
+				}
+			}
+			
+			// 添加属性和方法另一种方式
+			Gadget.prototype.price = 100;
+			Gadget.prototype.rating = '好评';
+			Gadget.prototype.name = 'jenny';
+			Gadget.prototype.getInfo = function() {
+				return 'i am a ' + this.price + " " + this.rating;
+			}
+			
+			// 使用原型的方法和属性
+			var Gadget = new Gadget('jack', 'back');
+			console.log(Gadget);
+			
+			// 利用自身属性重写原型属性
+			/*同一个属性名出现在对象的自身属性和原型属性时中*/
+			
+			// 枚举属性
+//			for in 循环可以遍历数组的所有元素或对象
+			var a = [12,4,6,23,45,1]
+			for (var k in a) {
+				console.log(a[k]) // 12,4,6,23,45,1
+			}
+			var o = {p1: 1, p2: 2}
+			for (var i in o) {
+				console.log(i+ '=' + o[i])
+			}
+			console.clear()
+			
+			// hasOwnProperty判断一个属性是对象自身属性还是原型属性
+			for(var v in Gadget) {
+				console.log(v+ '=' + Gadget[v])
+			}
+			Gadget.hasOwnProperty('name') // true
+			Gadget.hasOwnProperty('price') // false
+			
+			// 拿到自身属性
+			for (var j in Gadget) {
+				if (Gadget.hasOwnProperty(j)) {
+					console.log(j+ '=' + Gadget[j]) 
+					/*
+                     * name=jack
+                     * color=back
+						wathAreYou=function() {
+						return 'i am a ' + this.color + " " + this.name;
+						}*/
+				}
+			}
+			
+			// isPrototype()方法,判断当前对象是否是另一个对象的原型
+			
+			// 定义一个简单的对象
+			var monkey = {
+				hair: true,
+				feeds: 'bananas',
+				breaches: 'air'
+			}
+			// 构造函数
+			function Human(name){
+				this.name = name;
+			}
+			// 将Human的原型属性设置指向monkey
+			Human.prototype = monkey;
+			
+			var georag = new Human('jack')
+			monkey.isPrototypeOf(georag) // true
+		</script>
+	</body>
+</html>

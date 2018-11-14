@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用法call和apply</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var obj1 = {
+				name: 'obj1_name',
+				getName(lastName) {
+					console.log(this.name + ' ' + lastName) // obj1_name
+				}
+			}
+			var obj2 = {
+				name: 'obj2_name'
+			}
+			obj1.getName() // obj1
+			// 将obj1上的方法执行，内部this执行指向obj2
+			obj1.getName.call(obj2) // obj2_name
+
+			// 函数.call(指定对象, 参数1，参数2，参数。。。),参数逐个传
+			obj1.getName.call(obj2, 'wang') // obj2_name wang
+
+			// es6函数默认的参数的默认值
+			function fun2(a = 10, b = 1) {
+				return a + b;
+			}
+			fun2(20, 1)
+			/*fun2()
+				11
+				fun2(20)
+				21
+				fun2(20,2)
+				22*/
+
+			var obj3 = {
+				name: 'obj3_name',
+				getName(a,b,c,d) {
+					console.log(this.name + ' ' +a,b,c,d) // obj1_name
+				}
+			}
+			var obj4= {
+				name: 'obj4_name'
+			}
+			// 传参的方式只需要一个参数列表
+			obj3.getName.apply(obj4, [1,2,3,4]) // obj4_name 1 2 3 4
+			
+			// 将Math.max传参方式该为数组的参数列表
+			console.log(Math.max.apply(null, [12,5,45,6]))
+			
+			var obj5 = {
+				name: 'obj5_name',
+				fun5() {
+					console.log(this.name)
+				}
+			}
+			var obj6 = {
+				name: 'obj6_name'
+			}
+			// 函数.bind(绑定对象) 返回新的函数
+			var newFun = obj5.fun5.bind(obj6)
+			newFun() // obj6_name
+			
+			var obj7 = {
+				name: 'obj7_name'
+			}
+			var newnewFun = newFun.bind(obj7)
+			// 绑定过的函数不能再次绑定其他对象
+			newnewFun()// obj6_name
+			
+			var obj8 = {
+				handle(callback){
+					// 改变this的指向
+					var newCallback = callback.bind(this)
+					newCallback()
+				}
+			}
+			obj8.handle(function() {
+				console.log("call改变指向后的this",this) // {handle: ƒ}
+			})
+			
+			// 练习
+			var x = 3;
+			var y = 4;
+			var obj6 = {
+				x: 1,
+				y: 6,
+				getX() {
+					var x = 5;
+					return function() {
+						return this.x;
+					}();
+				},
+				getY() {
+					var y = 7;
+						return this.y;
+				}
+			}
+			console.log(obj6.getX())// 3
+			console.log(obj6.getY())// 6
+			
+			
+			foo = function() {
+				
+			}
+ 		</script>
+	</body>
+
+</html>

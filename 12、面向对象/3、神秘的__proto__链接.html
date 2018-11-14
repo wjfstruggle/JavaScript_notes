@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>__proto__</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 定义一个简单的对象
+			var monkey = {
+				hair: true,
+				feeds: 'bananas',
+				breaches: 'air'
+			}
+			// 构造函数
+			function Human() {}
+			// 将Human的原型属性设置指向monkey
+			Human.prototype = monkey;
+
+			var georag = new Human();
+			// 赋予一些属性
+			georag.feeds = 'pizza'
+			georag.hacks = 'javascript'
+			// 其中breaches是在georag对象的自身属性中是不存在的，所以就得去原型中
+			// 查找，就好像其中有一个神秘的链指向相关的原型对象
+			georag.__proto__ // {hair: true, feeds: "bananas", breaches: "air"}
+			
+		</script>
+	</body>
+
+</html>

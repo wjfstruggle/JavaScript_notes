@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>继承</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function Father() {
+				this.name = "父亲"
+			}
+			function Son() {
+				this.name = "儿子";
+				this.age = 18;
+				this.run = function() {
+					console.log("run")
+				}
+			}
+			var f1 = new Father()
+			
+			// 子类的原型就是父类的一个实例
+			Son.prototype = new Father();
+			Son.prototype.constructor = Son;
+			var s1 = new Son()
+			console.log(f1,s1)
+			
+			//Object.create(被继承的对象)
+			var s2 = Object.create(f1)
+			console.log(s2)
+			
+			
+			// Father.prototype.constructor === Father true
+			
+			
+			// hasOwnProperty判断对象上的属性是否属于对象自己拥有的属性
+			console.log(s1.hasOwnProperty("age")) // true
+			
+			// isPrototypeOf判断实例对象与原型的关系
+			console.log(Son.prototype.isPrototypeOf(s1)) // true
+			
+			
+			// getPrototypeOf返回原型对象
+			console.log("getPrototypeOf", Object.getPrototypeOf(s1) == Son.prototype) //true
+			
+			var obj5 = {
+				name: 'five'
+			}
+			Object.preventExtensions(obj5) // 禁止对象的扩展
+			obj5.age = 18; // 不能扩展
+			obj5.name = 'jack' // 可以修改
+			delete obj5.name // 可以
+			console.log(obj5) // {name: 'five'}
+			
+			var obj6 = {
+				name: 'six'
+			}
+			// Object.seal 阻止扩展并且禁止操作符（delete）
+			Object.seal(obj6)
+			obj6.name = 'xis'
+			delete obj6.name // 不可以
+			console.log('seal',obj6)
+			
+			var obj7 = {
+				name: 'seven'
+			}
+			// Object.freeze 禁止属性的修改
+			Object.freeze(obj7)
+			obj7.name = 'xis'
+//			delete obj6.name // 不可以
+			console.log('freeze',obj7)
+			
+			// 获取属性名(keys)
+			var obj8 = {
+				name: 'eight',
+				age: 12
+			}
+			console.log(Object.keys(obj8)) // ["name", "age"]
+		</script>
+	</body>
+</html>

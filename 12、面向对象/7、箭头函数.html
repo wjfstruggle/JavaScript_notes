@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>箭头函数</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var fun2 = (v) => v;
+			fun2(2);
+
+			// 正常函数写法
+			[1, 2, 3].map(function(item) {
+				return item * 2
+			});
+
+			[1, 2, 3].map(item => item * 2)
+
+			// 解构
+			Math.max(...[12, 45, 56]) // 56
+
+			// 箭头函数不能当做构造函数
+			var fun5 = () => {
+				this.name = 'five'
+			}
+			try {
+				var fun5 = new fun5();
+			} catch(e) {
+				console.warn(e)//  fun5 is not a constructor
+			}
+			
+			
+		</script>
+	</body>
+
+</html>

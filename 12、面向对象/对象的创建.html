@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>对象的创建</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 字面量创建
+			var obj1 = {
+				"name": '张三',
+				"age": 18
+			}
+			// 工厂模式对的方式创建(函数)
+			// 工厂函数的缺点，无法通过方法来获取对象的来源
+			function factory(name, age) {
+				var obj2 = {
+					"name": name,
+					"age": age
+				}
+				return obj2
+				// ES6写法，键值相同时，可以忽略value
+//				var obj2 = {
+//					name,
+//					age
+//				}
+			}
+			var obj2 = factory("李四",20)
+			console.log(obj2)
+			console.log(obj2 instanceof factory) // false
+			
+			
+			// 通过new操作符可以知道，事列化对象
+			// 构造函数一般驼峰法命名
+			var obj3 = new Object();
+			console.log(obj3 instanceof Object) // true
+			
+			// Object.create() 创建对象，也可以用作继承
+			var obj4 = Object.create(Object.prototype)
+			console.log(obj4 instanceof Object) // false
+			
+			
+			
+			var obj5 = {
+				name: '李四'
+			}
+			obj5.age = 14      // 对象.属性  = 值
+			
+			Object.defineProperty(obj5, "talk",{
+				value: 180,  // {name: "李四", age: 14, talk: 180}
+				enumerable: true,   // 可枚举enumerable: true, in 操作符才回匹配出来
+				writable: false, // 不可改写， 默认是可以改写的
+				configurable: true
+			})
+			
+			// in 操作符
+			for (var k in obj5) {
+				console.log(k, ':', obj5[k]);
+			}
+			// ES6  for of 可以直接遍历出value
+			var arr = [1,2,3,4]
+			for (var v of arr) {
+				console.log(v)
+			}
+			Object.defineProperty(obj5, "weight",{
+//				value: 180,  // {name: "李四", age: 14, talk: 180}
+				enumerable: true,   // 可枚举enumerable: true, in 操作符才回匹配出来
+//				writable: false, // 不可改写， 默认是可以改写的
+				
+				configurable: true,
+				// 属性被访问时执行的回调
+				// 每次访问重新计算，可以写一些动态的值随某种值来变化
+				get: function() {
+					console.log('get')
+					return this.age * 2;
+				},
+				// 当属性被赋值操作之后，执行回调
+				set: function(newValue) {
+					console.log('set',newValue)
+					// 不要在set里面进行对同一个属性的赋值操作，会引起死循环
+//					 this.weight = newValue // 爆栈
+					return newValue + this.age
+				}
+			})
+			
+//			Object.defineProperty(obj5, {
+//				"job": {
+//					value: 'it'
+//				},
+//				"hobbort": {
+//					value: ['finshing', 'swimming']
+//				}
+//			})
+			console.log(obj5)
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>原型链</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 原型链是ecmascript标准的默认继承方式
+			function Shape() {
+				this.name = 'shape',
+				this.toSource = function() {
+					return this.name;
+				}
+			}
+			
+			function TowDSahpe() {
+				this.name = '2D shape'
+			}
+			function Trangle(side, height) {
+				this.name = 'Trangle';
+				this.side = side;
+				this.height = height;
+				this.getArea = function() {
+					return (this.side * this.height) / 2;
+				}
+			}
+			
+			
+		</script>
+	</body>
+</html>
