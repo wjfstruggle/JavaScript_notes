@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>面向对象</title>
+		<style type="text/css">
+		* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.hero {
+				width: 45%;
+			}
+			
+			.hero:first-of-type {
+				float: left;
+			}
+			
+			.hero:last-of-type {
+				float: right;
+			}
+			
+			.hpBar {
+				border: 3px solid #000000;
+			}
+			
+			.hpBar .hp {
+				background: green;
+				height: 50px;
+				width: 100%;
+				transition: all 1s ease-in;
+			}
+			
+			.btn_atk {
+				background: red;
+				padding: 5px;
+				border: none;
+				color: #fff;
+			}
+			
+			.btn_heal {
+				background: green;
+				padding: 5px;
+				border: none;
+				color: #fff;
+			}
+		}
+		</style>
+	</head>
+
+	<body>
+		<div class="hero" id="hero1">
+			<div class="hpBar">
+				<div class="hp"></div>
+			</div>
+			<h1 class="name"></h1>
+			<button class="btn_atk">攻击</button>
+			<button class="btn_heal">吃药</button>
+		</div>
+		<div class="hero" id="hero2">
+			<div class="hpBar">
+				<div class="hp"></div>
+			</div>
+			<h1 class="name"></h1>
+			<button class="btn_atk">攻击</button>
+			<button class="btn_heal">吃药</button>
+		</div>
+		<script type="text/javascript">
+			// 英雄基本类型
+			function Hero(element, name, hp, atk) {
+				this.element = element; // 挂载DOM元素
+				this.name = name; // 名字
+				this.hp = hp; // 血条
+				this.maxHp = hp; // 满血
+				this.atk = atk; // 攻击力
+				this.init();    // 执行初始化方法
+			}
+			Hero.prototype.init = function() {
+				this.DOM = document.querySelector(this.element);
+				this.DOM.querySelector('.name').innerText = this.name;
+				var btn_atk = this.DOM.querySelector(".btn_atk");
+				var btn_heal = this.DOM.querySelector(".btn_heal");
+				// 受伤
+				btn_atk.addEventListener('click', ()=> {
+					this.attack();
+				})
+				// 回血
+				btn_heal.addEventListener('click', ()=> {
+					this.heal();
+				})
+			}
+			Hero.prototype.attack = function() {
+				// 目标，受伤(自身.攻击力)
+				this.target.damage(this.atk)
+			}
+			Hero.prototype.damage = function(atk) {
+				// 受伤的方法
+				this.hp -= atk;
+				// 血量为零时
+				if(this.hp <= 0) {
+					this.hp = 0;
+				}
+				// 受伤后的百分比
+				var present = (this.hp / this.maxHp *100);
+				this.DOM.querySelector('.hp').style.width = present + "%";
+				// 血条变色
+				if (present < 50) {
+					this.DOM.querySelector('.hp').style.background = 'orange';
+				}
+				if (present < 20){
+					this.DOM.querySelector('.hp').style.background = 'red';
+				}
+			}
+			// 治疗的方法
+			Hero.prototype.heal = function() {
+				// 加血的方法
+				this.hp += 100;
+				if(this.hp >= this.maxHp) {
+					this.hp = this.maxHp
+				}
+				// 加血后的百分比
+				var present = (this.hp / this.maxHp *100);
+				this.DOM.querySelector('.hp').style.width = present + "%";
+				if (present >= 50) {
+					this.DOM.querySelector('.hp').style.background = 'green';
+				}
+				if (present >= 20 && present <50) {
+					this.DOM.querySelector('.hp').style.background = 'orange';
+				}
+				if (present >= 0 && present <20){
+					this.DOM.querySelector('.hp').style.background = 'red';
+				}
+			}
+			var dm = new Hero("#hero1", "德玛", 800, 70);
+			var ns = new Hero("#hero2", "小学生之手", 600, 80);
+			batter(dm, ns)
+			// 对战的方法
+			function batter(obj1, obj2) {
+				obj1.target = obj2;
+				obj2.target = obj1;
+			}
+			// 键盘控制
+			document.body.addEventListener('keydown', (e)=> {
+				if (e.keyCode == '65') {
+					dm.attack()
+				}
+				if (e.keyCode == '66') {
+					ns.attack()
+				}
+			})
+		</script>
+	</body>
+
+</html>
