@@ -2,47 +2,80 @@
 
 <a name="zero"></a>
 
+
 #### [实例对象与 new 命令](#实例对象与 new 命令)
 
+
 > * 对象是什么
+
 > * 构造函数
+
 > * new 命令
+
 > * 基本用法
+
 > * new 命令的原理
+
 > * Object.create() 创建实例对象
 
 #### [this关键字](#this关键字)
 
 > * 涵义
+
 > * 实质
+
 > * 使用场合
+
 > * 使用注意点
+
 	- 避免多层 this
+	
 	- 避免数组处理方法中的 this
+	
 	- 避免回调函数中的 this
+	
 > * 绑定 this 的方法
+
 	- Function.prototype.call()
+	
 	- Function.prototype.apply()
+	
 	- Function.prototype.bind()
+	
 
 #### [对象的继承](#对象的继承)
 
 > * 原型对象概述
+
 	- 构造函数的缺点
+	
 	- prototype 属性的作用
+	
 	- 原型链
+	
 	- constructor 属性
+	
 > * instanceof 运算符
+
 > * 构造函数的继承
+
 > * 多重继承
+
 > * 模块
+
 	- 基本的实现方法
+	
 	- 封装私有变量：构造函数的写法
+	
 	- 封装私有变量：立即执行函数的写法
+	
 	- 模块的放大模式
+	
 	- 输入全局变量
+	
 
 <a name="实例对象与 new 命令"></a>
+
 ### 1、对象是什么
 
 - 面向对象编程（Object Oriented Programming，缩写为 OOP）是目前主流的编程范式。它将真实世界各种复杂的关系，抽象为一个个对象，然后由对象之间的分工与合作，完成对真实世界的模拟。
