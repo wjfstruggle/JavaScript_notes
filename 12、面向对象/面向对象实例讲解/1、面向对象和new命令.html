@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>实例对象与 new 命令1</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function Vehicle() {
+				this.price = 1000;
+			}
+			var v = new Vehicle()
+			v.price; // 1000
+
+			// 传参数
+			function Vehicle(p) {
+				this.price = p;
+			}
+			var v = new Vehicle(1000)
+			v.price; // 1000
+
+			function Vehicle() {
+				this.price = 100;
+			}
+			var v = Vehicle()
+			v // undefined
+			price // 100 全局变量
+			
+			// 为了保证构造函数必须与new命令一起使用，一个解决办法是，构造函数内部使用严格模式，即第一行加上use strict。
+//			function Fubar(foo, bar) {
+//				'use strict';
+//				this._foo = foo;
+//				this._bar = bar;
+//			}
+//
+//			Fubar()
+			// TypeError: Cannot set property '_foo' of undefined
+			
+			//Object.create() 创建实例对象 
+			
+			var person1 = {
+				name: "张三",
+				age: 15,
+				greeting: function() {
+					console.log('HI ! I\m' + this.name + '.')
+				}
+			}
+			var p = Object.create(person1)
+			p.name       //"张三"
+			p.greeting() //  Hi! I'm 张三.
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>this关键字</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var person = {
+				name: '张三',
+				describe() {
+					return '姓名 ' + this.name;
+				}
+			}
+			person.describe(); // 姓名 张三
+
+			// this的指向是可变的。
+			var A = {
+				name: '张三',
+				describe: function() {
+					return '姓名：' + this.name;
+				}
+			};
+
+			var B = {
+				name: '李四'
+			};
+
+			B.describe = A.describe
+			B.describe() // "姓名：李四" 
+
+			// 稍稍重构这个例子，this的动态指向就能看得更清楚。
+
+			function f() {
+				return '姓名：' + this.name;
+			}
+			var C = {
+				name: "张三",
+				describe: f
+			}
+
+			var D = {
+				name: "李四",
+				describe: f
+			}
+			C.describe() // "姓名：张三"
+			D.describe() // "姓名：李四"
+
+			function fun1() {
+				console.log(this) // window
+				console.log(this.x) // 10
+			}
+			var x = 10;
+			var F = {
+				x: 100,
+				f: fun1
+			}
+			F.f() // 100
+
+			//			对象的方法
+			var obj = {
+				foo() {
+					console.log(this) // obj
+				}
+			}
+			obj.foo()
+
+			var a = {
+				p: "hello",
+				m: function() {
+					console.log(this.p)
+				}
+			}
+			//		a.b.m();// 'm' of undefined
+			var a = {
+				m: function() {
+					console.log(this.p)
+				}
+			}
+			var b = {
+				p: "hello",
+				b: a
+			}
+			//		b.m()
+
+			// 由于this的指向是不确定的，所以切勿在函数中包含多层的this。
+			var o = {
+				f1() {
+					console.log(this) // o
+					var f2 = function() {
+						console.log(this) // window
+					}()
+				}
+			}
+			// 实际执行下面代码
+
+			var f2 = function() {
+				console.log(this) // window
+			}
+			var o = {
+				f1() {
+					console.log(this) // o
+					var f2 = f2();
+				}
+			}
+
+			// 解决方案
+			var o = {
+				f1() {
+					console.log(this) // o
+					var _this = this;
+					var f2 = function() {
+						console.log(_this) // o
+					}()
+				}
+			}
+			// 数组处理方法中的 this
+			var o = {
+				v: 'hello',
+				p: ['a1', 'a2'],
+				f: function() {
+					this.p.forEach(function(item) {
+						console.log(this.v + ' ' + item)
+					})
+				}
+			}
+			o.f() // undefined a1 undefined a2
+			// 解决1
+			var o = {
+				v: 'hello',
+				p: ['a1', 'a2'],
+				f: function() {
+					var _this = this;
+					this.p.forEach(function(item) {
+						console.log(_this.v + ' ' + item)
+					})
+				}
+			}
+			o.f() // hello a1 hello a2
+
+			// 解决2
+
+			var o = {
+				v: 'hello',
+				p: ['a1', 'a2'],
+				f: function() {
+					//					var _this = this;
+					this.p.forEach(function(item) {
+						console.log(this.v + ' ' + item)
+					}, this)
+				}
+			}
+			o.f() // hello a1 hello a2
+
+			// 解决3
+			// es6箭头函数
+			var o = {
+				v: 'hello',
+				p: ['a1', 'a2'],
+				f: function() {
+					//					var _this = this;
+					this.p.forEach((item) => {
+						console.log(this.v + ' ' + item)
+					})
+				}
+			}
+			o.f() // hello a1 hello a2
+			console.clear()
+			// JavaScript 提供了call、apply、bind这三个方法，来切换/固定this的指向。
+			// Function.prototype.call()
+
+			var obj = {}
+
+			function f() {
+				return this; // window
+			}
+			var obj = {}
+
+			function f() {
+				return this;
+			}
+			f.call(obj) === obj // true
+
+			var n = 123;
+
+			var obj2 = {
+				n: 456
+			}
+
+			function aa() {
+				console.log(this.n)
+			}
+			aa.call() // 123
+			aa.call(null) // 123
+			aa.call(undefined) // 123
+			aa.call(window) // 123
+			aa.call(obj2) // 456
+
+			function f3() {
+				return this;
+			};
+
+			f3.call(5) // Number {5}
+
+			function add(a, b) {
+				return a + b;
+			}
+
+			add.call(this, 1, 2) // 3
+
+			function f4(x, y) {
+				console.log(x + y);
+			}
+
+			f4.call(this, 1, 1) // 2
+			f4.apply(this, [1, 1]) // 2
+			
+			console.clear()
+			// 找出数组最大元素
+			
+			var a = [12,16,14,78,9]
+			Math.max.apply(this, a) // 78
+			Math.max.apply(null, a) // 78
+			
+			var b = [12,16,14,,78,9]
+			
+			function print(i) {
+				console.log(i)
+			}
+			b.forEach(print) // 12,16,14,78,9
+			
+			Array.apply(null, b).forEach(print) // 12,16,14,undefined,78,9
+			
+			console.clear()
+			
+			var counter = {
+				count: 0,
+				inc() {
+					this.count++;
+				}
+			}
+			
+			var func = counter.inc.bind(counter)
+			func();
+			counter.count // 1
+			console.clear()
+			var counter = {
+				count: 0,
+				inc() {
+					this.count++;
+				}
+			}
+			var obj5 = {
+				count: 100
+			}
+			var func = counter.inc.bind(obj5)
+			func();
+			obj5.count // 101
+		</script>
+	</body>
+
+</html>
