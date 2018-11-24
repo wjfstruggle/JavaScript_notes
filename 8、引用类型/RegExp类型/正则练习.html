@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			input[type="text"] {
+				position: relative;
+				display: block;
+			}
+			
+			#a {
+				width: 160px;
+				height: 50px;
+				position: relative;
+				border: 1px solid #ddd;
+				margin-top: 20px;
+				text-align: center;
+				display: none;
+			}
+			#a p{
+				font-size: 12px;
+				color: red;
+			}
+			#a::after {
+				width: 0;
+				height: 0;
+				content: '';
+				position: absolute;
+				left: 50%;
+				-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+				top: -30px;
+				z-index: 10;
+				border: 15px solid transparent;
+				border-bottom: 15px solid #ddd;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input type="text" name="" id="text1" value=""/>
+		<div id="a">
+			<p>请输入6到12个字符！</p>
+		</div>
+		<script type="text/javascript">
+			// 验证手机号
+			/*
+			 13 ，15， 18 ，17 开头， 不能0开头 + 9为数字
+			 ^[1(3|5|7|8)][\d]{9}$
+			 * */
+			var phone = /^1[(3|5|7|8)]+\d{9}$/
+
+			var phone1 = /^1((3[0-9])|4(5|7)|(5[0-35-9])|(7[1-7])|(8[0-9]))\d{8}$/
+
+			// 车牌  A-Z + 5位数字
+			/*
+			 	开头大写字母
+			 * */
+			var car_brand = /^[冀粤晋蒙辽吉黑沪苏浙皖闽鲁豫鄂湘桂琼渝川黔藏陕甘青宁新][A-Z][0-9A-Z]{5}$/
+
+			// 邮箱
+			/*
+			 10位数字+字母 @ 163/126/qq/yahoo/gmail.com
+			 
+			 ^[1-9A-Za-z]
+			 * */
+			var mail = /^[a-z0-9]{6,10}@(163|126|qq|yahoo|gmail)\.com$/
+			// 密码强度
+			//至少六位 ，包括至少1个大写字母和一个小写字母，一个数字一个特殊子符 ?!@#$_
+			/*	(?=)断言 前面任意，后面必须有xx内容
+			 (?=.*[A-Z]+) 前面任意字符，后面必须有一个 A-Z
+			 * */
+			var password = /((?=.*[A-Z]+)(?=.*[a-z]+)(?=.*\d+)(?=.*[ ?!@#$_]+))([A-Za-z\d?!@#$_]){6,}/
+
+			// 匹配中文
+			var chines = /[\u4E00-\u9FA5]/
+
+			// 匹配18位身份证
+			var reg = /^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/;
+		</script>
+		<script type="text/javascript">
+			// 仿注册时的弹出框
+			var a = document.getElementById("a");
+			var text1 = document.getElementById("text1");
+			var str = /^[A-Za-z$_][\w]*$/gi;
+			text1.onkeydown = function() {
+				if (str.test(text1.value)) {
+					a.style.display = "none"
+				} else {
+					a.style.display = "block"
+				}
+			}
+		</script>
+	</body>
+
+</html>

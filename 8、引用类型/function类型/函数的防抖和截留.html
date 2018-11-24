@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>函数的防抖和节流</title>
+		<style type="text/css">
+			#box {
+				width: 200px;
+				height: 200px;
+				background: skyblue;
+				text-align: center;
+				line-height: 200px;
+				font-size: 40px;
+				font-weight: bold;
+			}
+			body {
+				height: 3000px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			0
+		</div>
+
+		<script type="text/javascript">
+			// mousemove scroll resize
+			// 防抖：一定时间内，只让函数触发一次
+			var box = document.getElementById("box")
+			box.addEventListener('mousemove',fangdou(function() {
+				this.innerText = parseInt(this.innerText) + 1
+			}, 800));
+
+			function fangdou(callback,delay) {
+				// 定时器
+				var timer;
+				return function() {
+					if(timer) { // 引用外部函数的timer
+						clearTimeout(timer)
+					}
+					timer = setTimeout(() => {
+						callback.apply(this,arguments)
+					}, delay)
+				}
+			}
+//			function time() {
+//				var date = new Date();
+//				
+//			}
+
+			// 节流  在一定时间间隔后才能触发函数
+			function throttle(callback, delay) {
+//				var currentTime = new Date().getTime();
+				var lastTime;// 上次时间
+				return function() {
+					var first;
+					if (lastTime == undefined) {
+						lastTime = new Date();
+						first = true;
+					}
+					var nowTime = new Date()// 
+					// 超过一定时间执行函数
+					if (nowTime - lastTime > delay || first == true) {
+						callback.apply(this,arguments);
+						// 更新lastTime的时间， 给下一次触发使用
+						lastTime = nowTime;
+					}
+				}
+			}
+			document.addEventListener('scroll', throttle(function() {
+				var scrollTop = document.documentElement.scrollTop;
+				console.log(scrollTop)
+			}, 800))
+		</script>
+	</body>
+
+</html>
