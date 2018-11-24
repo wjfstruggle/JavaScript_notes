@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ajax</title>
+	</head>
+	<body>
+		<script>
+			
+			// post请求
+			/*
+			 get和post的区别
+			 1、get参数  拼接在URL后面 列如 URL+ "?name="ajax"&age='18'"
+			 2、post 参数不需要拼接
+			 
+			 传参数不同， get请求会受到URL最大参数的限制，post的信息量比get要大。
+			 
+			 相对而言，post请求会相对安全些。
+			 * */
+			var xhr;
+			var url = "https://www.easy-mock.com/mock/5bee24d76b3691268016a039/post_test";
+			var url_post = url + "/post_test";
+			
+			if (window.XMLHttpRequest) {
+				xhr = new XMLHttpRequest();
+			} else if (window.ActiveXObject){
+				xhr = new ActiveXObject('Microsoft.XMLHTTP');
+			} else {
+				xhr = new ActiveXObject('Msxm12.XMLHTTP');
+			}
+			
+			xhr.open("post", url_post);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+			xhr.addEventListener('readystatechange', function(e) {
+				if (e.target.readyState == 4 && e.target.status == 200) {
+					var res = JSON.parse(e.target.responseText);
+					console.log(res)
+				}
+			})
+			xhr.send("name='jenny'&age=18");
+		</script>
+	</body>
+</html>
