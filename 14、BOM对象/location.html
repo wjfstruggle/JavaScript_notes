@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>location</title>
+	</head>
+
+	<body>
+
+		<!--
+			浏览器对象
+			location// 包含的是URL內的信息
+			location.href 当前完整地址   直接赋值作为跳转
+			location.reload()  重新加载页面
+			location.replace(url) 也可以跳转，不过替代当前页面，跳转后就没有退回原来页面。
+		-->
+		<h1>浏览器对象</h1>
+		<button onclick="handleClick()">点击</button>
+		<script type="text/javascript">
+			// location
+			function handleClick() {
+				//				location.href = "http://www.baidu.com";
+
+				var id = 4449;
+				// 传参方式
+				//				location.href = "./页面传参.html?id=" + id;
+				//				location.reload("http://www.baidu.com")
+				//				location.replace("http://www.baidu.com")
+			}
+			// 浏览器或设备信息
+			console.log(navigator.userAgent);
+			
+			
+			// 弹窗
+//			window.confirm("aaa")
+			
+			// 关闭
+//			window.close();
+			
+			// 移动端设备信息
+			console.log(screen)
+			// history
+			// history.go(-1) // 向前向后 n个页面
+			// history.back() // 后退一个页面
+			// history.forward() // 向前一个页面
+			
+			
+			
+			
+			
+			function getBrowserInfo() {
+				var ua = navigator.userAgent.toLocaleLowerCase();
+				var browserType = null;
+				if(ua.match(/msie/) != null || ua.match(/trident/) != null) {
+					browserType = "IE";
+					browserVersion = ua.match(/msie ([\d.]+)/) != null ? ua.match(/msie ([\d.]+)/)[1] : ua.match(/rv:([\d.]+)/)[1];
+				}else if (ua.match(/Edge/) != null) {
+					browserType = "Edge";
+					console.log("Edge");
+				}else if(ua.match(/firefox/) != null) {
+					browserType = "火狐";
+				} else if(ua.match(/ubrowser/) != null) {
+					browserType = "UC";
+				} else if(ua.match(/opera/) != null) {
+					browserType = "欧朋";
+				} else if(ua.match(/bidubrowser/) != null) {
+					browserType = "百度";
+				} else if(ua.match(/metasr/) != null) {
+					browserType = "搜狗";
+				} else if(ua.match(/tencenttraveler/) != null || ua.match(/qqbrowse/) != null) {
+					browserType = "QQ";
+				} else if(ua.match(/maxthon/) != null) {
+					browserType = "遨游";
+				} else if(ua.match(/chrome/) != null) {
+					var is360 = _mime("type", "application/vnd.chromium.remoting-viewer");
+
+					function _mime(option, value) {
+						var mimeTypes = navigator.mimeTypes;
+						for(var mt in mimeTypes) {
+							if(mimeTypes[mt][option] == value) {
+								return true;
+							}
+						}
+						return false;
+					}
+					if(is360) {
+						browserType = '360';
+					} else {
+//						$('html').css("zoom", ".80");
+					}
+				} else if(ua.match(/safari/) != null) {
+					browserType = "Safari";
+				}
+			}
+			getBrowserInfo()
+		</script>
+	</body>
+
+</html>
