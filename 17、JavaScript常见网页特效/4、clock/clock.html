@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>时间</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				margin: 50px auto;
+			}
+			body {
+				background: #0099CC;
+			}
+			#clock {
+				width: 250px;
+				height: 38px;
+			}
+			
+			#clock img {
+				width: 25px;
+				height: 36px;
+				margin: 0 2px;
+				position: relative;
+			}
+			
+			#clock span {
+				font-size: 50px;
+				line-height: 36px;
+				color: #aaa;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			window.onload = function() {
+				var aImg = document.getElementById("clock").getElementsByTagName("img"); // 获取图片
+				var now = new Date();
+				var prevTime = toZero(now.getHours()) + toZero(now.getMinutes()) + toZero(now.getSeconds());
+				var arr = [];
+				var nextTime = '';
+				var timer = null; // 定时器
+				for(var i = 0; i < aImg.length; i++) {
+					// 显示当前时间。
+					aImg[i].src = 'images/' + prevTime.charAt(i) + '.png';
+				}
+				// 每隔一秒
+				setInterval(toChange, 1000)
+
+				function toChange() {
+					var date = new Date();
+					nextTime = toZero(date.getHours()) + toZero(date.getMinutes()) + toZero(date.getSeconds());
+					toCom(prevTime, nextTime);
+					prevTime = nextTime;
+				}
+
+				function toCom(str1, str2) {
+					//每次清空数组里面的数据
+					arr = [];
+					for(var i = 0; i < str1.length; i++) {
+						if(str1.charAt(i) != str2.charAt(i)) {
+							arr.push(i);
+						}
+					}
+					startMove();
+				}
+
+				function startMove() {
+					var speed = -4;
+					timer = setInterval(function() {
+						for(var i = 0; i < arr.length; i++) {
+							if( aImg[arr[i]].offsetHeight == 0 ){
+							speed = 4;
+							aImg[arr[i]].src = "images/" + nextTime.charAt( arr[i] ) + ".png"
+						}
+							//改变数字高度时默认向底线减少，所以手动改变数字的top向上移动
+							aImg[arr[i]].style.height = aImg[arr[i]].offsetHeight + speed + "px";
+							aImg[arr[i]].style.top = aImg[arr[i]].offsetHeight / 2 - 18 + "px";
+
+							if(aImg[arr[i]].offsetHeight == 36) {
+								clearInterval(timer);
+							}
+						}
+					}, 10)
+				}
+				// 补零函数
+				function toZero(num) {
+					if(num < 10) {
+						return num = "0" + num;
+					} else {
+						return num = num + '';
+					}
+				}
+			}
+		</script>
+		<div id="clock">
+			<img src="images/0.png" alt="">
+			<img src="images/0.png" alt="">
+			<span>:</span>
+			<img src="images/0.png" alt="">
+			<img src="images/0.png" alt="">
+			<span>:</span>
+			<img src="images/0.png" alt="">
+			<img src="images/0.png" alt="">
+		</div>
+	</body>
+
+</html>

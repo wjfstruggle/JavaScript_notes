@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>删除</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        .box {
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .box ul {
+           float: left;
+        }
+        .box ul li {
+            position: relative;
+            float: left;
+            width: 205px;
+            height: 160px;
+            border: 1px solid #fff;
+            margin: 15px;
+            text-align: center;
+        }
+        .box ul li a {
+            display: block;
+        }
+        .box ul li p{
+            height: 25px;
+            line-height: 25px;
+            font-size: 14px;
+            color: #000;
+            background: #ccc;
+        }
+        .box ul li:hover{
+            border: 1px solid #66ccff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #c2c2c2;
+        }
+        .box ul li i {
+            position: absolute;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background: url(images/edit.png) no-repeat;
+            z-index: 2;
+            display: none;
+        }
+        .box ul li i.edit {
+            left: 5px;
+        }
+        .box ul li i.edit:hover {
+            background-position: 0 -30px;
+        }
+        .box ul li i.del {
+            background-position:0 -60px;
+            right: 5px;
+        }
+        .box ul li i.del:hover {
+            background-position: 0 -90px;
+        }
+        .box ul li:hover i{display:inline-block;}
+    </style>
+</head>
+
+<body>
+    <script>
+        function del(el)  {
+            el.parentElement.parentElement.remove();
+        }   
+    </script>
+    <div class="box">
+        <ul>
+            <li>
+                <a href="#">
+                    <img src="images/baidu.png" alt="百度">
+                    <p>百度</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/1hd.jpg" alt="一号店">
+                    <p>一号店</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/jd.jpg" alt="京东">
+                    <p>京东</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/sina.jpg" alt="新浪">
+                    <p>新浪</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/taobao.jpg" alt="淘宝">
+                    <p>淘宝</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/youku.jpg" alt="优酷">
+                    <p>优酷</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/amazon.jpg" alt="亚马逊">
+                    <p>亚马逊</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/xiaomi.jpg" alt="小米">
+                    <p>小米</p>
+                    <i class="edit"></i>
+                    <i class="del" onclick="del(this)"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

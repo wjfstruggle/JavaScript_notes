@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			li {
+				list-style: none;
+			}
+
+			ul {
+				display: flex;
+				position: relative;
+			}
+
+			li {
+				float: left;
+				width: 200px;
+				margin: 10px;
+			}
+
+			li img {
+				width: 200px;
+			}
+
+			p {
+				height: 30px;
+				line-height: 30px;
+				text-indent: 1em;
+				font-weight: bold;
+				border-bottom: 1px #333 dashed;
+			}
+
+			#div1 {
+				width: 600px;
+				border: 1px #000 solid;
+				height: 300px;
+				clear: both;
+			}
+
+			.box1 {
+				float: left;
+				width: 200px;
+			}
+
+			.box2 {
+				float: left;
+				width: 200px;
+			}
+
+			.box3 {
+				float: left;
+				width: 200px;
+			}
+
+			#allMoney {
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<ul>
+			<li draggable="true">
+				<img src="img/s1.jpg" />
+				<p>javascript语言精粹</p>
+				<p>40￥</p>
+			</li>
+			<li draggable="true">
+				<img src="img/s2.jpg" />
+				<p>javascript权威指南</p>
+				<p>120￥</p>
+			</li>
+			<li draggable="true">
+				<img src="img/s3.jpg" />
+				<p>精通javascript</p>
+				<p>35￥</p>
+			</li>
+			<li draggable="true">
+				<img src="img/s4.jpg" />
+				<p>DOM编程艺术</p>
+				<p>45￥</p>
+			</li>
+		</ul>
+		<div id="div1"></div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var li = document.querySelectorAll('li');
+				var div = document.getElementById("div1");
+				var obj = {};
+				var iNum = 0; // 价格
+				var allMoney = null;
+				for(var i = 0; i < li.length; i++) {
+
+					//第二步： 为需要移动的元素设置dragstart事件
+
+					li[i].ondragstart = function(e) {
+						var aP = this.getElementsByTagName('p');
+						//为移动的元素设置dragstart事件,该事件用于存放需要移动的数据
+						e.dataTransfer.setData('title', aP[0].innerHTML);
+						e.dataTransfer.setData('money', aP[1].innerHTML);
+						//语法void dataTransfer.setDragImage(img, xOffset, yOffset);
+						// 设置为自定义图像
+						e.dataTransfer.setDragImage(this, 0, 0);
+					};
+
+				}
+				div.ondragover = function(e) {
+					e.preventDefault();
+				};
+				//第三步： 重写div的drop事件
+				//重写了div的drop事件，因为默认情况下是什么也不做
+				div.ondrop = function(e) {
+					//火狐中取消drop默认行为，阻止打开URL
+					e.preventDefault();
+					// event.target是触发事件的元素
+					var title = e.dataTransfer.getData('title');
+					var money = e.dataTransfer.getData('money');
+					if(!obj[title]) {
+						var p = document.createElement('p');
+
+						var span = document.createElement('span');
+						span.className = 'box1';
+						span.innerHTML = 1; // 第一次数量设置为1
+						p.appendChild(span);
+
+						var span = document.createElement('span');
+						span.className = 'box2';
+						span.innerHTML = title; // 书本描述
+						p.appendChild(span);
+
+						var span = document.createElement('span');
+						span.className = 'box3';
+						span.innerHTML = money; // 书本价格
+						p.appendChild(span);
+
+						div.appendChild(p);
+						obj[title] = 1;
+					} else {
+						var box1 = document.getElementsByClassName('box1');
+						var box2 = document.getElementsByClassName('box2');
+						for(var i = 0; i < box2.length; i++) {
+							if(box2[i].innerHTML == title) {
+								box1[i].innerHTML = parseInt(box1[i].innerHTML)+1;// 数量 + 1
+							}
+						}
+					}
+
+					if(!allMoney) {
+						allMoney = document.createElement("div");
+						allMoney.id = "allMoney"; // 赋予id为allMoney
+					}
+					// 价格累加
+					iNum += parseInt(money);
+					allMoney.innerHTML = iNum + '¥';
+					div.appendChild(allMoney)
+				}
+			}
+		</script>
+
+	</body>
+
+</html>

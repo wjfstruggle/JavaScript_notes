@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            *{ margin: 0; padding: 0; }
+    		#btn{ width: 100px; height: 40px; line-height: 40px; outline: 0; border: 1px solid #333; background: #555; color: #fff; cursor: pointer; }
+    		#btn:hover{ background: #444; }
+    		#login{ width: 260px; height: 390px;box-shadow: 0 0 5px #999; padding: 10px 20px; position: relative; background: #fff;display: none;}
+    		#close{ position: absolute; width: 26px; height: 26px; right: 10px; top: 10px; }
+    		#head{ text-align: center; font-size: 20px; line-height: 2em; width: 100%; }
+    		#login p label{ font-size: 16px; line-height: 3em; }
+    		#login p:nth-of-type(7){ font-size: 12px; color: #aaa; text-align: center; line-height: 3em; }
+    		#login input{ width: 100%; height: 30px;border:1px solid #ccc;outline: none;padding-left: 10px;}
+    		#login input[type=button]{ height: 40px; margin-top: 20px; background: #222; color: #fff; outline: 0; border: 1px solid #111; }
+    		#login>img{ width: 100%; height: 100px; position: absolute; left: 0; bottom: 0; display: block; }
+        </style>
+    </head>
+    <body>
+        <script src="index.js" charset="utf-8"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                let btn = document.getElementById("btn")
+                let login = document.getElementById("login")
+                let head = document.getElementById("head")
+                let parent = head.parentNode;
+                console.log(parent);
+                let sw = false; //开关，默认是关闭
+                // 点击
+                btn.addEventListener("click",()=> {
+                    login.style.display = "block";
+                })
+
+                //按下鼠标
+                head.onmousedown = function( event ){
+
+                    var ev = event || window.event;
+                    x = ev.clientX;
+                    y = ev.clientY;
+                    l = parseInt( parent.offsetLeft );
+                    t = parseInt( parent.offsetTop );
+
+                    sw = true;
+                    head.style.cursor = "move";
+                    //移动鼠标
+                    document.onmousemove = function( event ){
+                        if( sw ){
+                            var ev = event || window.event;
+                            parent.style.left = l - ( x-ev.clientX ) + "px";
+                            parent.style.top = t - ( y-ev.clientY ) +"px";
+                            parent.style.marginTop = "";
+                            parent.style.marginLeft ="";
+                        }
+                    }
+                    //抬起鼠标
+                    document.onmouseup = function(){
+                        if( sw ){
+                            sw = false;
+                        }
+                    }
+
+                }
+            }
+        </script>
+        <input type="button" value="点击显示弹窗" id="btn">
+    	<div id="login">
+    		<div id="close"><img src="./images/close.jpg" alt=""></div>
+    		<p id="head">登陆</p>
+    		<p><label for="email">邮箱 :</label></p>
+    		<p><input type="email" id="email"></p>
+    		<p><label for="pwd">密码 :</label></p>
+    		<p><input type="password" id="pwd"></p>
+    		<p><input type="button" value="登 陆"></p>
+    		<p>忘记密码 创建账号</p>
+    		<img src="./images/bg.jpg" alt="">
+    	</div>
+    </body>
+</html>

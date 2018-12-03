@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>放大镜效果</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			#normal {
+				width: 400px;
+				height: 300px;
+				position: relative;
+				top: 20px;
+				left: 20px;
+				border: 1px solid #000;
+			}
+
+			#normal img {
+				width: 100%;
+				height: 100%;
+			}
+
+			#lay {
+				background: goldenrod;
+				position: absolute;
+				opacity: 0.5;
+				left: 0;
+				top: 0;
+				cursor: move;
+				display: none;
+			}
+
+			#bigImg {
+				width: 300px;
+				height: 300px;
+				overflow: hidden;
+				position: absolute;
+				top: 20px;
+				left: 440px;
+				display: none;
+				border: 1px solid #000;
+			}
+
+			#bigImg img {
+				position: absolute;
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="normal">
+			<img src="1.jpeg" />
+			<span id="lay"></span>
+		</div>
+
+		<div id="bigImg">
+			<img src="1.jpeg" />
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				var normal = document.getElementById("normal");
+				var bigImg = document.getElementById("bigImg");
+				var lay = document.getElementById("lay");
+				var img = bigImg.getElementsByTagName("img")[0];
+
+				// 鼠标移入图片，lay显示，图片显示
+				normal.addEventListener("mouseover", function() {
+					lay.style.display = "block";
+					bigImg.style.display = "block";
+				})
+				// 鼠标移出图片，lay隐藏，图片隐藏
+				normal.addEventListener("mouseout", function() {
+					lay.style.display = "none";
+					bigImg.style.display = "none";
+				})
+
+				normal.addEventListener("mousemove", function(ev) {
+					var ev = ev || event;
+					var scale = 4; // 放大镜倍数
+					// 拖块的位置(居中)
+					var x = ev.clientX - lay.offsetWidth / 2 - normal.offsetLeft;
+					var y = ev.clientY - lay.offsetHeight / 2 - normal.offsetTop;
+					// 拖块的大小
+					lay.style.width = parseInt(normal.offsetWidth / scale) + "px";
+					lay.style.height = parseInt(normal.offsetHeight / scale) + "px";
+					//设置放大图片的宽高
+					img.style.width = normal.offsetWidth * scale + "px";
+					img.style.height = normal.offsetHeight * scale + "px";
+
+					// 超出图片范围限制
+					if (x < 0) {
+						x = 0;
+					}
+					if (x > normal.offsetWidth - lay.offsetWidth) {
+						x = normal.offsetWidth - lay.offsetWidth;
+					}
+					if (y < 0) {
+						y = 0;
+					}
+					if (y > normal.offsetHeight - lay.offsetHeight) {
+						y = normal.offsetHeight - lay.offsetHeight;
+					}
+					//放大镜随鼠标移动
+					lay.style.left = x + "px";
+					lay.style.top = y + "px";
+
+
+					//同比例放缩，大的盒子图片的放缩比例，当小盒子向右移动的时候，大盒子向左移动同等的比例的宽高，方向是相反的;
+					var left = lay.offsetLeft * scale;
+					var top = lay.offsetTop * scale;
+
+					img.style.left = -left + "px";
+					img.style.top = -top + "px";
+				})
+			}
+		</script>
+	</body>
+
+</html>

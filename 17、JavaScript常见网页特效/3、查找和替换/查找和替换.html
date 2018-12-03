@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查找和替换</title>
+    <style>
+        *{margin:0;padding:0;}
+        #box{width:600px;height:600px;background:#CCC;position:absolute;padding:50px 100px;}
+        p{width:70%;height:300px;background:#FFF;font-size:14px;line-height:25px;float:left;padding:30px;}
+        ul{list-style:none;}
+        li{float:left;width:50px;height:30px;font-size:16px;line-height:30px;text-align:center;cursor:pointer;border-radius:3px;}
+        li.sec{background: #4aaa}
+        #tab{float:left;border:15px solid #666;padding:5px 10px;width:400px;height:100px;margin-top:10px;}
+        hr{background-color:#F60;height:2px;clear:both;}
+        #tab .tab { display: none; }
+        #tab .active { display: block; }
+        span{background:yellow;}
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <p>
+            1969年1月，我到文安驿公社接北京知青。就是在这个时候，我第一次见到了近平。当时，梁家河派了十几个年轻力壮的社员去接知青。怕人手不够，我们还牵了毛驴，帮着驮行李。知青们的行李有铺盖卷，有箱子，我们轮流帮着拿行李，你拿一气儿，我拿一气儿，几十个人，浩浩荡荡地就回到村里来了。我记得很清楚，当时梁家河村一共来了十五名北京知青，十一名男知青，四名女知青。当时梁家河村委会接待室是一队的地方，分来五名男知青，四名女知青；近平和其余五名男知青在后面的二队。村里当时安排我父亲给二队的知青做饭。
+        </p>
+        <div id="tab">
+            <ul>
+                <li class="sec">查找</li>
+                <li>替换</li>
+            </ul>
+            <hr />
+            <div id="search" class="tab active">
+                <input type="text" />
+                <input onclick="search_value()" type="button" value="查找" />
+            </div>
+            <div id="replace" class="tab">
+                <input type="text" />
+                <input type="text" />
+                <input onclick="replace_value()" type="button" value="替换" />
+            </div>
+        </div>
+    </div>
+    <script>
+        var li = document.getElementsByTagName("li");
+        var search = document.getElementById("search");
+        var replace = document.getElementById("replace");
+        var replace_1 = replace.children[0];
+        var replace_2 = replace.children[1];
+        var tab = document.getElementsByClassName("tab");
+        var text = document.querySelector('p').innerHTML;
+        // 选项卡切换
+        tabChange()
+        function tabChange() {
+            for (var i = 0; i < li.length; i++) {
+                li[i].index = i;
+                li[i].addEventListener('click', function() {
+                    for (var i = 0; i< tab.length;i++){
+                        tab[i].classList.remove('active');
+                        li[i].classList.remove('sec');
+                    }
+                    tab[this.index].classList.add('active');
+                    this.classList.add('sec');
+                })
+            }
+        }
+        // 搜索
+        function search_value() {
+            var textValue = search.firstElementChild.value;
+            if (text.indexOf(textValue) ==-1) {
+                alert("未找到您要找的文字！");
+            } else if(textValue == ""){
+                alert("请输入文字！")
+            }
+            document.querySelector('p').innerHTML = text.split(textValue).join(`<span>${textValue}</span>`);
+        }
+        // 替换
+        function replace_value() {
+            var oldText = replace_1.value;
+            var newText = replace_2.value;
+            if (text.indexOf(oldText) ==-1) {
+                alert("未找到您要找的文字！");
+            } else if(oldText == ""){
+                alert("请输入文字！")
+            }
+            document.querySelector('p').innerHTML = text;
+            document.querySelector('p').innerHTML = document.querySelector('p').innerHTML.split(oldText).join(`<span>${newText}</span>`);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>验证码的生成</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+        }
+        .box {
+            margin: 100px;
+        }
+        .box input {
+            outline: none;
+            border: 1px solid #ccc;
+            height: 30px;
+            line-height: 30px;
+            padding-left: 15px;
+            font-size: 16px;
+        }
+        .box input:focus {
+            box-shadow: 0px 0px 5px #499994;
+        }
+        .box a {
+            display: inline-block;
+            vertical-align: middle;
+            width: 110px;
+            height: 30px;
+            line-height: 30px;
+            background-color: #aaa;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 4px;
+            font-style: oblique ;
+        }
+        .box button {
+            border: none;
+            outline: none;
+            color: #fff;
+            width: 60px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 5px;
+            background-color: #499994;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body onload="changeCode()">
+    <div class="box">
+        <input id="text" type="text" placeholder="请输入验证码" value="">
+        <a id="code" href="javascript:;" onclick="changeCode(this)"></a>
+        <button id="btn" onclick="textValue()">验证</button>
+    </div>
+    <script>
+        var checkCode = document.getElementById("code");
+        var btn = document.getElementById("btn");
+        var randomCode = '';
+        // 点击切换验证码
+        function changeCode() {
+            // 验证码类型
+            var str = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','X','Y','Z','W','V','U','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','x','y','z','w','v','u'];
+            var codeLength = 4; // 验证码长度
+            randomCode = '';
+            for (var i = 0; i < codeLength; i++) {
+                // 随机的52个数存放在index
+                var index = Math.floor((Math.random() * 62));
+                randomCode += str[index]; // 在数组取值。
+            }
+            checkCode.innerHTML = randomCode;
+        }
+        // 判断输入的验证码是否正确
+        function textValue() {
+            // 忽略大小写
+            var textValue = document.getElementById("text");
+            if (checkCode.innerText.toLowerCase() == textValue.value) {
+                window.open('http://www.baidu.com','_self');
+            } else if (textValue.value.length == 0) {
+                alert("请输入验证码");
+            } else {
+                alert('验证码不正确，请重新输入');
+                textValue.value = '';// value清空
+                changeCode(); // 重新打乱验证码
+            }
+        }
+    </script>
+</body>
+</html>

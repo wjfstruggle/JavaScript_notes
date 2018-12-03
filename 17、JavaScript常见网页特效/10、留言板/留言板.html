@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style type="text/css">
+            * {
+              margin: 0;
+              padding: 0;
+            }
+
+            .message {
+              width: 300px;
+              min-height: 500px;
+              border: 1px solid #333;
+              padding: 10px;
+              background: #F6F6F6;
+              margin: 10px auto;
+              border-radius: 5px;
+            }
+
+            input {
+              height: 20px;
+              padding: 0 3px;
+              color: #000
+            }
+
+            ul {
+              list-style: none;
+            }
+
+            li {
+              font-size: 16px;
+              height: 20px;
+              text-indent: 10px;
+              margin-top: 10px;
+              line-height: 20px;
+              font-weight: bold;
+              color: #666;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="message">
+    		<input  type="text"/>
+    	    <input  type="button" value="留言" />
+    	    <input  type="button" value="批量删除" />
+    	    <ul id="list"></ul>
+    	</div>
+        <script type="text/javascript">
+        window.onload = function() {
+            var input = document.getElementsByTagName('input');
+            var list = document.getElementById("list");
+            input[1].addEventListener('click', addInfo);
+            var ali = document.getElementsByTagName("li");
+
+            // 检测是否按下Enter键,发送内容
+            input[0].addEventListener('keyup',function(e) {
+                var e = e || event;
+                // enter键值为13
+                if (e.keyCode == 13 && this.value !== '') {
+                    addInfo()
+                }
+            })
+            // 删除留言
+            input[2].addEventListener('click', del);
+            function del() {
+                for (var i =0; i < ali.length; i++){
+                    if (!ali[i].onOff) {
+                        list.removeChild(ali[i]);
+                        i--;
+                    }
+                }
+            }
+            function addInfo() {
+                // 动态创建一个li
+                var li = document.createElement("li");
+
+                if (input[0].value && input[0].value.trim()){    // 获取输入框的内容
+                    li.innerHTML = input[0].value;           // 输入框内容赋给li
+                    li.onOff = true;
+                    if(list.children[0]){    // 如果开始li不为0，则留言的内容插入前面
+                        list.insertBefore(li, list.children[0])    // node.insertBefore(newnode,existingnode)
+                    }  else {
+                        list.appendChild(li)         // 在ul中插入li
+                    }
+                } else {
+                    alert("输入内容不能为空")
+                }
+                for (var i = 0; i < ali.length; i++) {
+                    (function(j) {
+                        // 鼠标移入
+                        ali[j].onmouseover = function() {
+                            this.style.background = "#1AA1E1";
+                            this.style.color = "#fff";
+                        }
+                        // 鼠标移出
+                        ali[j].onmouseout = function() {
+                            this.style.background = "";
+                            this.style.color = "";
+                        }
+                        ali[j].addEventListener('click', function() {
+                            if (j % 2 == 0) {
+                                this.style.background = "#B3C833";
+                                ali[j].onmouseout = function() {
+                                    this.style.background = "#B3C833";
+                                }
+                            } else {
+                                this.style.background = "#5E5CA6";
+                                ali[j].onmouseout = function() {
+                                    this.style.background = "#5E5CA6";
+                                }
+                            }
+                            this.onOff = !this.onOff;
+                        })
+                    })(i)
+                }
+                // input[0].value = '';
+            }
+        }
+        </script>
+
+    </body>
+</html>

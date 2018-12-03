@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            body {
+                background: #000;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="stars"></div>
+        <script type="text/javascript">
+            let stars = document.getElementById("stars"); // 获取星星元素
+            let Obj = function(){} // 设置一个对象
+            Obj.prototype.drawStar = ()=> {    // obj的原型上添加方法
+                let oDiv = document.createElement("div") // 创建一个div标签
+                // 设置div宽高
+                oDiv.style.width = '7px';
+                oDiv.style.height = '7px';
+                oDiv.style.position = 'relative'; // 相对定位
+                oDiv.style.left = Math.floor(document.body.clientWidth*Math.random())+'px' // 不超出屏幕宽度
+                oDiv.style.top = Math.floor(document.body.clientHeight*Math.random()) +"px" // 不超出屏幕高度
+                oDiv.style.overflow = "hidden" // 设置div的overflow为hidden
+                stars.appendChild(oDiv);    // 添加div到stars元素上
+                let img = document.createElement('img') // 创建图片
+                img.src = "./images/star.png"
+                img.style.width = '49px';
+                img.style.height = '7px';
+                img.style.position = 'absolute'; // 绝对定位
+                img.style.top = '0';
+                oDiv.appendChild(img);
+                Play(img)
+            }
+            // 星星不同时闪烁，设置随机值
+            function Play(el) {
+                let i = Math.floor(Math.random()*7);
+                let time = setInterval(()=> {
+                    if (i < 7) {
+                        el.style.left = - i*7 + 'px';
+                        i++
+                    } else {
+                        i = 0;
+                    }
+                }, 100) // 每100ms执行一次
+            }
+            // 循环设置多个星星
+            for (let i = 0; i < 50; i++){
+                let obj = new Obj();
+                obj.drawStar()
+            }
+        </script>
+    </body>
+</html>
