@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title></title>
+<style media="screen">
+    span {
+        color: #fff;
+        background: blue;
+    }
+</style>
+</head>
+<body>
+<h1>填空题</h1>
+    <p><span>第一题：</span> undefined, "local"</p>
+    <p><span>第二题：</span> 2,2</p>
+    <p><span>第三题：</span>5,'finish', time_a, time_b</p>
+    <p><span>第四题：</span>null和undefined的区别：1、null是一个空对象，需要人为的设置null。2、undefined表示
+                变量已经定义了，但是未赋值。变量的默认是undefined。3、null == undefined 返回true。</p>
+    <p><span>第五题：</span> css的样式渲染是从dom结构里到外，一个dom结构中，HTML标签明显要多于class选择器，效率来说前者更高。</p>
+<h1>简答题</h1>
+    <p><span>第一题：</span>JavaScript的基本数据类型:简单数据类型包括（ string,number,null,undefined,boolean）和复杂数据类型（object）,es6新增的（Symbol）表示值是惟一的</p>
+    <p><span>第二题：</span>var date = new Date() <br>
+                console.log(date.getFullYear()+"-"+(date.getMonth())+"-"+date.getDate());</p>
+    <p><span>第三题：</span>onload()函数和jQuery的document.ready()有什么区别？<br>
+                javascript中的onload()函数表示dom树和外部引用的资源全部加载完成。
+                <br>
+                jQuery的document.ready()表示DOM结构已完全加载</p>
+    <p><span>第四题：</span>DOM操作——如何添加、移除、复制、创建和查找节点。
+    <br>
+                dom添加：js：appendChild()插入子节点, inserBefore()在某元素前面插入节点。 jq：append()在某元素末尾插入节点, appendTo()将元素插入到目标元素的最后面, prepend()在某元素前面插入节点<br>
+                dom移除：js：removeChild()移除子节点，remove()删除当前元素。jq：.remove()移除元素<br>
+                dom复制：js，jq：clone(布尔值),布尔值为false时为浅复制，为true是深复制（子元素文本元素都会被克隆）<br>
+                dom创建： js：document.createElement() <br>
+                dom查找： js：.parentNode()返回父子节点。getElementsByTagName(tagName)返回元素节点，.firstChild()返回第一个子节点，.lastChild()返回最后一个子节点，.childNodes()，.children()返回子节点数目。.previousSibing()返回上一个兄弟节点，.nextSibing()返回下一个兄弟节点。jq：$("节点元素")，$().siblings返回兄弟节点，$().next()元素紧邻的后面同辈元素的元素集合,$().prev()元素紧邻的后面同辈元素的元素集合</p>
+    <p><span>第五题：</span>ajax是什么？ajax的过程？ajax是JavaScript执行异步网络请求。过程四步走：
+        1、创建XMLhttp请求对象<br>
+        2、设置请求的方式<br>
+        3、监听状态值的改变<br>
+        	状态值： 4 代表数据解析完成<br>
+        	状态码 ： 200表示请求成功<br>
+        4、发送请求<br></p>
+    <p><span>第六题：</span>什么是跨域，如何处理？由于浏览器的同源策略，协议，域名，端口任意一个不同都会造成跨域<br>
+            跨域的方法：1、jsonp跨域。<br>
+        2、后端打开 CORS允许头  Access-Control-Allow-Origin: *<br>
+        3、反向代理</p>
+    <p><span>第七题：</span>storage和cookie的区别。<br>
+    localStorage本地存储：上限5m，存储内容较多，没有期限，需要手动清除<br>
+    sessionStorage会话存储： 当用户关闭浏览器窗口后，数据会被删除。<br>
+    cookies有大小限制  最大为4kb  数量在30 ~ 50个左右,可以请求时携带，后端也可以主动给客户端设置。</p>
+    <p><span>第八题：</span>eval的理解。可以当做一个函数来运行，接收字符串作为参数</p>
+    <p><span>第九题：</span>什么是事件流？事件冒泡？事件捕获？事件委托？<br>
+        事件流包括三个阶段： 事件捕获阶段，目标阶段和事件冒泡阶段。<br>
+        事件冒泡：具体元素接收事件，事件向上传播，过程：div->body->html->document<br>
+        事件捕获：从外到内依次传递就开始触发事件  document→html→body→div<br>
+        事件代理：利用事件对象可以获得子元素的方式去实现，可以节省性能消耗<br>
+        </p>
+    <p><span>第十题：</span>如何优化页面性能。<br>
+        1、压缩css和js代码和图片（小图片可以使用雪碧图），外部引入资源<br>
+        2、尽可能减少HTTP请求：图片合并 （css sprites），Js脚本文件合并、css文件合并<br>
+        3、减少DNS查询<br>
+        4、避免重定向<br>
+        5、使用ajax缓存<br>
+        6、使用CDN(内容分发网络)<br></p>
+<script src='https://cdn.bootcss.com/jquery/2.1.0/jquery.min.js'></script>
+<script type="text/javascript">
+    // 1
+//     var a = "global";
+//     (function(){// 匿名函数
+//         console.log(a);
+//         var a = "local";
+//         console.log(a);
+//     })()
+//
+//     // 2
+    for(var i=0;i<2;i++  ){// for循环结束才执行回调函数
+       setTimeout(function(){
+           console.log(i)// 2, 2
+       },0)
+   }
+//     // 3
+//
+// setTimeout(function(){
+//   console.log("time_a");
+// },0)
+//
+// for(var j=0;j<5;j++){
+//     console.log(j);
+// }
+// setTimeout(function(){
+//   console.log("time_b");
+// },0)
+//
+// function waitForMe(){
+//     var now = (new Date()).getTime();
+//     while((new Date()).getTime() - now < 5000){};
+//     console.log("finish");
+// }
+// waitForMe();
+// 4、 null 和 undefined的区别
+// 5、('div .ab')与(’.ab div’)哪个效率更高？
+
+/*
+JavaScript的基本数据类型
+
+请用JavaScript的时间对象获取当前年、月、日，要求格式如下：1970-00-01
+
+onload()函数和jQuery的document.ready()有什么区别？
+
+DOM操作——如何添加、移除、复制、创建和查找节点。
+
+ajax是什么？ajax的过程？
+
+什么是跨域，如何处理？
+
+storage和cookie的区别。
+
+eval的理解。
+
+什么是事件流？事件冒泡？事件捕获？事件委托？
+
+如何优化页面性能。
+ */
+// 用js实现随机抽取60~100之间的10个不重复数字，存到一个数组中，并将其元素从小到大排序。
+/*60~100之间的10个不重复数字
+  存到一个数组中
+  从小到大排序。*/
+  function randomSort() {
+      var arr = [],obj = {};
+      for (var i = 0; i < 10; i++) {
+          var random = Math.floor(Math.random()*40 + 60);// 60~100
+          if (!obj[random]) {
+              obj[random] = true;
+              arr.push(random);
+          } else {
+              i--
+          }
+      }
+      // 从小到大排序
+      function sortArray(a,b) {
+			return a - b
+		  }
+      console.log(arr.sort(sortArray));
+  }
+  // randomSort()
+
+  // 实现对数组的深度克隆
+  function clone(obj) {
+    var newObj;
+    if (typeof obj === "object" && obj !== null) {
+        if (obj instanceof Array) {
+            newObj = [];
+            obj.forEach((item, index)=> {
+                newObj[index] = clone(obj[index])
+            })
+        } else {
+            newObj = {};
+            for (k in obj) {
+                newObj[k] = clone(obj[k])
+            }
+        }
+    } else {
+        newObj = obj
+    }
+    return newObj;
+  }
+  // 测试
+    var data = {
+        "name": 12,
+        age: 18,
+        fun: function a() {
+            console.log(this.name);
+        }
+    }
+    console.log(clone(data));
+  // 实现对数组的深度克隆2
+
+
+
+
+
+     // step 1: 根据menu的数据，动态生成一个二级联运菜单
+    // step 2: 实现动态增加、修改、删除菜单dom节点，同时保持dom结构与json保持同步
+   // step 3: 实现通过拖拽修改菜单结构（可使用jQuery插件），同时保持dom结构与json保持同步
+var menu = [
+    {"type_id":1,"name":"大菜","food":[
+        {"food_id":1,"name":"鱼香肉丝","price":"10"},
+        {"food_id":2,"name":"红烧肉","price":"11"},
+        {"food_id":3,"name":"香辣粉","price":"12"}
+    ]},
+    {"type_id":2,"name":"中菜","food":[
+        {"food_id":4,"name":"小炒肉","price":"13"},
+        {"food_id":5,"name":"云吞","price":"14"}
+    ]},
+    {"type_id":3,"name":"小菜","food":[
+        {"food_id":6,"name":"雪糕","price":"15"},
+        {"food_id":7,"name":"黄瓜","price":"16"}
+    ]}
+];
+
+/*实现功能：重写console.log方法，在每次输出前增加一个自增序号，效果如下：
+
+    console.log("f")    //1:f
+    console.log("g")    //2:g
+    console.log("h")    //3:h*/
+
+    typeof console.log; // function
+    // 值的拷贝，指函数，闭包
+    console.log = (function(fn) {
+        let i = 0;
+        return function(data) {
+            i++
+            fn.call(null,i + ":" , ...arguments)
+        }
+    })(console.log)
+</script>
+</body>
+</html>

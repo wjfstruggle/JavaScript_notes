@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+        <style media="screen">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+            .menu {
+            display: inline-block;
+            width: 700px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 5px 5px 10px #888;
+            margin: 20px;
+            cursor: default; }
+            .menu h1 {
+            margin-bottom: 10px;
+            display: inline-block;
+            margin-right: 20px; }
+            .menu h1.active {
+              color: red; }
+            .menu ul {
+            position: relative;
+            margin-top: 30px;}
+            .menu ul > li {
+            height: 35px;
+            line-height: 35px;
+            cursor: grab; }
+            .menu ul > li input {
+              display: none; }
+            .menu ul > li button {
+              float: right;margin-left:5px;}
+            .menu ul > li:hover {
+              background: #f2f2f2; }
+
+        </style>
+    </head>
+    <body>
+        <div class="menu">
+            <div class="menu1">
+            </div>
+            <div  class="menu2">
+                <div class="m2_t">
+                    <input type="text" placeholder="菜名" />
+                    <input type="number" placeholder="价格" />
+                    <button class="add btn btn-success">添加</button>
+                </div>
+                <ul></ul>
+            </div>
+        </div>
+
+        <script src='https://cdn.bootcss.com/jquery/2.1.0/jquery.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+        <script>
+        var menu = [
+            {"type_id":1,"name":"大菜","food":[
+                {"food_id":1,"name":"鱼香肉丝","price":"10"},
+                {"food_id":2,"name":"红烧肉","price":"11"},
+                {"food_id":3,"name":"香辣粉","price":"12"}
+            ]},
+            {"type_id":2,"name":"中菜","food":[
+                {"food_id":4,"name":"小炒肉","price":"13"},
+                {"food_id":5,"name":"云吞","price":"14"}
+            ]},
+            {"type_id":3,"name":"小菜","food":[
+                {"food_id":6,"name":"雪糕","price":"15"},
+                {"food_id":7,"name":"黄瓜","price":"16"}
+            ]}
+        ];
+
+        // 初始化
+        function init() {
+            var menu_index = 0;
+            // 一级菜单
+            var menu1_html = ''// 开始时设为空字符串
+            menu.forEach((item, index)=> {
+                menu1_html += `<h1 class="classfy">${item.name}</h1>`
+            })
+            $(".menu1").html(menu1_html)
+            $(".menu1 > h1").eq(0).addClass('active');
+            // 渲染二级菜单
+            render_menu2(menu[0].food)
+
+            // 点击一二级联动
+            $(".menu1 > h1").on('click', function() {
+                var new_index = $(this).index();
+                console.log(new_index);
+                if (menu_index == new_index) { // 相同就不执行
+                    return;
+                }
+                // 渲染二级
+                render_menu2(menu[new_index].food)
+                menu_index = new_index;
+                $(this).addClass('active').siblings().removeClass('active');
+            })
+            // 添加
+            $(".add").on('click', function() {
+                var add_name = $(".m2_t input").eq(0).val();
+                var add_price = $(".m2_t input").eq(0).val();
+                if (add_name == "" || add_price == "") {
+                    return;
+                }
+                menu[menu_index].food.push({"food_id":1,"name":add_name,"price":add_price});
+                render_menu2(menu[menu_index].food);
+            })
+            // 删除
+            $(".menu2").on('click', '.del',function() {
+                var btn_index = $(this).attr("data-id");
+                menu[menu_index].food.splice(btn_index,1);
+                render_menu2(menu[menu_index].food);
+            })
+            // 点击span，显示input
+            $(".menu2").on('click','span', function() {
+                $(this).hide().next().show()
+            })
+            // 修改
+            $(".menu2").on('click','.change', function() {
+                var btn_index = $(this).attr("data-index");
+                // 获取input内容
+                var inp_name = $(".menu2 li").eq(btn_index).find("input.name").val();
+                var inp_price = $(".menu2 li").eq(btn_index).find("input.price").val();
+                if (inp_name !== "") {
+                    menu[menu_index].food[btn_index].name = inp_name;
+                }
+                if (inp_price !== "") {
+                    menu[menu_index].food[btn_index].price = inp_price;
+                }
+                render_menu2(menu[menu_index].food);
+                // console.log(1);
+            })
+        }
+        init()
+
+        function render_menu2(menu_arr) {
+            // 二级菜单
+            var menu2_html = '';
+            menu_arr.forEach((item, index)=> {
+                menu2_html += `<li data-id="${item.food_id}" dragge = "true">
+                    <span class="name">${item.name}</span>
+                    <input type="text" class="name">
+                    <span class="price">价格：￥${item.price}</span>
+                    <input type="number" class="price">
+                    <button class="del btn btn-danger" data-index="${index}">删除</button>
+                    <button class="change btn btn-success" data-index="${index}">修改</button>
+                </li>`
+            })
+            $(".menu2 ul").html(menu2_html)
+        }
+        </script>
+    </body>
+</html>
