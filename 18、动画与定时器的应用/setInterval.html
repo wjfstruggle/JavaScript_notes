@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            div{
+                width: 100px;
+                height: 100px;
+                background: skyblue;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="div">
+
+        </div>
+        <input type="text" id="btn" name="" value="">
+        <script type="text/javascript">
+            var div = document.getElementById("div");
+            var opacity = 1;
+            var timer = setInterval(()=> {
+                opacity -= 0.1;
+                if (opacity >= 0) {
+                    div.style.opacity = opacity;
+                } else {
+                    clearInterval(timer)
+                }
+            }, 1000)
+
+
+            //
+            setInterval(()=> {
+                console.log(2);
+            },1000)
+
+            step1(3000)
+            function step1(ms) {
+                var start = new Date();
+                while(new Date() - start < ms) {
+                    console.log(new Date() - start);
+                }
+            }
+            document.title = "定时器"
+
+            // 调整事件的发生循序
+            let btn = document.getElementById("btn")
+            btn.onclick = ()=> {
+                setTimeout(function B() {
+                    btn.value += "input"
+                }, 0)
+            }
+            document.body.onclick = function C() {
+                 btn.value += ' body'
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            ul,li{list-style: none;}
+            #box{
+                width: 200px;height: 200px;background:red;position: absolute;left: 600px;top:0;border-radius:50%;
+            }
+            .ul{position: absolute;left: 100px;top: 300px;}
+            .ul li{float: left;margin-right: 10px;color: #FFF;cursor: pointer;}
+            #left{width: 40px;height: 40px;background:#000000;}
+            #right{width: 40px;height: 40px;background:#000000;}
+        </style>
+    </head>
+    <body>
+        <div id="box"></div>
+        <ul class="ul">
+            <li id="left">左</li>
+            <li id="right">右</li>
+        </ul>
+        <script type="text/javascript">
+
+        var left_run = document.getElementById("left");
+        var right_run = document.getElementById("right");
+        var box = document.getElementById("box");
+
+        var timer;// 定时器
+        left_run.onclick = function() {
+            leftMove(box, 0)
+        }
+        right_run.onclick = function() {
+            leftMove(box, 800)
+        }
+        function leftMove(el, target) {
+            clearTimeout(timer);
+            var cur = getStyle(el, "left")
+            if (cur <= target) {
+                // 向右运动
+                if (cur >= target) {
+                    box.style.left = target + 'px'
+                } else  {
+                    box.style.left = getStyle(el, 'left') + 10 + "px"
+                }
+                timer = setTimeout(()=> {
+                    leftMove(el, target)
+                }, 30)
+                // 向左
+            } else if(cur > target) {
+                if (cur -11 <= target) {
+                    box.style.left = target + 'px'
+                } else  {
+                    box.style.left = getStyle(el, 'left') - 10 + "px"
+                }
+                timer = setTimeout(()=> {
+                    leftMove(el, target)
+                }, 30)
+            }
+        }
+
+            function getStyle(obj, attr) {
+                if (typeof getComputedStyle) {
+                    return parseFloat(getComputedStyle(obj, null)[attr]);
+                } else {
+                    return obj.currentStyle[attr];
+                }
+            }
+        </script>
+    </body>
+</html>
