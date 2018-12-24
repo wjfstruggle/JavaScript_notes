@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var str1 = "utf-78";
+			str1 = str1 + "拼接"
+			console.log(str1)// "utf-78拼接"
+			console.log(str1.length)// 11
+			console.log(str1[0])// 11
+			//Unicode码，汉字范围4e00 - 9fa5
+			console.log('\u4eca\u5929')// 今天
+			
+			// 数字
+			Number("1234")
+			var str = ""
+			console.log(Boolean(""))// false
+			console.log(Boolean("123"))// true
+			console.log([str],Boolean(str.length))// true
+			console.log(Boolean(null))// false
+			/*
+			 
+			 * Boolean转为false的有空字符串，0，-0，null，undefined，false
+			 * 
+			 * */
+			
+			// 拼接
+			var str3 = "-color"
+			console.log(`background${str3}:`)
+			document.write("<h1>我是谁<h1/>" + "<a>链接<a/>")
+			
+			// 算数运算符
+			// + 具有加法和拼接的作用 + "1"会转化我 数字1
+			console.log(+ "1" + 1) // 2
+			console.log(+ "1" - 1) // 0
+			// 乘除，求余数，字符串也会转化为数字
+			console.log("1" / 1) // 1
+			console.log("1" * 1) // 1
+			/*
+			 自增 a++ ,++a
+			 a++ 完成当前代码执行后再加1
+			 ++a 先自增，再使用
+			 自减同里
+			 * */
+			/*
+			 比较运算符
+			 * 
+			 * */
+			console.log(5 == "5") // true ==会隐性转化
+			console.log(5 === "5") // false
+			
+			// !== 不全等于，连同类型也进行比较
+			console.log(5 !== "5")// true
+			
+			/*
+			 逻辑运算符
+			 && 与 （并列关系）
+			 || 或 （任意一个为真则为真）
+			 ! 非  取反
+			 * */ 
+			 
+			 var num1 = prompt('请输入一个数字')
+			 console.log(0 < num1 && num1 < 10 )
+			
+		</script>
+	</body>
+</html>

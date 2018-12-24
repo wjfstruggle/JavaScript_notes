@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>数组的方法</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			 强调循序的数据集合
+			 * */
+			var arr1 = [
+				{"name":"jack","age": 18}
+			]
+			console.log(arr1.length, arr1[0].name)
+			
+			var obj = {"name":"jack","age": 18}
+			
+			console.log(obj.name, obj["name"])
+			
+			var arr2 = new Array(); // 构造方式、
+			
+			/*可以修改数组的长度
+			 主动设置长度比原来大时，多出的是undefined，比原来少时，相当于删除后面的元素
+			 设置下标元素，相当于增加数长度 arr3[5] = 10;
+			 * */
+			var arr3 = [1,2]
+			arr3.length = 12;
+			console.log("ar3的长度"+arr3.length) // arr3[5]undefined
+			
+			// 方法
+			
+			var arr4 = [1,2,3,4,5];
+			/*
+			 push()在末尾增加新元素，作用在原数组上，返回更新后的长度
+			 
+			 pop()在末尾删除，返回删除的元素
+			 * */
+			arr4.push(6,7,8,9)
+			console.log("push",arr4)
+			
+			arr4.pop();
+			console.log("pop",arr4)
+			
+			/*
+			 unshift()在对头添加新元素，返回更新后的长度
+			 
+			 shift()在对头删除新元素，返回删除的元素
+			 * */
+			arr4.unshift(23)
+			console.log("unshift",arr4)//[23, 1, 2, 3, 4, 5, 6, 7, 8]
+			
+			arr4.shift()
+			console.log("shift",arr4)//[1, 2, 3, 4, 5, 6, 7, 8]
+			
+			
+			// 删除多个
+			
+			function popMore(arr, num) {
+				arr.length = arr.length - num;
+				return arr;
+			}
+			console.log("删除多个数组方法", popMore([1, 2, 3, 4, 5, 6, 7, 8], 5))
+			
+			// concat()数组拼接,返回新数组
+			
+			var arr5 = [12,25];
+			var arr6 = [45,20]
+			arr5 = arr5.concat(arr6)
+			console.log("concat",arr5)
+			
+			/*splice()
+			 替代: 三个参数：三个参数都给，长度设置一，替代单个元素，长度大于一，单个元素替代多个元素 splice(start， 长度， 新元素)
+				 start被替代元素开始下标
+				 length;从start开始的长度
+				 新元素
+			删除： 两个参数	，删除的成员以数组形式返回
+			
+			增加： 三个参数都给，长度为0
+			 * 
+			 * */
+			
+			var arr7 = ["a","b","c","d"]
+			arr7.splice(0,1,"A")
+			
+			console.log("替代"+arr7) // A,b,c,d
+			arr7.splice(0,2,"A")
+			console.log("替代"+arr7) // A,c,d
+			
+			var arr8 = ["a","b","c","d"]
+			arr8.splice(0,2)
+			console.log("删除"+arr8) //c,d
+			
+			var arr9 = ["a","b","c","d"]
+			arr9.splice(0,0, "A")
+			console.log("增加"+arr9) //A,a,b,c,d
+			
+			/*slice() 截取数组
+			 参数：从start开始截取
+			 * */
+			var arr10 = ["a","b","c","d"]
+			
+			arr10 = arr10.slice(2)
+			console.log("slice:"+arr10) //c,d
+			
+			// join（）将数组以某个字符串连接，默认逗号连接
+			
+			/*reverse() 翻转*/
+			var arr11 = ["a","b","c","d"]
+			var str11 = 'abcdefg'
+			arr11.reverse();
+			console.log(arr11) // ["d", "c", "b", "a"]
+			
+			// sort() 数组排序
+			var arr12 = [1, 5, 3, 4, 2, 6, 9, 8]
+			arr12.sort(function(a,b) {
+				return a - b;
+			})
+			console.log(arr12)// [1, 2, 3, 4, 5, 6, 8, 9] 升序
+			
+			/*map()遍历数组的每个元素并处理元素的值，返回新数组
+			 
+			 
+			 * */
+			
+			var arr13 = [1, 5, 3, 4, 2, 6, 9, 8]
+			arr13 = arr13.map(function(item,index,arr) {
+				console.log(item,index,arr) // 1 0 [1, 5, 3, 4, 2, 6, 9, 8]
+				return item * 2;
+			})
+			console.log(arr13) // [2, 10, 6, 8, 4, 12, 18, 16]
+			
+			/*
+			 * filter()过滤
+			 回调函数返回true，添加到新数组。
+			 返回false，则不添加
+			 
+			 * */
+			var arr14 = [1, 5, 3, 4, 2, 6, 9, 8]
+			arr14 = arr14.filter(function(item, index) {
+				// 过滤奇数
+				if (item % 2 !== 0) {
+					return false
+				} else {
+					return true;
+				}
+			})
+			console.log(arr14)
+			
+			/*
+			 forEach()遍历数组，返回undefined
+			 * */
+			
+			var arr15 = [1, 5, 3, 4, 2, 6, 9, 8]
+			arr15.forEach(function(item, index) {
+				console.log(item)
+			})
+			
+			/*indeOf,返回搜索元素下标，如果找不到，返回-1。
+			 * 
+			 * lastIndexOf() 从末尾去查找，返回搜索元素下标，如果找不到，返回-1。
+			 要注意类型相同才能匹配位置*/
+			
+			// 练习
+			
+			// 随机5个不相同的数字范围在[1-10]，并且放在一个数组中
+			var arr_5 = [];
+			for (var i = 0; i <5;) {
+				console.count()
+				var int_num = Math.random()*10 // [1-10]的数
+					int_num = Math.ceil(int_num) // 随机数向上取整
+				if (arr_5.length == 0 || arr_5.indexOf(int_num) == -1) {
+					arr_5.push(int_num) // 添加到数组去
+					i++ // 只有主动添加的次数才能进入下一次
+				}
+			}
+			console.log(arr_5) 
+			
+		</script>
+	</body>
+</html>

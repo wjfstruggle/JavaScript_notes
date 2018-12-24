@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>鼠标坐标</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				margin: 100px;
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				background-color: skyblue;
+			}
+			html,body {
+				position: relative;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+		<script type="text/javascript">
+			var box = document.querySelector(".box")
+			box.addEventListener("click", function(e) {
+				/*
+				 * clientX:  和当前窗口位置有关
+				 * clientY
+				 * 
+				 * layerX   1、如果正常文档流，当前元素的偏移加上鼠标在元素內的偏移（体现在父子元素）
+				 * layerY	2、如果是绝对定位，则与offset相同
+				 * 
+				 * offsetX  // 相对监听元素的内部坐标
+				 * offsetY
+				 * 
+				 * pageX  只跟页面的原来尺寸有关
+				 * pageY
+				 * 
+				 * screenX  相对屏幕位置
+				 * screenY*/
+				console.log("client",e.clientX, e.clientY);
+				console.log("layer",e.layerX, e.layerY);
+				console.log("offset",e.offsetX, e.offsetY);
+				console.log("page",e.pageX, e.pageY);
+				console.log("screen",e.screenX, e.screenY);
+				console.log("x和y",e.x, e.y);
+				
+				console.log("offsetLeft和offsetTop",box.offsetLeft, box.offsetTop);
+				
+				// 兼容性写法
+				var offsetX = e.offsetX || e.pageX - box.offsetLeft;
+				console.log(offsetX)
+			})
+			
+			//物体跟随鼠标移动
+			
+			document.body.addEventListener("mousemove", function(e) {
+				// 坐标位置
+				console.log(e.pageX, e.pageY)
+				// 鼠标位置 - 自身宽度的一半
+				box.style.left = e.pageX - (box.clientWidth / 2) + 'px';
+				box.style.top = e.pageY - (box.clientHeight / 2) + 'px';
+				console.log(box.offsetLeft)
+			})
+		</script>
+	</body>
+</html>

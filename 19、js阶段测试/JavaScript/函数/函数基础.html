@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function fun1(a,b) {
+				var c = a + b;
+				return c; // 返回给函数调用
+			}
+			var res = fun1();
+			console.log(res)
+			
+			function setName(OBJ) {
+				OBJ.name = 'java'
+				// 函数运行时，参数OBJ会释放
+				// 每次函数运行，参数可以理解为独立的个体
+				OBJ = new Object();
+				OBJ.name = "css"
+				return OBJ;
+			}
+			var obj = {
+				name: "jenny"
+			}
+			var newObject = setName(obj)
+			console.log(obj,newObject)
+		</script>
+	</body>
+</html>

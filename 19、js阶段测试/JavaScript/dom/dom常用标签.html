@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>dom常用标签</title>
+	</head>
+	<body onkeydown="keydowm(event)" onkeyup="keyup(event)" onkeypress="keypess(event)">
+		<input type="radio" name="danxuan" id="radio1" value="" />
+		<label for="radio1"></label>
+		<input type="radio" name="danxuan" id="radio2" value="" />
+		<label for="radio2"></label>
+		<img src="" id="img" ondblclick="dbclick()"/>
+		<audio src="" controls="controls" id="audio"></audio>
+		<select name="" id="select">
+			<option value="gz">广州</option>
+			<option value="sz">深圳</option>
+			<option value="sh">上海</option>
+			<option value="bj">北京</option>
+		</select>
+		<input type="text" name="" id="" value="" onkeydown="handleDown(this,event)" oninput="handleInput(this)" />
+		<script type="text/javascript">
+			var radio1 = document.getElementById("radio1")
+			console.log(radio1)
+			// radio1.checked 表示 单选是否选中
+			// radio1.checked = !radio1.checked 取反
+			var select1 = document.getElementById("select")
+			// 下拉框获取值的方式是通过value
+			console.log(select1.value) // gz
+			
+			// 动态添加图片
+			var img = document.getElementById("img")
+			img.src = "http://i.imgur.com/tY1ymHt.png"
+			
+			// 双击事件函数
+			function dbclick() {
+				console.log(123)
+			}
+			
+			// 输入框
+			function handleInput(el) {
+//				console.log(el.value)
+			}
+			var audio = document.getElementById("audio")
+//			audio.src = "https://m10.music.126.net/20181107105854/8b84e2dce1c94857d4fef1ed23665a71/ymusic/603f/2799/ea87/0ac26d0e219c049b2c5a12fd6be2826f.mp3"
+			// 播放
+//			audio.play();
+			// 暂停
+			audio.pause();
+			
+			// 键盘事件
+			function keydowm(e) {
+//				if (e.keyCode == 65) {
+//					console.log(e.key)
+//				}
+//				if (e.keyCode == 75) {
+//					console.log(e.key)
+//				}
+//				if (e.keyCode == 81) {
+//					console.log(e.key)
+//				}
+//				if (e.keyCode == 73) {
+//					console.log(e.key)
+//				}
+			}
+			function keyup(event) {
+//				console.log("keyup",event)
+			}
+			var i = 0;
+			var falg = true;
+			function keypess(e) {
+//				if ( i <= 1) {
+//					console.log("keypress", i++)
+//					falg = false
+//				}
+			}
+			
+			// 同时，两个按键
+			function handleDown(el, event) {
+				if (el.code1 == event.keyCode) { // 按键和上一次相同
+					return;
+				}
+//				if (el.code1 != undefined && el.code2 == undefined) {
+//					el.code2 = event.keyCode;
+//				}
+//				if (el.code1 == undefined) {
+//					el.code1 = event.keyCode;
+//				}
+//				if (el.code1 == 17 && el.code2 == 13) {
+//					console.log("ctrl+enter")
+//				}
+				console.log(el.ctrlKey)
+				if (13 == el.keyCode && el.ctrlKey) {
+					console.log(123)
+				}
+			}
+		</script>
+	</body>
+</html>

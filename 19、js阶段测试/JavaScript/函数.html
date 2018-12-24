@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>函数</title>
+</head>
+<body>
+	<script type="text/javascript">
+		/*
+		 函数声明
+		 function 函数名() {}
+		 参数：形参和实参都是两个不同的个体，命名可以重名
+		 形参： 函数内部自动帮我们声明a,b;
+		 arguments是函数内部接收参数传入的列表，
+		 参数被调用时，形参可以列可以理解为arguments自动声明形参名字并自动赋值。
+		 * 
+		 * */
+		function add(a,b) {
+//			if ()
+			console.log(arguments)
+			return a + b;
+		}
+		add(1,2,3)
+		
+		function html() {
+			console.log(arguments.length)
+			if (arguments.length == 0) {
+				// 获取
+			}
+			if (arguments.length == 1) {
+				// 替换
+			}
+		}
+		html(1)
+		// 练习,arguments的使用
+		function addMore() {
+			var result = 0;
+			 for(var i = 0; i < arguments.length; i++) {
+			 	result += arguments[i];
+			 }
+			 return result;
+		}
+		addMore()
+		
+		// 作用域
+		var x = 12;
+		function funArea() {
+			var x = 10; // 函数的作用域
+			console.log("a的值"+ x)
+			funArea2()
+			function funArea2() {
+//			var x = 8; // 函数的作用域
+			console.log("a的值"+ x)
+		}
+	}
+		funArea()
+		// 
+		
+		
+		/*
+		 var 声明提前： 先给这些变量开辟内存空间，尽管他的值是undefined,
+		 用var重复声明不会报错
+		 
+		 
+		 * 
+		 * */
+		console.log(aaa);
+		var aaa = "123";
+		var aaa = 456
+		/*
+		 es6
+		 
+		 let 不允许重复声明，而且有块级作用域，可以运行砸一个没有独立作用域的代码块里，列如for循环
+		 
+		 const表示声明常量，不允许重复声明，必须赋值
+		 		声明后不可不可以再赋值。
+		 * 
+		 * */
+		var i = 5;
+		for (let i = 10; i < 20; i++) {
+			console.log(i)
+		}
+		console.log(i)
+	</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			.box {
+				position: relative;
+				left: 50%;
+				margin-left: -365px;
+				width: 730px;
+				height: 454px;
+				overflow: hidden;
+			}
+			
+			.box .banner {
+				width: 4380px;
+				height: 454px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			.box .banner a {
+				display: block;
+				float: left;
+			}
+			
+			.box .btn {
+				position: absolute;
+				width: 50px;
+				height: 50px;
+				line-height: 42px;
+				top: 50%;
+				margin-top: -25px;
+				font-size: 60px;
+				text-align: center;
+				cursor: pointer;
+				color: #fff;
+			}
+			
+			.box .btn:hover {
+				background-color: rgba(0, 0, 0, .7);
+			}
+			
+			.box .leftBtn {
+				left: 0;
+			}
+			
+			.box .rightBtn {
+				right: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<div class="banner">
+				<!--730 x 454-->
+				<a href=""><img src="img/jd1.jpg" alt=""></a>
+				<a href=""><img src="img/jd2.jpg" alt=""></a>
+				<a href=""><img src="img/jd3.jpg" alt=""></a>
+				<a href=""><img src="img/jd4.jpg" alt=""></a>
+				<a href=""><img src="img/jd5.jpg" alt=""></a>
+				<a href=""><img src="img/jd6.jpg" alt=""></a>
+			</div>
+			<div class="btn leftBtn">&lt;</div>
+			<div class="btn rightBtn">&gt;</div>
+			<!--图片下标索引-->
+			<div class="nav-bar">
+				<ul class="nav">
+					<li class="active"></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/banner.js"></script>
+	</body>
+
+</html>

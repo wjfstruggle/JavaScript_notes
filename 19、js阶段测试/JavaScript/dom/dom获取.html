@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<ul>
+			<li>0</li>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<!--包含一个文本节点-->
+		<ol>
+		</ol>
+		<!--不包含一个文本节点-->
+		<ol></ol>
+		<script type="text/javascript">
+			// getElementById()
+			// getElementsByClassName()
+			// getElementsByName()
+			
+			// 获取ul
+			var ul = document.getElementsByTagName("ul")[0];
+			// 类数组，有length属性反映出查询页面结构的个数
+			console.log(ul, ul.length)
+			
+			// querySelector		// 支持css选择器
+			// querySelectorAll		// 获取静态的nodelist列表
+			
+			// 获取子节点
+			
+			// childNodes包含文本节点和元素节点(标签)
+			// childElementCount元素节点的个数
+			// children所有的子元素节点
+			console.log(ul.childNodes, ul.childElementCount, ul.children, ul.children[2]) // text, li, text, li, text, li, text, li, text, li, text
+			
+			// 第一个子元素和最后一个子元素
+			console.log(ul.firstChild,ul.firstElementChild) // text  // <li>0</li>
+			console.log(ul.lastChild,ul.lastElementChild) // text  // <li>4</li>
+			
+			// 兄弟节点
+			var li = document.getElementsByTagName("li")
+			// 下一个节点
+			console.log(li[2].nextSibling, li[2].nextElementSibling)// text  // <li>3</li>
+			// 如果到了尽头，表示没有下一个或者上一个了， 就会返回null
+			console.log(li[2].nextSibling, li[2].nextElementSibling.nextElementSibling.nextElementSibling)//text  null
+			// 上一个节点
+			console.log(li[2].previousSibling, li[2].previousElementSibling)// text  // <li>1</li>
+			
+			// 查找父元素
+			console.log(li[2].parentNode, li[2].parentElement);
+			
+			console.log(li[1].id = "li_01")
+		</script>
+	</body>
+</html>

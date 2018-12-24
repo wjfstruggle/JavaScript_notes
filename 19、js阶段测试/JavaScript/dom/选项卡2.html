@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+        <title>Document</title>
+        <style>
+            .card{
+                width: 150px;
+                height: 100px;
+                text-align: center;
+                line-height: 100px;
+                display: none;
+            }
+            .active{
+                display: block;
+            }
+            .card:nth-of-type(1){
+                background: skyblue;
+            }
+            .card:nth-of-type(2){
+                background: pink;
+            }
+            .card:nth-of-type(3){
+                background: orange;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <button>选项卡1</button>
+        <button>选项卡2</button>
+        <button>选项卡3</button>
+
+        <div class="card active">卡片1</div>
+        <div class="card">卡片2</div>
+        <div class="card">卡片3</div>
+    
+        <script>
+            // 点击按钮显示对应的选项卡，例如点击第一个，显示卡片1，其余隐藏
+            var btn = document.querySelectorAll("button");
+            var card = document.querySelectorAll(".card");
+            var index = 0;    // 表示当前展示的下标
+
+            for(let i = 0; i<btn.length;i++){
+                btn[i].addEventListener("click",function(){
+                    // 问题点：变量污染
+
+                    console.log(i);
+                    // 方法1： 为了保证active只存在一个
+                    // for(var j=0;j<card.length;j++){
+                    //     if( i == j){
+                    //         card[j].classList.add("active");
+                    //     }else{
+                    //         card[j].classList.remove("active");
+                    //     }
+                    // }
+
+                    // 方法2：记录每次选中的下标，针对这个下标去移除
+                    if(i !== index){
+                        card[i].classList.add("active");
+                        card[index].classList.remove("active");
+                        index = i;  // 更新表示展示下标的数据
+                    }
+
+                })
+            }
+			
+			// 函数作用域 -- 局部
+			function fun1(index) {
+				var a = 20;
+				console.log("fun1的值",a);
+				function fun2(abc) {
+					var a = 30;
+					console.log("fun2的值",abc);
+				}
+				fun2(index) 
+			}
+			var i = 10;
+			fun1(i);
+			
+			
+			function fun3() {
+				return function fun2() {
+					i++
+					console.log(i)
+				}
+			}
+			var i = 10;
+			var f3 = fun3()
+			f3()// 11
+			f3()// 12
+			var f4 = fun3();
+			f4()// 13
+			
+			
+			/*
+			 * 闭包：
+			 	函数嵌套函数（传递参数），参数就会被内部函数保存起来，起到变量防污染的作用
+			 	自执行函数，没办法自动释放自身，会引起内存泄漏
+			 * */
+			console.clear(i)
+			function fun4(i) {
+				return function() {
+					i++;
+					console.log(i)
+				}
+			}
+			var i = 10
+			var f5 = fun4(i);
+			f5(); // 11
+			console.log("全局变量i",i);
+        </script>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// setTimeout(回调函数， 时间)，定时器声明是给一个变量，以便后续清除定时器
+			function timeOut1() {
+				var t1 = setTimeout(function() {
+					// 1s后运行
+					console.log("hello world")
+					clearTimeout(t1) // 清除定时器clearTimeout(定时器序号)
+				}, 1000)
+				console.log("t1", t1) // t1 , 1
+			}
+
+			// setInterval(回调函数， 时间)
+			function interval1() {
+				var timer = 0;
+				var t2 = setInterval(function() {
+					if(timer >= 5) {
+						clearInterval(t2);
+						return; // 退出函数
+					}
+					console.log("boom !")
+					timer++;
+				}, 1500)
+
+				var t3 = setInterval(function() {
+					if(timer == 5) {
+						clearInterval(t3);
+						return; // 退出函数
+					}
+					console.log("boom ~·!")
+					timer++;
+				}, 1500)
+			}
+			
+			/*
+			 * 同步任务： 执行栈內执行
+			 * 异步任务：任务队列等待状态或者触发时间到执行栈中执行*/
+			function setinterval2() {
+				var t0 = setInterval(function() { // 异步
+					console.log("定时器內")
+					clearInterval(t0);
+				}, 0) // 时间虽然为0，但是t0先打印出来，异步的结果
+				console.log("to", t0) // 同步>-阻塞情况
+			}
+			setinterval2()
+		</script>
+	</body>
+
+</html>

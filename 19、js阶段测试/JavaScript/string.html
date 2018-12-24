@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// charAt() 返回下标对应的字符
+			// charCodeAt() 返回10进制Unicode编码（默认是16进制）
+			console.log("ABC".charCodeAt(0)) // 65
+			
+			/*
+			 * indexOf("检索的字符串") // 返回字符串的首字符开始检索位置，如果不存在，返回-1。
+			 * 并且只返回第一次出现的位置
+			 * 第二个参数表示搜索的起始位置
+			 * */
+			var num = "javascriptss"
+			console.log("indexOf", num.indexOf("s"))// 4
+			console.log("indexOf", num.indexOf("s", 5))// 10
+			
+			/*
+			 lastIndexOf()返回最后一次出现的位置
+			 * */
+			console.log("lastIndexOf", num.lastIndexOf("s"))// 11
+			
+			/*concat()拼接，返回新的字符串，将被连接为一个字符串的一个或多个字符串对象。
+			 * stringObject.concat(stringX,stringX,...,stringX)
+			 不会修改原来的字符串
+			 * */
+			var num1 = "js"
+			var num2 = "css"
+			console.log(num1.concat(num2))// jscss
+			
+			/*
+			 fromCharCode() 可接受一个指定的 Unicode 值的10进制，然后返回一个字符串。
+			 用法： String.fromCharCode(numX,numX,...,numX)
+			 一个或多个 Unicode 值，即要创建的字符串中的字符的 Unicode 编码。
+			 * 
+			 * */
+			console.log(String.fromCharCode(101))
+			
+			/*slice()截取字符串的片段
+			 * 开始位置必选，结束为可选，如果不写，默认到字符串结束。如果写了，不包活结束位置本身。
+			 * 支持负数，表示倒数第几位
+			 
+			 * 
+			 * */
+			
+			var str2 = "hello world"
+			console.log(str2.slice(3))// lo world
+			console.log(str2.slice(3, 5))// lo末尾不包括自己
+			console.log(str2.slice(3, -5))// 
+			
+			/*substr()在字符串中抽取从 start 下标开始的指定数目的字符。
+			 第二个参数： 长度
+			 
+			 substring()提取字符串中介于两个指定下标之间的字符。
+			 第二个参数： 下标位置，不包括自己
+			 * */
+			
+			var str="Hello world!"
+			console.log(str.substring(3,7))// lo w
+			console.log(str.substr(3,7))// lo worl
+			
+			/*
+			 split()将字符串以某个字符串作为分割点去分分割数组
+			 第二个参数是长度
+			 * 
+			 * */
+			console.log(str.split("")) // ["H", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"]
+			console.log(str.split(" ")) // ["Hello,world!"]
+			
+			/*
+			 replace() 替换
+			 * 
+			 * */
+			
+			var str4 = "今天星期天吗?今天星期天吗?今天星期天吗?"
+			console.log(str4.replace("天","日"))
+			
+			// 循环替换天
+			function replaceT(str) {
+			for (var i = 0;i < str.length; i++) {
+				if (str.indexOf("天") == -1) {
+					console.log(i+"次数")
+					break;
+				}
+				str = str.replace("天","日");	
+			}
+			return str;
+			}
+			console.log(replaceT(str4))
+			
+			/*字符串转为大小写
+		 		toLowerCase()	把字符串转换为小写。
+				toUpperCase()	把字符串转换为大写。
+			 * */
+			var str5 =  "javascript";
+			// 开头字母大写
+			console.log(str5.charAt(0).toUpperCase()+str5.substring(1)) // Javascript
+			
+			// 除去前后空格
+			
+			
+// 练习
+
+//1. 有段文字text = "and in it he says Any damn fool could", 不改变原text的前提下， 提取第一段话a = "Any damn fool could", 
+//第二段话b = "and", 第三段话c = "could", 注意， slice() 可以接受负数, string.slice().
+				var text = "and in it he says Any damn fool could";
+				var a = text.slice(18);
+				var b = text.slice(0,3);
+				var c = text.slice(-5);
+				console.log(a+"\n"+b+"\n"+c+"\n");
+//2. 字符串digite = "0123456789", 把前5个字符分割出来， 返回个单字符的数组, 注意， 返回数组里面的数字是字符串类型, string.split()
+				var digite = "0123456789";
+				var digite_str1 = digite.substr(0,5).split("");
+				var digite_str2 = digite.split("", 5); //方法二
+				console.log(digite_str1)
+				console.log(digite_str2)
+//3.已知有字符串foo=”get-element-by-id”,写一个function将其转化成驼峰表示法”getElementById”.
+				var foo ="get-element-by-id"
+				function hump(foo) {
+					var foo_str = foo.split("-")
+					// 先分割字符串数组，得到"get", "element", "by", "id"
+//					console.log(foo_str)
+					for (var i = 1;i < foo_str.length; i++) {
+						// 每个字符串的开头转成大写，其余拼接起来
+							foo_str[i] = foo_str[i].charAt(0).toUpperCase() + foo_str[i].substring(1)
+						}
+					return foo_str.join("")
+				}
+				console.log(hump(foo));
+				// 方法二
+				for (var i = 0; i < foo.length;i++) {
+					if (foo[i] == "-") {
+						foo = foo.replace("-"+foo[i+1], foo[i+1].toUpperCase())
+					}
+				}
+				console.log(foo)
+//4.定义一个函数,将"今天是什么鬼天气，这么热，明天要去游泳！"里面的有"天"的下标输出(用indexof())
+				var str6 = "今天是什么鬼天气，这么热，明天要去游泳！"
+				function day(str) {
+					var sum = []// 存放下标
+					var str6_1 = str.split("")
+					var idx = str6_1.indexOf("天")// 带有"天"
+					for(var i = 0; i< str6_1.length;i++) {
+						if (idx !== -1) {
+							sum.push(idx)
+							idx = str6_1.indexOf("天", idx+1)
+						}
+					}
+					console.log(sum)
+				}
+				day(str6)
+				// 方法二
+				var str6 = "今天是什么鬼天气，这么热，明天要去游泳！"
+				for(var i = 0,index=0,time=0; i < str6.length;i++) {
+					index = str6.indexOf("天", index)
+					if (index > 0) {
+						time++;
+						console.log(index)
+						index++;
+					} else {
+						console.log(time+"次")
+						break;
+					}
+				}				
+//5.定义一个函数,将"今天是什么鬼天气，这么热，明天要去游泳！"里面的有"天"替换成"日"(用replace())
+			var str7 = "今天是什么鬼天气，这么热，明天要去游泳！";
+			function replaceT(str) {
+				for (var i = 0;i < str.length; i++) {
+					if (str.indexOf("天") == -1) {
+						break;
+					}
+					str = str.replace("天","日");	
+				}
+				return str;
+			}
+			console.log(replaceT(str7))
+		</script>
+	</body>
+</html>

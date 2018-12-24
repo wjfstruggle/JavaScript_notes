@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>ajax</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var url_get = "https://www.easy-mock.com/mock/5a91126f9d9af46407651597/test/test_get?num=10";
+			var url_post = "https://www.easy-mock.com/mock/5a91126f9d9af46407651597/test/test_post";
+			// 1、创建XMLhttp请求对象
+			var xhr = new XMLHttpRequest();
+			// 2、设置请求的方式
+			xhr.open("get", url_get);
+			// 监听状态值的改变
+			xhr.addEventListener("readystatechange", function(e) {
+				// 状态值： 4 代表数据解析完成
+				// 状态码 ： 200表示请求成功
+				if(e.target.readyState == 4 && e.target.status == 200) {
+					console.log(e.target.readyState)
+					console.log(e)
+					console.log(JSON.parse(e.target.responseText)) // 返回一个对象
+				}
+			})
+			// 发送请求  	post请求 xhr.send("name=haha&age=12");
+			xhr.send();
+
+			// 前后端工作交接，如果后端接口要从零开发，先定好接口结构和数据类型，写好文档列明前端提交的参数和后端返回的数据
+			// 接入到正式数据，最好在测试环境下进行测试。上线时间尽可能避开高峰期
+			var baseUrl = "https://www.easy-mock.com/mock/5bed3df093d15a3354f97694/test";
+			var test_get = baseUrl + "/test_get"; // 基础路径 + 接口地址
+
+			ajax_get(test_get, function(e) {
+				if(e.target.readyState == 4 && e.target.status == 200) {
+					var res = JSON.parse(e.target.responseText)
+					console.log(res.data)
+				}
+			})
+
+			function ajax_get(url, callback) {
+				var xhr;
+				if (window.XMLHttpRequest) {
+					xhr = new XMLHttpRequest();
+				} else {
+					// ie
+					xhr = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				xhr.open("get", url);
+				xhr.addEventListener('readystatechange',callback)
+				xhr.send();
+			}
+		</script>
+	</body>
+
+</html>

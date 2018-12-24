@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>正则的基础</title>
+		<style type="text/css">
+			#content {
+				color: red;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" name="" id="test_var" value="" />
+		<input type="text" name="" id="test_username" value="" oninput="test_username(this)"/>
+		<button onclick="test_var()">测试</button>
+		<div id="content">
+			请输入4到12个字符
+		</div>
+		<script type="text/javascript">
+//			function test_var() {
+//				// 获取输入框的值
+//				var value = document.getElementById("test_var").value;
+//				var input = document.getElementById("test_var");
+//				var str = /^[A-Za-z$_][\w]*$/gi
+//				if (str.test(value)) {
+//					input.style.borderColor = "red"
+//				} else {
+//					alert("输入有误")
+//				}
+//			}
+			// 
+			
+			var str = /^[A-Za-z0-9]{4,12}$/;
+			var content = document.getElementById("content");
+			function test_username(el) {
+				var value = el.value
+				if (str.test(value) && value == "") {
+					content.style.display = "none"
+				} else {
+					content.style.display = "block"
+				}
+			}
+		</script>
+		<script type="text/javascript">
+
+			// 正则的写法
+			// 1、
+			var regex = /xyz/
+			var regex2 = new RegExp('xyz', 'i');
+			
+			/*
+			  全局  g  ,  	i 忽略大小写
+			  
+			 m  多行  ， u  Unicode  y  粘性匹配
+			 * 
+			 * */
+			// 正则的方法
+			var reg = /abc/gi
+			var str1 = 'abcdABCD'
+			
+			// 正则对象.test(匹配字符串)  // 返回true或者false
+//			console.log(reg.test(str1)) // true
+			
+			// exec
+			/*
+			 如果匹配成功，exec() 方法返回一个数组，并更新正则表达式对象的属性。返回的数组将完全匹配成功的文本作为第一项，将正则括号里匹配成功的作为数组填充到后面。
+
+			如果匹配失败，exec() 方法返回 null。
+			
+			[0] 匹配的字符串
+			index  匹配到的字符位于原始字符串的基于0的索引值
+			input  原始字符串  下一次匹配开始的位置	,如果匹配失败，lastindex归零
+			lastIndex  
+			 * */
+			console.log(reg.exec(str1), reg.lastIndex)  // 3
+			console.log(reg.exec(str1), reg.lastIndex) // 7
+			
+			/*match 字符串方法
+			 * 
+			 * 字符串.match（正则对象）
+			 * 
+			 * 注意，如果正则不包含g， 则返回的内容和exec的效果一样，不过每次匹配的结果都是一致的，正则lastindex也不会个更新。
+			 * 
+			 * 如果正则包含标志g，返回的是包含匹配片段的数组
+			 * 
+			 * 
+			 */
+			var str3 = "today is Monday day"
+			
+			var reg3 = /day/gi
+			
+			console.log(str3.match(reg3)) // ["day", "day"]
+			
+			// search
+			// 
+			// 如果匹配成功，则 search() 返回正则表达式在字符串中首次匹配项的索引。否则，返回 -1。
+			console.log(str3.search(/day/g)) // 2
+			console.log(str3.search(/day/g)) // 2
+			
+			/******************匹配规则*************/
+			console.log("******************匹配规则*************")
+			var str4 = "today is Monday day, not a good day"
+			
+			console.log(str4.match(/.y/g)) //  ["ay", "ay", "ay", "ay"]
+			console.log(str4.match(/..y/g)) //  ["day", "day", "day", "day"]
+			console.log(str4.match(/...y/g)) //  ["oday", "nday", " day", " day"]
+			
+			// \d	匹配任意阿拉伯数字。等价于[0-9]。
+			var str5 = "1234day"
+			
+			console.log(str5.match(/\d+/)) // 1234
+			
+			// \D 匹配任意一个不是阿拉伯数字的字符。等价于[^0-9]。
+			console.log(str5.match(/\D+/)) // day
+			
+			// \w	匹配任意来自基本拉丁字母表中的字母数字字符，还包括下划线。等价于 [A-Za-z0-9_]。
+			
+			var str5 = "##$Df45"
+			console.log("\\w",str5.match(/\w+/g)) // ["Df45"]
+			
+			// js变量命名规则
+			
+			// 数字  字母  下划线
+			var str6 = "@123, abc"
+			
+			// \s	匹配一个空白符，包括空格、制表符、换页符、换行符和其他 Unicode 空格。
+			
+			var str7 = "hello world"
+			console.log(str7.match("\\s",/\s/))// " "
+			
+//			\S	匹配一个非空白符
+
+			var str8 = "control-M"
+			console.log(str8.match("\\cM",/\cM/))// 
+			
+			// \uhhhh	匹配 Unicode 值为 hhhh （四个十六进制数字）的字符。
+			
+			var str9 = '今天是周一'
+			console.log(str9.match("",/[\u4E00-\u9FA5]/))// 
+			
+			// 匹配以 xxx开头
+			var str10 = "Atr11"
+			console.log(str10.match(/^A/))// A
+			
+			//$	匹配输入结尾。例如，/t$/ 不匹配 "eater" 中的 "t"，但匹配 "eat" 中的 "t"。
+			
+			// (x)	匹配 x 并且捕获匹配项。 这被称为捕获括号（capturing parentheses）。
+			
+			var str11 = "str=11 string";
+			console.log(str11.match(/(str)/))//  ["str", "str"]
+			console.log(str11.match(/str=(\d\d)/g))//  ["str=11"]
+			
+			// \n	n 是一个正整数。一个反向引用，指向正则表达式中第 n 个括号（从左开始数）中匹配的子字符串。
+			// n前面的第几个()
+			
+			var str12 = "str=11 string";
+			console.log(str12.match(/(str(=11)\sstring\1)/))//  ["str", "str"]
+			
+			var str13 = "string12346"
+			var str14 = "stri@ng12346"
+			console.log(str13.match(/^[A-Za-z0-9_]\w*/))// "string12346"
+			console.log(str14.match(/^[A-Za-z0-9_]\w*/))// "stri"
+			
+			
+			//x+	匹配前面的模式 x 1 或多次。等价于 {1,}。
+			
+			// x?	匹配前面的模式 x 0 或 1 次。
+			// x*? 像上面的 * 和 + 一样匹配前面的模式 x，然而匹配是最小可能匹配。
+			var str15 = "string123"
+			console.log(str15.match(/string\d?/))// "string1"
+			console.log(str15.match(/string\d*?/))// "string"
+			console.log(str15.match(/string\d+/))// "string123"
+			
+			// x(?=y)	只有当 x 后面紧跟着 y 时，才匹配 x。
+			
+			var str16 = "jack spart"
+			console.log(str16.match(/jack (?=spart)/)) // "jack"
+			
+			// x(?!y)	只有当 x 后面不是紧跟着 y 时，才匹配 x。
+			var str17 = "3.141";
+			console.log(str17.match(/\d+(?!\d)/)) // ["3"];
+			console.log(str17.match(/\d+(?!\.)/)) // ["141"];
+			console.clear()
+			
+		</script>
+	</body>
+</html>

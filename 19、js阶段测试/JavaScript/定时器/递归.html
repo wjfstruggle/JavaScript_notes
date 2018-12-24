@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>递归</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// 小明去存1000钱，每天会产生1%的利息，求问，30天后，小明可以拿回多少钱
+			
+			function digui(day) {
+				if (day == 0) {
+					return 1000;
+				}
+				return digui(day - 1) * 1.01;
+			}
+			digui(2);
+			
+
+//小明题目升级版，小明拿着1000块在周一买入基金，一开户立给10块红利，逢周六日没有利息，平时利息为1%，请问30天后，小明可以拿回多少钱？
+// 递归方法
+			
+			function digui(day) {
+				if (day == 0) {
+					return 1010;
+				}
+				 // 除去周六和周日
+				if (day % 7 == 6 || day % 7 == 0) {
+					return digui(day - 1);
+				}
+				return digui(day - 1) * 1.01;
+			}
+			console.log(digui(30));
+			
+			// 有雌雄一对兔子，假定过两个月后可繁殖一对雌雄兔子，问过n个月后共有多少只兔子。
+			/*
+			 月数             对数               
+			 1       1
+			 2       2     1老1新
+			 3       2	  
+			 4       4	   2老2新
+			 5       4     
+			 6       8     4老4新
+			 7       8
+			 8       16    8老8新
+			 * 
+			 * */
+			function numDigui(n) {
+				if (n == 1) {
+					return 1;
+				}
+				// 奇数月
+				if (n % 2 !== 0){
+					return numDigui(n -1)
+				} else {
+					// 偶数月
+					return numDigui(n- 1) * 2
+				}
+			}
+			numDigui(1)
+		</script>
+	</body>
+</html>

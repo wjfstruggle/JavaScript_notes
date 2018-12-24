@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>快速排序</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			// 快速排序
+			/*
+			 1、先找一个成员作为基准
+			 2、基准和其他成员比较，小的放左边，大的放右边
+			 3、将左右两边的数据集合重复步骤1和步骤2，直到数据集合会只有一个值为止。
+			 * 
+			 * */
+			var arr = [10, 14, 8, 12, 5, 6, 17]
+
+			//			[10,8,5,6]  12  [14,17]
+
+			function quickSort(arr) {
+				if(arr.length <= 1) {
+					return arr;
+				}
+				var left = []; // 左右两个空数组
+				var right = [];
+				// 基准  步骤一
+				var markIndex = Math.floor(arr.length / 2)
+				var mark = arr.splice(markIndex, 1)[0]
+				//				console.log(mark)//12
+				for(var i = 0; i < arr.length; i++) {
+					if(mark > arr[i]) {
+						left.push(arr[i]);
+					} else {
+						right.push(arr[i]);
+					}
+				}
+				return quickSort(left).concat(mark, quickSort(right));
+			}
+			console.log(quickSort(arr));
+
+			var arr1 = [1, 12, 4, 11, 8, 4, 2, 7, 3, 13, 12, 5, 4, 6, 1, 5]
+		</script>
+	</body>
+
+</html>

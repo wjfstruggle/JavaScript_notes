@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>函数的补充</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			/*
+			 return 返回值，终断函数的运行
+			 * 
+			 * */
+			
+			
+			// 函数命名
+			function reduce() {
+				// 逻辑
+			}
+			reduce()
+			// 函数表达式
+			var add = function(){
+				// 逻辑
+			}
+			add();
+			
+			
+			// abc()函数的当前容器是add
+			var add = function abc() {
+				// 逻辑
+				console.log(abc)
+			}
+			add();// 123
+		//			abc();// 报错	
+			/*
+			 捕获错误，错误的信息放在参数里面
+			 * console.warn打印警告
+			 * console.error(err)打印错误
+			 * new Error报错提示
+			 * 
+			 * try{
+			 * 	
+			 * }catch(e) {
+			 * 	具有独立的作用域
+			 * 	捕获错误
+			 * 	e代表错误
+			 * }
+			 * 
+			 * 
+			 * throw主动抛出错误语句*/
+			try {
+				console.log(add,abc)
+			}catch(e){
+				// 如果try没有错误，则不会执行
+				var err = new Error('abc没有挂载到全局变量中')
+				console.error(err)
+				console.warn(e)
+			}finally{
+				console.log("完成")
+			}
+			var a = new Error("error")
+			throw a;
+		</script>
+	</body>
+</html>

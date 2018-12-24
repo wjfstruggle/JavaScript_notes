@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<ul id="test1">
+			<li class="item">01</li>
+			<li>02</li>
+			<li>03</li>
+			<li>04</li>
+			<li>05</li>
+		</ul>
+		<ol id="ol">
+			<li id="liID">1</li>
+			<li>2</li>
+			<li>3</li>
+		</ol>
+		<input type="" name="username" id="username" value="" onclick="change()"/>
+		<script type="text/javascript">
+			// DOM 文档对象模型
+			// 通过id获取
+			var test1 = document.getElementById("test1")
+			var ol = document.getElementById("ol");
+			console.log(test1)
+			
+			// 通过class类名获取，返回的是一个类似数组（长得像数组，但是没有数组的方法）
+			var item= document.getElementsByClassName("item")
+			console.log(item[0])
+			
+			// 通过标签获取
+			var li = document.getElementsByTagName("li");
+			
+			console.log(li)
+			
+			// 通过name属性获取
+			var username = document.getElementsByName("username")
+			console.log(username)
+			
+			//querySelector(css选择器)
+			var ol = document.querySelector("ol > li")
+			console.log(ol)
+			
+			var olAll = document.querySelectorAll("ol > li")
+			console.log(olAll)
+			
+			// getElement和querySelector差异
+			var ol = document.getElementsByTagName("ol")[0]
+			var ol_getElement = ol.getElementsByTagName("li")
+			var ol_querySelector = document.querySelectorAll("ol>li");
+			
+			var newLi = document.createElement("li")
+			ol.appendChild(newLi);
+			console.log("getElement", ol_getElement)
+			console.log("querySelector", ol_querySelector)
+			console.log("querySelector", document.querySelectorAll("ol>li"))
+			
+			// HTMLCollection是一个动态的列表
+			// NodeList是一个静态集合
+			var input = document.getElementById("username")
+			function change() {
+				input.value = input.value.toLocaleUpperCase()
+			}
+			
+		</script>
+	</body>
+</html>

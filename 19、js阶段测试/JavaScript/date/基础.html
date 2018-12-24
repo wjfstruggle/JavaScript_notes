@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var date = new Date();
+			console.log(date) // Mon Nov 05 2018 10:42:42 GMT+0800 (中国标准时间)
+
+			/*
+			 new Date(string)
+			 string不填，表示当前时间。
+			 	string 可以写成 "2018-11-11 0:0:0"
+			 	string 为null ，1970 08:00:00
+			 * 
+			 * */
+
+			var date = new Date("2018-11-11 0:0:0");
+			console.log(date) // Sun Nov 11 2018 00:00:00 GMT+0800 (中国标准时间)
+
+			var date = new Date(null);
+			console.log(date) // Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间)
+
+			// 时间戳,计算离970年的毫秒数
+			var date = new Date();
+			console.log(date.getTime()) // 1541386325232毫秒数
+
+			// 来自服务器的时间戳和本地时间戳做对比。
+
+			// 获取年份
+			console.log(date.getFullYear()) // 2018
+			// 月份从零开始，月份 + 1
+			console.log(date.getMonth() + 1) // 11
+			// 日期
+			console.log(date.getDate()) // 5
+			// 星期
+			console.log(date.getDay()) //星期一
+
+			// 时
+			console.log(date.getHours()) //11
+
+			//分
+			console.log(date.getMinutes()) //
+			// 秒
+			console.log(date.getSeconds()) //
+
+			// 毫秒的英文
+			console.log(date.getMilliseconds()) //
+
+			// 倒计时
+
+			function shuangshiyi() {
+				var date11 = new Date("2018-11-11 0:0:0") // 双十一时间
+
+				setInterval(function() {
+					var d = new Date(); // 当前时间
+					var Time_diff = (date11 - d) / 1000;
+					// 天
+					var day = parseInt(Time_diff /(24*60*60))
+					// 小时
+					var hours = parseInt(Time_diff / (3600) % 24);
+					// 分
+					var second = parseInt((Time_diff % 3600) / 60);
+					// 秒
+					var min = parseInt(Time_diff % 60);
+					hours = hours<10?"0"+hours:hours
+					second = second<10?"0"+second:second
+					min = min<10?"0"+min:min
+					document.write("倒计时" + "<h1>"+ `${day}天` + `${hours}小时` + `${second}分` + `${min}秒` + "<h1/>")
+				}, 1000)
+			}
+			shuangshiyi()
+			
+		</script>
+	</body>
+
+</html>

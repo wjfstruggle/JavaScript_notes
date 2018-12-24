@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			tr td,
+			tr th {
+				width: 120px;
+				height: 40px;
+				text-align: center;
+			}
+			
+			td button {
+				border: none;
+				width: 100%;
+				height: 100%;
+				cursor: pointer;
+				background: #fff;
+			}
+			
+			td button:active {
+				background: red;
+			}
+			
+			tr th {
+				height: 80px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input type="text" name="name" value="" placeholder="请输入姓名" />
+		<input type="number" name="age" value="" placeholder="请输入年龄" />
+		<button onclick="add()">添加</button>
+		<button onclick="deleClick()">批量删除</button>
+		<button onclick="sortAge()">排序</button>
+		<input type="text" id="search" name=""><button onclick="search()">搜索</button>
+		<table border="1" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>
+						<button onclick="selectAll()">全选</button>
+						<button onclick="noneClick()">反选</button>
+					</th>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>年龄</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<script type="text/javascript">
+			// 全选反选功能
+			// 批量删除
+			// 搜索，匹配的行高亮显示
+			var menber = [{
+					name: "张三",
+					age: 20
+				},
+				{
+					name: "李四",
+					age: 18
+				},
+				{
+					name: "王五",
+					age: 15
+				},
+				{
+					name: "刘六",
+					age: 24
+				},
+				{
+					name: "赛文七",
+					age: 23
+				}
+			]
+			// 获取tbody
+			var tbody = document.getElementsByTagName("tbody")[0];
+			// 获取tr
+			var tr = document.getElementsByTagName("tr");
+			// 获取单选框
+			function add_info() {
+				// 遍历数据
+				for(var i = 0; i < menber.length; i++) {
+					template(i + 1, menber[i].name, menber[i].age)
+				}
+			}
+			add_info();
+			// 添加表格信息
+			function add() {
+				var name = document.getElementsByName("name")[0];
+				var age = document.getElementsByName("age")[0];
+				var num = tr.length;
+				// 输入框内没有值，不能添加
+				if(name.value.trim() == "") {
+					alert("请输入正确的姓名");
+					return;
+				}
+				if(age.value.trim() == "" || age.value < 0) {
+					alert("请输入正确的年龄");
+					return;
+				}
+				if(name.value !== '' && age.value !== '') {
+					if(tr.length < 10) {
+						template(num, name.value, age.value)
+					} else {
+						template(num, name.value, age.value)
+					}
+				}
+				// 每次添加完信息，输入框清空
+				name.value = ''
+				age.value = ''
+			}
+			// 删除表格
+			function del(el) {
+				if(confirm("确定删除这一行嘛？")) {
+					el.parentElement.parentElement.remove();
+				}
+			}
+			// 表格渲染数据函数模板
+			function template(num, name, age) {
+				num = num < 10 ? "0" + num : num
+				tbody.innerHTML += `
+				<tr class="tr">
+					<td>
+						<input type="checkbox" class="box"/>
+					</td>
+					<td>${num}</td>
+					<td>${name}</td>
+					<td class="age">${age}</td>
+					<td><button onclick="del(this)">删除</button></td>
+				</tr>`
+			}
+			// 全选
+			var tr = tbody.getElementsByTagName("tr");
+			var box = document.getElementsByClassName("box");
+
+			function selectAll() {
+
+				// 遍历所有的单选框
+				//				for (var i = 0; i < box.length;i++) {
+				//					box[i].checked = true;
+				//				}
+				for(var i = 0; i < tr.length; i++) {
+					tr[i].querySelector("input[type='checkbox']").checked = true;
+				}
+			}
+			// 取消全选
+			function noneClick() {
+				// 遍历所有的单选框
+				for(var i = 0; i < tr.length; i++) {
+					tr[i].querySelector("input[type='checkbox']").checked = !tr[i].querySelector("input[type='checkbox']").checked;
+				}
+			}
+			// 批量删除
+			function deleClick() {
+				// 方法二，获取tr的静态列表
+				var tr = tbody.querySelectorAll("tr")
+				//				for (var i = 0; i < tr.length; i++) {
+				//					if (tr[i].querySelector("input[type='checkbox']").checked == true) {
+				//						tr[i].remove();
+				//						// 方法一 ， i--  抵消i的变换
+				////						i --;// 
+				//					}
+				//				}
+				// 方法二
+				for(var i = tr.length - 1; i >= 0; i--) {
+					if(tr[i].querySelector("input[type='checkbox']").checked == true) {
+						tr[i].remove();
+						// 方法一 ， i--  抵消i的变换
+						//						i --;// 
+					}
+				}
+			}
+			// 搜索
+			function search() {
+				var searchAge = parseInt(document.querySelector("#search").value);
+				var menberAge = document.querySelectorAll(".age");
+				var tr = tbody.querySelectorAll("tr");
+				for(var i = 0; i < menberAge.length; i++) {
+					var age = parseInt(menberAge[i].innerText);
+					if(age == searchAge) {
+						tr[i].style.display = "table-row";
+					} else if(searchAge == "") {
+						alert("输入有误")
+						return;
+					} else{
+						tr[i].style.display = "none";
+					}
+				}
+			}
+			// 年龄排序从小到大
+			function sortAge() {
+				var tr = tbody.querySelectorAll("tr");
+				var menberAge = document.querySelectorAll(".age");
+				menberAge = menberAge.innerText;
+				var temp;
+				menberAge.filter(function(item, index) {
+					if (item[index] > item[index + 1]) {
+						temp = item[index];
+						item[index] = item[index + 1];
+						item[index + 1] = temp;
+					}
+					return menberAge;
+				})
+			}
+		</script>
+	</body>
+
+</html>

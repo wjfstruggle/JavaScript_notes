@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<ul>
+			<li>01</li>
+			<li>02</li>
+			<li>03</li>
+			<li>04</li>
+		</ul>
+		<script type="text/javascript">
+			
+			var ul = document.querySelector("ul")
+			var getElement = document.getElementsByTagName("li")
+			var querySelector = document.querySelectorAll("li")
+			
+			console.log("插入前",getElement, querySelector)
+			
+			var li = document.createElement("li")
+			ul.appendChild(li)
+			console.log("插入后",getElement, querySelector)
+			
+			// querySelector如果想动态添加li
+			// 可以多次调用document.querySelectorAll("li")
+		</script>
+	</body>
+</html>

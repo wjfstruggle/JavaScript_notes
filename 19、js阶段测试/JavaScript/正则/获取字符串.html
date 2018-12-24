@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function getQueryString(name) {
+				//  获取URL的参数	 ?key = 123&name='jack'
+				var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+				var r = window.location.search.substr(1).match(reg);
+				if(r != null) {
+					return unescape(r[2]);
+				}
+				return null;
+			}
+			
+			
+			/*
+			 _ga=GA1.2.1609955129.1542370954; _gid=GA1.2.1064771921.1542370954; Hm_lvt_5eec262881855af3dede6a71234571f6=1542591000,1542609569,1542631780,1542677956; _gat_gtag_UA_111269443_1=1; Hm_lpvt_5eec262881855af3dede6a71234571f6=1542679577"
+			 * 
+			 * */
+			function getCookie(name) {
+				var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");　　
+				return(arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>垃圾回收机制</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var obj1 = {
+				name: "obj"
+			}
+			var obj2 = obj1; // name:obj 被引用数2
+			obj2 = null; // obj2对应的值是null，obj被引用数1
+			obj1 = null; // obj1对应的值是null，obj被引用数0
+			console.log(obj1)
+
+			function setName(OBJ) {
+				OBJ.name = 'java' // 0x001
+				// 函数运行时，参数OBJ会释放
+				// 每次函数运行，参数可以理解为独立的个体
+				OBJ = new Object(); // 0x002
+				OBJ.name = "css"  // 0x002
+				return OBJ;
+				// 释放变量，0x002因为只有在函数内的参数在引用，所以函数运行结束时也会随之释放
+			}
+			var obj = {
+				name: "jenny"   // 0x001
+			}
+			setName(obj)
+		</script>
+	</body>
+
+</html>

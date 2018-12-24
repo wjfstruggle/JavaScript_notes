@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			 判断
+			 if(判断语句) {
+			 	执行的代码
+			 } else{
+			 	执行的代码
+			 }
+			 * 
+			 * */
+			
+			window.onload = function () {
+				var score = prompt("请输入成绩")
+				if (isNaN(Number(score))){
+				alert("请输入数字")
+				} else {
+					if (score >= 90){
+					alert("优秀")
+				}else if(score >= 80) {
+					alert("良好")
+				}
+				else if(score >= 70) {
+					alert("中等")
+				}
+				else if(score >= 60) {
+					alert("及格")
+				}
+				else{
+					alert("不及格")
+				}			
+				}
+				
+			}
+		</script>
+	</body>
+</html>

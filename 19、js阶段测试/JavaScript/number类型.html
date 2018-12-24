@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			/*
+			 number类型
+			 * */
+			
+			console.log(0.1+0.2 == 0.3)// false 精度丢失
+			var num2 = 0.1+0.2
+			console.log(num2.toFixed(2))// 保留n位小数，返回的是string
+			var num3 = 1.5+1.6;
+			var num4 = 1.5+1.6;
+			console.log(parseInt(num3))//转为整数
+			console.log(parseFloat(num3))//转为浮点型
+			// 隐形转换
+			/*
+			 
+			 * 避免隐形转化，可以用parseInt() 或者Number()
+			 * */
+			var num5 = "1.2"+1;
+			console.log(num5);// 1.21拼接  +号除了加法运算还有拼接作用
+			
+			var num6 = Number("1.2")+1;
+			console.log(num6);// 2.2
+			
+			console.log(Number("5z")) // NaN  : Not a Number不是一个数字
+			console.log(parseInt("xx5z"))// NaN 
+			console.log(parseInt(5.2))// 
+			console.log(parseFloat("xx5z"))// NaN 
+			/*
+			 Number(字符串) 只要字符串里面存在不是合法的数字内容，都返回NaN
+			 parseInt(字符串) 从头开始判断，直到非数字为止，如果第一个不是数字，返回NaN
+			 * 
+			 * 判断isNaN是否是NaN
+			 * */
+			var num7 = Infinity; // 无穷
+			console.log(Infinity == Infinity) // true
+			console.log(Infinity === Infinity) // true
+			console.log(NaN == NaN) // false
+			
+			// 数字转化成布尔值
+			console.log(Boolean(1000))// true
+			console.log(Boolean(0))// false
+			console.log(Boolean(-3))// true
+			
+			// 数字转化成字符串
+			console.log(String(10))// '10'
+		</script>
+	</body>
+</html>

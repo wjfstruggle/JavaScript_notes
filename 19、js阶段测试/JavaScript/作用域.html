@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// window = 全局
+			window.a = 10; // 全局，浏览器最大的对象
+			var a = 10; // 相当于window.a = 10
+			console.log(a);
+			
+			// 函数作用域 -- 局部
+			function fun1() {
+				var a = 20;
+				console.log("fun1的值",a);
+				function fun2() {
+					var a = 30;
+					console.log("fun2的值",a);
+				}
+				fun2() 
+			}
+			fun1();
+			
+			function fun3() {
+				var c = 100;
+				return c;
+			}
+			var cc = fun3();
+			console.log("fun3的值",cc);
+			// 作用域链：变量访问时的作用域之间的循序，从内到外，直到window也没有这个变量才停止
+			// 函数外部不能访问函数内部的变量或方法，只能由函数内部访问数据
+			// 函数不能主动获取内部的值，但是可以通过return返回数据给调用的位置。
+			
+			function fun4() {
+				d = 44; // 没有用var 声明时，可以作为全局变量
+			}
+			fun4()
+			console.log("fun4的值",d)
+			
+			
+			// 创建定时器的任务
+			var t1 = setTimeout(function() {
+				// 执行内容
+			}, 1000)
+			console.log("setTimeout", t1)
+			
+			var i = 0;
+			var t2 = setInterval(function() {
+				if (i >=5) {
+					clearInterval(t2)
+					// 清除定时器不代表此次代码块就立即结束；
+					return;
+				}
+				console.log("setInterval", i); // 1000ms
+				i++
+			}, 1000)
+			console.log("setInterval", t2); // 1ms
+		</script>
+	</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			/*1.JS是什么
+			 * 
+				 JavaScript是一个脚本语言，高级，弱类型解释型语言。需要解释器，容易移植到不同的平台
+				 JavaScript由三部分组成：
+					 1、ECMAScript（核心、语法）
+					 2、 DOM 文档对象模型   document object model 页面节点
+       				 3、BOM 浏览器对象模型 browser object model   浏览器部分功能
+			 * 
+			 * */
+					
+			/*2.JS的数据类型有哪几种，哪些是简单类型变量，哪些是复杂类型变量，它们有什么区别
+			 
+			 * 	JS的数据类型有Number,String，null,undefined,Boolean,Object
+			 * 	简单的数据类型(Number,String，null,undefined,Boolean)
+			 * 	复杂的数据类型(Object)
+			 * 	区别：
+			 * 		1、简单数据类型存的是值，复杂的数据类型存的是地址。
+			 * 		2、简单数据类型放在栈内存，复杂的数据类型放在堆内存。
+			 * */
+			
+			/*3.用代码来表示具体如何定义JS的各种类型变量
+			 * 
+			 * 	变量的声明：大小写字母，数字（不能数字开头），下划线，$。
+			 * 			不能使用关键字比如var，delete，new document window
+			 * 			小驼峰法：dataNumber  大驼峰法：DataString
+			 * 	声明变量如下： var（关键字声明） 变量 = 值
+			 * 		var Apple = 10;
+			 * 		var _Apple = 10;
+			 * 		var $Apple = 10;
+			 * 		var Apple_10 = 10;
+			 * 		var DataString = "ap"
+			 */
+
+			/*4.undefined和Null的区别
+			 * 相同： 隐形转为false，从概念上说都是"空"
+			 	undefined: 变量未定义，变量的默认值为undefined，有值但表示为空
+			 		var a;
+			 		console.log(a) // undefined
+			 	null：	   表示一个空对象指针，需要我们主动设置进去 空值，连值都没有。通常释放不需要的 数据
+			 	关系：
+			 		alert( null = = undefined); // true
+			 * */
+
+			/*5.script标签写在页面头部和底部，有何区别
+			 * 	浏览器先解析在渲染，遇到script如果包含了操作文档的代码，有可能会打断原本文档解析的渲染，不不利于首屏加载
+			 * 	一般情况下推荐script标签放置在页底，或者使用defer和async
+			 *  放在head：须 等 到 全 部 JavaScript 代 码 都 被 下 载、 
+			 * 		解 析 和 执 行 完 成 以 后， 才 能 开 始 呈 现 页 面 的 内 容
+			 * 		（ 浏 览 器 在 遇 到 < body > 标 签 时 才 开 始 呈 现 内 容）。 对 于 那 些 需 要 很 多 JavaScript 代 码 的 页 面 来 说，
+			 * 		这 无 疑 会 导 致 浏 览 器 在 呈 现 页 面 时 出 现 明 显 的 延 迟， 而 延 迟 期 间 的 浏 览 器 窗 口 中 将 是 一 片 空白。
+			 	放在body： 打开页面速度加快，页面内容将完全呈现出浏览器中
+			 * */
+
+
+			/*6.如何判断一个变量是属于哪种变量类型（字符串、数值、布尔值、Null、undefined、对象、数组、函数
+			 
+			 * 判断变量类型的方法：
+			 * 	1、(typeof 变量类型)  => 
+			 * 		function fun() {}
+			 		console.log(typeof "string"); // string
+			  		console.log(typeof 12); // number
+					console.log(typeof true);//	boolean
+					console.log(typeof null);// object
+					console.log(typeof undefined);//undefined
+					console.log(typeof {});// object
+					console.log(typeof []);// object
+					console.log(typeof fun);// function
+			 * 	2、instanceof(变量  instanceof （原型）) 返回布尔值
+			 * 		console.log ([] instanceof(Array));//true
+					console.log ({} instanceof(Object));//true
+					console.log (null instanceof(Object));//false
+					console.log ('' instanceof(String));//false
+					console.log (23 instanceof(Number));//false
+					console.log (true instanceof(Boolean));//false
+					console.log (fun instanceof(Function));//true
+					
+				3、原型对象上的String让数据强制转化为字符串得到对应类型的数据结果
+					console.log (Object.prototype.toString.call([]));//[object Array]
+					console.log (Object.prototype.toString.call(12));//[object Number]
+					console.log (Object.prototype.toString.call(""));//[object String]
+					console.log (Object.prototype.toString.call(null));//[object Null]
+					console.log (Object.prototype.toString.call(true));//[object Boolean]
+					console.log (Object.prototype.toString.call(fun));//[object Number]
+					console.log (Object.prototype.toString.call({}));//[object Object]
+					console.log (Object.prototype.toString.call(undefined));//[object Undefined]
+			 * 	4、
+			 * 		console.log(getType(''))	// String
+					console.log(getType([])) 	// Array
+					console.log(getType({}))	// Object
+					console.log(getType(null))	//Null
+					console.log(getType(undefined))//Undefined
+					console.log(getType(12))	//Number
+					console.log(getType(fun))	//Number
+					console.log(getType(true))	//Boolean
+			 * */
+			
+			//	1.给两个的年龄，计算出他们的年龄差
+//				function age(age1,age2) {
+//					if (!isNaN(Number(age1,age2))) {
+//						return age1 - age2;
+//					}
+//				}
+//				console.log(age(12 ,23));
+			//	2.请写出Javascript的算术运算符 
+				
+			//	3.请写出Javascript比较运算符
+
+			//	4.请写出Javascript的逻辑运算符
+
+			//	5.请写出Javascript的注释符
+
+			//  6.从下面代码中看出，请问 j 和 y 分别是多少？(不要运行代码，自己分析后写出答案)
+			var i = 100;
+//			i++;
+			console.log(i++);//100
+			//自增， 输出的结果为100，i再加1，i的值为101
+//			j = i++;
+			console.log(j = i++);//101
+			// i的值为101，先将i=101赋值给j，输出结果为102。此时j=101，i=102
+//			y = ++j
+			console.log(y = ++j);// 102
+			// j的值为101，j先加一，最后把值赋给y，输出结果为102
+
+			//  7.有这样一个代码，请用if来实现这段代码的效果	
+//			switch(name) {
+//				case "jt":
+//					alert('啊啊啊啊');
+//					break;
+//				case "ejt":
+//					alert('噢噢噢噢');
+//					break;
+//				case "ejin":
+//					alert("呃呃呃");
+//					break;
+//				default:
+//					alert("噫噫噫");
+//			}
+//			function nameShow(name) {
+//				if (name == "jt") {
+//					alert('啊啊啊啊');
+//				} else if(name == "ejt"){
+//				   alert('噢噢噢噢');
+//				} else if(name == "ejin"){
+//				   alert('呃呃呃');
+//				} else {
+//					alert('噫噫噫');
+//				}
+//			}
+//			nameShow('jt')
+//			nameShow('ejt')
+//			nameShow('ejin')
+//			nameShow('ejins')
+			/**********************************
+			8.如何判断某一个年份是否闰年
+			***********************************/
+			// 能被4整除但不能被100整除,能被400整除的为世纪闰年
+			function year(data) {
+				if(isNaN(data) || data == 0) {
+					alert("请输入正确的年份");
+					return;
+				}
+					if (data%4==0 && data%100 !==0) {
+					console.log(data+ "是普通闰年")
+				} else if(data%400==0){
+					console.log(data+ "是世纪闰年")
+				} else{
+					console.log(data+ "不是闰年")
+			}
+				}
+			year(2000);//2000是世纪闰年
+			year(2004);//2004是普通闰年
+			year(1990);//1990不是闰年
+			year(2008);//2008是闰年
+			
+
+			/********************
+			9.输入三个整数x,y,z，请把最大值输出	
+			********************/
+			var a,b,c;
+			var max = a; // 假设a最大
+			function maxNum(a,b,c) {
+				// 先比较A和B，选出最大值
+				if (a>b) {
+					max = a;
+				} else {
+					max = b;
+				}
+				// 在用最大值和c作比较
+				if (max > c) {
+					return max
+				} else {
+					return c
+				}
+			}
+			console.log("最大数为："+Number(maxNum(12,45,6)))
+			console.log("最大数为："+Number(maxNum(14,10,5)))
+			console.log("最大数为："+Number(maxNum("14",10,"5")))
+			// 条件运算符
+			var a= "18",b=12,c=9;
+			max1 = a > b ? a:b;
+			max1>c? max1:c;
+			console.log("最大数为："+Number(max1))
+		</script>
+	</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//1.编写一个函数实现冒泡排序算法,可以把数组里面的数字进行从小到大排列(提高题)
+			var arr = [12, 5, 4, 6, 8, 23, 16, 15]
+			var temp;
+			for(var i = 0; i < arr.length; i++) {
+				for(var j = i + 1; j < arr.length; j++) {
+					if(arr[i] > arr[j]) {
+						// 前一个值大于后一个值，作交换
+						temp = arr[i];
+						arr[i] = arr[j];
+						arr[j] = temp;
+					}
+				}
+			}
+			console.log("数组从小到大排序：" + arr)
+			//2.小明去存1000钱，每天会产生1%的利息，求问，30天后，小明可以拿回多少钱
+			function money(day) {
+				// 第一天的钱
+				if(day == 0) {
+					return 1000;
+				}
+				return money(day - 1) * 1.01
+			}
+			console.log("30天后小明可以拿回" + Math.floor(money(30)) + "块钱")
+
+			//3.小明题目升级版，小明拿着1000块在周一买入基金，一开户立给10块红利，逢周六日没有利息，平时利息为1%，请问30天后，小明可以拿回多少钱？
+			function money1(day) {
+				if(day == 0) {
+					return 1000 + 10;
+				}
+				// 除去周六日，利息+本金没变化
+				if(day % 7 == 6 || day % 7 == 0) {
+					return money1(day - 1)
+				} else {
+					return money1(day - 1) * 1.01
+				}
+			}
+			console.log("30天后小明可以拿回" + Math.floor(money1(30)) + "块钱")
+
+			//4.小猴子第一天摘下若干桃子,当即吃掉一半,又多吃一个.第二天早上又将剩下的桃子吃一半,又多吃一个.以后每天早上吃前一天剩下的一半另一个.到第10天早上猴子想再吃时发现,只剩下一个桃子了.问第一天猴子共摘多少个桃子？
+
+			function peach(day) {
+				if(day == 10) {
+					return 1;
+				}
+				return peach(day + 1) * 2 + 2
+			}
+			console.log("第一天猴子共摘"+peach(1)+"个桃子")
+
+			//5.有雌雄一对兔子，假定过两个月便可繁殖雌雄各一的一对小兔子。问过n个月后共有多少对兔子？
+			/*
+			 月数		1		2		3		4		5		6		7		8
+			 
+			 对数		1		2		2		4		4		8		8		16
+			 		1老	  1老1新     1老1新	  2老2新			 4老4新			  8老8新
+			 * 
+			 * */
+			function rabbitNum(n) {
+				// 第一个月，对数不变
+				if(n == 1) {
+					return 1;
+				}
+				// 奇数月对数不变
+				if(n % 2 !== 0) {
+					return rabbitNum(n - 1)
+				} else {
+					// 偶数月翻倍
+					return rabbitNum(n - 1) * 2
+				}
+			}
+			console.log("过8个月后共有"+rabbitNum(8)+"对兔子")
+
+			/*6.有5个人坐在一起，问第五个人多少岁？他说比第4个人大2岁。问第4个人岁数，他说比第3个人大2岁。问
+			第三个人，又说比第2人大两岁。问第2个人，说比第一个人大两岁。最后问第一个人，他说是10岁。请问第五个
+			人多大？ */
+			/*
+			 第一个人10岁
+			 第二个人比第一个人大2岁
+			 第三个人比第二个人大2岁
+			 第四个人比第三个人大2岁
+			 第五个人比第四个人大2岁
+			 * */
+			function age(n) {
+				// 第一个人10岁
+				if (n == 1) {
+					return 10;
+				}
+				// 后一个人比前一个人大两岁
+				return age( n - 1) + 2
+			}
+			console.log("第五个人"+ age(5)+"岁")
+			//  一头牛，3年后生了一头小牛（第4年开始），之后每年生一头，n年后有多少头牛
+
+			/*
+			    年：    1   2   3     4       5         6       7       8       9       10          11      12
+			    牛：    1   1   1     2       3         4       6       9       13      19          28      41
+			    1老1新  1老2新   1老3新   2老4新   3老6新   4老9新   6老13新    9老19新  13老28新
+			*/
+			function num(n) {
+				if(n == 1 || n == 2 || n == 3) {
+					return 1;
+				}
+				return num(n - 1) + num(n - 3)
+			}
+			console.log("12年后有多少"+num(12)+"头牛")
+
+			//【提高题】7.一个人赶着鸭子去每个村庄卖，每经过一个村子卖去所赶鸭子的一半又一只。这样他经过了七个村子后还剩两只鸭子，问他出发时共赶多少只鸭子？经过每个村子卖出多少只鸭子？
+			/*
+			 第七个村子： num= 2
+			 
+			每经过一个村子 num = num / 2 - 1;
+			 * 
+			 * */
+			function yazi(n){
+				if( n == 7) {
+					return 2;
+				}
+				return yazi(n + 1) * 2 +2
+			}
+			for (var i = 1; i <= 7; i++) {
+				var every = (yazi(i)/2) + 1 /*经过每个村子卖出鸭子数*/
+				console.log("经过第"+i+"个村子卖出"+every+"只鸭子")
+			}
+			console.log("发时共赶"+yazi(1)+"只鸭子")
+		</script>
+	</body>
+
+</html>

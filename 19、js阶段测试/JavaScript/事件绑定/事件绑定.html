@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				width: 100px;
+				height: 100px;
+				border: 1px solid #6C6C6C;
+			}
+		</style>
+	</head>
+	<body>
+		<button>点击</button>
+		<button>点击</button>
+		<button>点击</button>
+		<button>点击</button>
+		<button>点击</button>
+		<div class="">
+			
+		</div>
+		<script type="text/javascript">
+			var btn = document.getElementsByTagName("button");
+			var div = document.querySelector("div")
+			for (let i = 0; i < btn.length; i++) {
+				btn[i].onclick = function() {
+				console.log(i)
+				}
+			}
+			/*oncick如果重新设置，后置会替换前者*/
+			
+			/*添加点击事件addEventListener("事件名",回调函数)
+			 如果多个addEventListener给与相同的事件，就会追加事件*/
+			div.addEventListener("click", cb)
+			function cb() {
+				console.log("div第一次单击事件")
+				}
+//			div.addEventListener("click", function() {
+//				console.log("div第二次单击事件")
+//			})
+			div.addEventListener("dblclick", function() {
+				console.log("div的双击事件")
+			})
+			
+			// 移除监听事件，要找到对应的回调函数，所以回调函数最好是一个具名的函数
+			div.removeEventListener("click", cb)
+			
+			div.addEventListener("click", function(e) {
+				console.log(e)
+			})
+			
+			div.addEventListener("touchstart", function(e) {
+				console.log(e)
+			})
+		</script>
+	</body>
+</html>

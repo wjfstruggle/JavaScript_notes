@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// javascript基本数据类型
+			// 数值，布尔，字符串，null，undefined，object
+			/*
+			 判断数据类型： typeof
+			 typeof判断null,[],obj都是返回Object
+			 * */
+			var num = 10;
+			var bool = true;
+			var str = "string";
+			var  nul = null;
+			var und = undefined;
+			var arr = [];
+			var arr2 = new Array();
+			var obj = {};
+			function fun() {}
+			console.log(typeof num);
+			console.log(typeof bool);
+			console.log(typeof str);
+			console.log(typeof nul); // object
+			console.log(typeof und);
+			console.log(typeof arr);// object
+			console.log(typeof obj);// object
+			console.log(typeof fun);
+			/*
+			 * 判断一个变量是否属于哪种类型
+			 变量  instanceof （原型）
+			 坑点： console.log ("string" instanceof(String));//false
+			 instanceof方法用于判断数据是否来自原型，所以只有new String这样得出的字符串才是true
+			 * 
+			 * */
+			console.log (arr2 instanceof(Array));//true
+			console.log (obj instanceof(Object));//true
+			console.log (nul instanceof(Object));//false
+			/*
+			 原型
+			 对象上的String让数据强制转化为字符串得到对应类型的数据结果*/
+			console.log (Object.prototype.toString.call(arr));//[object Array]
+			console.log (Object.prototype.toString.call(num));//[object Number
+			console.log (Object.prototype.toString.call(str));//[object String
+			console.log (Object.prototype.toString.call(nul));//[object Null
+			console.log (Object.prototype.toString.bind(nul));//[object Null
+			
+			/*
+			 判断类型的方法*/
+			function getType(data) {
+				return Object.prototype.toString.call(data).slice(8, -1);
+			}
+			console.log(getType(''))
+			console.log(getType([]))
+			console.log(getType({}))
+			console.log(getType(null))
+			console.log(getType(undefined))
+			console.log(getType(12))
+			console.log(getType(fun))
+			console.log(getType(true))
+		</script>
+	</body>
+</html>

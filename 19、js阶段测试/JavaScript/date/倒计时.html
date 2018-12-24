@@ -1,0 +1,64 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>js简单时分秒倒计时</title>
+		<style type="text/css">
+			span{
+				display: inline-block;
+				width: 80px;
+				height: 80px;
+				line-height: 80px;
+				text-align: center;
+				font-size: 20px;
+				font-weight: bold;
+				background: skyblue;
+				color: #fff;
+			}
+		</style>
+		<script type="text/javascript">
+			function countTime() {
+				//定义变量 d,h,m,s保存倒计时的时间  
+				// 获取双十一的时间
+				var end = new Date("2018/11/11 00:00:00");
+				var now = new Date(); // 当前时间
+				var leftTime = end - now;//时间差  
+				
+				// 计算剩余天数，小时，分钟，秒
+				var day, hours, min, second;
+				day = Math.floor(leftTime / 1000 / 60 / 60 / 24);
+				hours = Math.floor(leftTime / 1000 / 60 / 60 % 24);
+				min = Math.floor(leftTime / 1000 / 60 % 60);
+				second = Math.floor(leftTime / 1000 % 60);
+				
+				// 如果天数小时显示个位数，前面补个零
+				day = day < 10 ? "0" + day : day
+				hours = hours < 10 ? "0" + hours : hours
+				min = min < 10 ? "0" + min : min
+				second = second < 10 ? "0" + second : second
+				
+				// 添加到dom元素中
+				document.getElementById("day").innerHTML = day + "天"
+				document.getElementById("hours").innerHTML = hours + "小时"
+				document.getElementById("min").innerHTML = min + "分钟"
+				document.getElementById("second").innerHTML = second + "秒"
+				
+				// 倒计时结束后，清除定时器
+				if (day == 0 && hours == 0 && min == 0 && second == 0) {
+					clearInterval(timer)
+				}
+			}
+			var timer = setInterval("countTime()",1000);
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<span id="day"></span>
+			<span id="hours"></span>
+			<span id="min"></span>
+			<span id="second"></span>
+		</div>
+	</body>
+
+</html>

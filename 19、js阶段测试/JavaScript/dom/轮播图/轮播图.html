@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>轮播图</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+
+	<body>
+		<!--轮播图效果
+			
+		-->
+		<div class="box">
+			<ul class="inner">
+				<li class="item"><img src="img/0.jpg" /></li>
+				<li class="item"><img src="img/1.jpg" /></li>
+				<li class="item"><img src="img/2.webp" /></li>
+			</ul>
+			<div class="btn leftBtn">&lt;</div>
+			<div class="btn rightBtn">&gt;</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function() {
+
+			var t; //定时器
+
+			var falg = true;
+			var inner = document.querySelector(".inner")
+			// 点击按钮
+			var leftBtn = document.querySelector(".leftBtn");
+			var rightBtn = document.querySelector(".rightBtn");
+			// 第一张图片
+			var li = document.querySelectorAll(".item")
+			// 每一张图片宽度
+			var li_width = li[0].offsetWidth;
+			// 克隆第0张图片
+			var lastLi = li[0].cloneNode(true);
+			// 克隆最后一张图片
+			var firstLi = li[li.length - 1].cloneNode(true);
+			// 插入
+			inner.appendChild(lastLi);
+			inner.insertBefore(firstLi, li[0]);
+			// 下标
+			var index = 1;
+			// 
+			inner.style.marginLeft = -li_width + 'px';
+			// 点击，右边下一张
+			rightBtn.addEventListener('click', toRight)
+
+			function toRight() {
+				if(flag == true) {
+					flag = false;
+					// 下标加一
+					index++
+					inner.style.transition = "all .8s ease-out";
+					inner.style.marginLeft = -(index * li_width) + 'px'
+				}
+			}
+			// 点击，左边下一张
+			leftBtn.addEventListener('click', toLeft)
+
+			function toLeft() {
+				if(flag == true) {
+					flag = false;
+					// 下标减一
+					index--
+					console.log(index)
+					inner.style.transition = "all .8s ease-out";
+					inner.style.marginLeft = -(index * li_width) + 'px'
+				}
+			}
+			// 解决边界问题，保证刚好过渡完成
+			inner.addEventListener("transitionend", function() {
+				// 右边边界条件
+				if(index >= li.length + 1) {
+					inner.style.marginLeft = -li_width + 'px';
+					inner.style.transition = "none";
+					index = 1
+				}
+				// 左边边界条件
+				if(index <= -li.length) {
+					index = 0
+					console.log(index)
+					inner.style.marginLeft = li_width + 'px';
+					inner.style.transition = "none";
+					
+				}
+				flag = true;
+			});
+			// 自动轮播
+			function autoPlay() {
+				t = setInterval(toRight, 3000)
+			}
+			inner.onmouseover = function() {
+				clearInterval(t)
+			}
+			inner.onmouseleave = function() {
+				autoPlay();
+			}
+		}
+	</script>
+
+</html>

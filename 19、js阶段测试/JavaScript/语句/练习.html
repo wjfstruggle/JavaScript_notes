@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			for (var i = 0; i <= 10; i++){
+				if (i%2 == 0) {
+					continue;
+				}
+				console.log(i)
+				document.write("<h1>"+ i+"<h1/>")
+			}
+			function fun() {}
+			  		console.log(typeof "string"); // string
+			  		console.log(typeof 12); // number
+					console.log(typeof true);//	boolean
+					console.log(typeof null);// object
+					console.log(typeof undefined);//undefined
+					console.log(typeof {});// object
+					console.log(typeof []);// object
+					console.log(typeof fun);// function
+					console.log ([] instanceof(Array));//true
+					console.log ({} instanceof(Object));//true
+					console.log (null instanceof(Object));//false
+					console.log (null instanceof(Object));//false
+					console.log ('' instanceof(String));//false
+					console.log (23 instanceof(Number));//false
+					console.log (true instanceof(Boolean));//false
+					console.log (fun instanceof(Function));//true
+					console.log (Object.prototype.toString.call([]));//[object Array]
+					console.log (Object.prototype.toString.call(12));//[object Number]
+					console.log (Object.prototype.toString.call(""));//[object String]
+					console.log (Object.prototype.toString.call(null));//[object Null]
+					console.log (Object.prototype.toString.call(true));//[object Boolean]
+					console.log (Object.prototype.toString.call(fun));//[object Function]
+					console.log (Object.prototype.toString.call({}));//[object Object]
+					console.log (Object.prototype.toString.call(undefined));//[object Undefined]
+					//89小时，编程计算共多少天零多少小时？
+					function data(data) {
+						var data = parseInt(data/24) + "天" + data%24 + "小时" + (data%24)*60 + '分钟'
+						console.log(data)
+					}
+					data(89)
+					//入职薪水10K，每年涨幅5%，50年后工资多少？
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--
+			
+		-->
+		<script type="text/javascript">
+			//data就是一个变量，装着数据的容器
+			var data = 123;
+			/*
+			 命名： 
+			 1、变量名只能由大小写英文字母、数字、下划线、$组成，但不能使用数字开头
+			 2、不能使用关键字： 比如new var delete document window
+			 3、小驼峰法：dataNumber  大驼峰法：DataString  、下划线data_array
+			 4、尽可能语义化，添加注释
+			 * */
+			//字符串类型
+			var str = "字符串"
+			var str1 = `字符串`
+			// 数值类型
+			{
+				var num  = 12;
+			console.log(num) // Uncaught ReferenceError: num is not defined
+			}
+//			null 和undefined的区别： 
+
+//          undefined： 变量未定义，变量的默认值为undefined，有值但表示为空
+
+//			null： 需要我们主动设置进去 空值，连值都没有。通常释放不需要的 数据
+			
+			// 布尔类型
+			var bool = true; // true为真，false为假
+			
+			// string 、 number、Boolean / null / undefined 都是简单类型
+			// Object引用类型（复杂类型）
+			var obj = new Object();
+			//变量保存的是地址的位置
+			// 为了节省内存空间，引用类型堆放在堆内存，放的是地址，如果我们要把对象的值完全拷贝出来，要使用深拷贝
+			// 总结： 引用类型放的是地址，存放在堆内存里面，拷贝的方式是地址的拷贝
+//					简单类型放的是值，存放在栈内存里面，拷贝的方式是值拷贝
+			var num1 = 123;
+			var num2 = num1;
+			num2 = 456;
+			console.log(num1, num2)
+			var person = {
+				name: 'jack',
+				age: 18,
+				rank: undefined,
+				body: {
+					tail: 18,
+					xxx: 180
+				}
+			}
+			var person1 = person;
+			person1.name = "jenny"
+			console.log(person, person1);
+			// 数组
+			var arr = [1,2,3,4,5,6]
+			// function函数
+			function show() {
+				alert("123");
+			}
+			//函数的调用
+			show();
+//			简单类型和引用类型的区别
+		</script>
+	</body>
+
+</html>
