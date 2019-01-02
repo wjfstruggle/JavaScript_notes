@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var fullName = 'hello_a'
+            var obj = {
+                fullName: 'hello_b',
+                obj1: {
+                    fullName: 'hello_c',
+                    foo: function() {
+                        return this.fullName;
+                    }
+                }
+            }
+            console.log(obj.obj1.foo()); // hello_c
+            var test = obj.obj1.foo;
+            console.log(test()); // hello_a
+        </script>
+    </body>
+</html>
