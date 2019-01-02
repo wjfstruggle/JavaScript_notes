@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            // 数组的本质，数组属于一种特殊的对象
+            typeof [1,2,3] // "object"
+
+            // 数组的空位
+            var a = [1, , 2] // [1, empty, 2]
+            a.length; // 3,数组的空位不影响length属性
+
+            // 类似数组的对象
+            var obj = {
+              0: 'a',
+              1: 'b',
+              2: 'c',
+              length: 3
+            };
+            // 对象obj就是一个类似数组的对象，但是类似数组的对象并不是数组，不具有数组的方法
+            // 典型的“类似数组的对象”是函数的arguments对象，以及大多数 DOM 元素集，还有字符串。
+            // arguments
+            // 数组的slice方法可以将类似数组的对象变成真正的数组
+            var arr = Array.prototype.slice.call(arr1)
+
+
+        </script>
+    </body>
+</html>

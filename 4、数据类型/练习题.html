@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<!--
+			如何让alert弹出框的信息换行 // alert("hello \n"+  "world")
+			- var str=true+11+null+9+indefined+”zhuanbang”+flase+null+9+[],str的值是多少？为什么？
+			- 在js中，{}、[]分别代表什么意思？
+			- NaN是什么意思？这个值有什么特点？
+			- 请问alert(Number(“08”))；输出的结果是什么？
+			- 请写出下面表达式的结果
+			  - Null instanceof Object
+			  - Null===undefined
+			  - Null==undefined
+			  - NaN==NaN
+			  - False==0
+			  - False==-1
+			  - “”==0
+			  - []==0
+			  - []==[]
+			  - !![]
+			  - False==null
+			  - False==””
+			  - False==”   ”
+			  - 0.1+0.2==0.3
+			  - “5”==5
+			- 有哪些值转换后是false
+			- 下面分别输出什么?
+			
+	        console.log("22"+11);
+	        console.log("22"-2+11);
+	        console.log("22"+11-2);
+	        console.log(+"22"+11);
+	        
+	        console.log(Number(true))
+	        console.log(Number(false))
+	        console.log(Number(""))
+	        console.log(Number([1,2,3]))
+	        console.log(parseInt([3,2,3]))
+	        console.log(parseFloat([1,2,3]))
+		-->
+		<script type="text/javascript">
+			// alert("hello \n"+  "world")
+			// var str=true+11+null+9+indefined+"zhuanbang"+flase+null+9+[]
+			// console.log(str) // indefined is not defined
+			console.log(Number("08")) // 8
+			console.log(null instanceof Object) // false
+			console.log(null===undefined) // false
+			console.log(null==undefined) //true
+			console.log(NaN==NaN) // false
+			console.log(false == 0) // true
+			console.log(false === 0) // false
+			console.log(false == -1) // false
+			console.log("" == 0) // true
+			console.log(Number('')) // 0
+			console.log(Number([])) // 0
+			console.log([] == 0) // true
+			console.log("22"+11); // 2211
+	        console.log("22"-2);// 20
+	        console.log("22"+11-2);//2209
+	        console.log(+"22"+11);//33
+	        
+	        console.log(Number(true))// 1
+	        console.log(Number(false)) // 0
+	        console.log(Number("")) // 0
+	        console.log(Number([1,2,3])) // NaN
+	        console.log(parseInt([3,2,3])) // 3
+	        console.log(parseFloat([1,2,3])) // 1
+	        console.log(parseFloat(0xf)) // 15
+		</script>
+	</body>
+</html>

@@ -5,6 +5,8 @@
 - 一、[Undefined and Null](#Undefined 和 Null)
 - 二、[Boolean](#boolean)
 - 三、[Number](#number)
+- 四、[String](#String)
+- 五、[object](#object)
 
 > ECMAScript5中有5种简单的数据类型（也称为基本数据类型）
 - 包括Undefined，null，Boolean，number，string。还有一种复杂的数据类型Object
@@ -31,7 +33,7 @@
 	console.log(typeof s) // boolean
 	console.log(typeof obj1) // object
 	console.log(typeof show) // function
-	
+
 	typeof检测任何数据，返回的都是一个字符串，两次和两次以上的连续typeof结果肯定都是string；
 
     //两次检测 结果是string
@@ -57,9 +59,9 @@ alert(message == undefined)// true
 
 
     console.log(xxx);// xxx is not defined
-    
+
 和下面
-    
+
     var xxx;
     console.log(xxx)
 
@@ -171,7 +173,9 @@ if (car ! null) {
 
 **[↑ 返回目录](#zero)**
 
+
 <a name="number"><a/>
+
 ### number 型
 
 包含：正数、负数、零、小数、以及特殊的NaN；
@@ -225,7 +229,7 @@ if (car ! null) {
 - NaN
   - NaN，即为非数值是一个特殊的数值。NaN本身有两个特点，一是NaN的操作（NaN/任何数值）都会返回NaN。
   其次，NaN和任何值都不相等，包括NaN本身
-  
+
 > console.log(NaN == NaN) //false
 
 - 针对这两个特点，ECMAScript定义了一个函数isNaN();它接收一个函数，参数可以是任意类型，而这个函数会帮助我们确定这个参数是否“不是数值”
@@ -233,6 +237,7 @@ isNaN()接收参数后，会尝试将这个值转化为数值，
 **任何不能被转化为数值的值都返回true**
 
 //任何不能被转化为数值的值都返回true
+
 ```
 	console.log(isNaN(10)) //false
 	console.log(isNaN(NaN))// true
@@ -257,7 +262,7 @@ isNaN()接收参数后，会尝试将这个值转化为数值，
   		- 如果字符串为空""，转换为0
   		- 如果出了包含上述都没的情况，返回NaN。
   		- 如果是对象，调用对象的valueOf()方法，如果转化结果是NaN,调用toString()方法一次执行上述转换规则
-  		
+
 ```
 <script type="text/javascript">
 	console.log(Number("hello world")) //NaN
@@ -299,15 +304,153 @@ isNaN()接收参数后，会尝试将这个值转化为数值，
 
 	        //num1是多少分
 	        var num1="564878.12415ssss";
-	
+
 	        var min1=Number(num1)/60,
 	            min2=parseInt(num1)/60,
 	            min3=parseFloat(num1)/60;
 	        console.log(min1,min2,min3);
-	
+
 	        var targetMin=parseInt(min2);
 	        console.log(targetMin);//9414秒
 
 			console.log(parseFloat(12, 10)) // 12
 			console.log(parseFloat("ab")) // NaN
 **[↑ 返回目录](#zero)**
+
+<a name="String"></a>
+
+### string型
+
+##### 字符串的特性；
+
+- 由0个或多个16位unicode字符组成；
+- 引号包裹，单引号和双引号都可以；但是单引号和双引号不能交叉使用；（放在引号内的任何东西都是属于字符串，即使里面没有东西或者空格，都属于合法的字符串 ）
+
+	    var str1="2";
+	    var str2='2';
+	    var str3="";
+	    var str4=" ";
+	    var str5="function(){}";
+	    //上面都是合法的string类型
+	    console.log(typeof str1);
+	    console.log(typeof str2);
+	    console.log(typeof str3);
+	    console.log(typeof str4);
+	    console.log(typeof str5);
+
+- 使用.length属性可以访问字符串的长度;
+
+length计算包括空格
+
+	    //字符串长度
+	    var strTest1="wujianfeng";//共10个
+	    var strTest2="JavaScript学习笔记";//共14
+	    console.log(strTest1.length);//10
+	    console.log(strTest2.length);//14
+	    //这只是个简单的判断，如果想用JavaScript判断或者获取所占的字节，就不能这么判断了，因为中文和英文字符所占的字节长度不同，所以要想获得中文字符的真正长度，就需要对输入的字符进行判断或过滤(可以unicode区间进行判断)，如果符合中文字符，则使用不同的标准。
+
+- 无法精确返回双字节字符长度(上面已经做说明)
+- 转义序列表示一个字符
+- 字符串一旦被创建，其值是不能改变的，若要改变必须销毁原有字符串，然后用另一个包含新值的字符串填充改变量；
+	- 原理后面会有总结
+
+转义序列；
+- \n 换行，常用的,这个需要记住；
+- \\ 斜杠\是常用转义使用的
+	- \’单引号 常用
+	- \”双引号 常用
+
+下面的仅作了解就可以了
+- \t 制表符
+- \b 空格
+- \r 回车符
+- \f 分页符
+- \xnn 十六进制，n代表0-F
+- \unnnn 以十六进制代码表示一个unicode字符
+
+##### 类型转换
+
+- toString()
+	- 把别的类型数据，转为字符串
+
+	      适用类型
+	      Number/Boolean/String/Object
+	      参数：number类型的数值基数；一般不需要写，仅作了解，如果需要按照2/8/16进制来转换，需要写；
+
+	    //toString()和String()
+	    var testNum=1;
+	    console.log(typeof testNum);//number
+	    var testTarget2=testNum.toString();//推荐用法
+	    console.log(typeof testTarget1);//string
+	    console.log(typeof testTarget2);//string
+	    console.log(typeof testTarget3);//string
+
+- String()
+
+	      Null
+	      Undefined
+	      null和undefined没有toString方法，所以转换的时候用String()函数；
+
+	      null.String() // "null"
+	      undefined.String() // "undefined"
+
+	    var testNull=null;
+	    console.log(typeof testNull);//object
+	    //var testString2=testNull.toString();//Uncaught TypeError:Cannot read property 'toString' of null
+	    var testString3=String(testNull);
+	    console.log(typeof testString3);//string
+
+- Eval()
+  - 计算字符串表达式的值并以数值形式返回；
+
+	    //eval
+	    var evalVal="1+2+5+8+10";
+	    console.log(typeof evalVal);//string
+	    var evalComputed=eval(evalVal);
+	    console.log(evalComputed,typeof evalComputed);//26 "number"
+
+##### 如果把某个数据转化为字符串，可以有一个快捷的方式，就是把它与一个字符串""相加就可以了；
+
+
+	    //+""用来转换字符串
+	    var numVal=2;
+	    var boolVal=false;
+	    var nullVal=null;
+	    var undefinedVal=undefined;
+
+	    var numValPlus=numVal+"";
+	    var boolValPlus=boolVal+"";
+	    var nullPlus=nullVal+"";
+	    var undefinedPlus=undefinedVal+"";z;
+	    console.log(numValPlus,typeof numValPlus);
+	    console.log(boolValPlus,typeof boolValPlus);
+	    console.log(nullPlus,typeof nullPlus);
+	    console.log(undefinedPlus,typeof undefinedPlus);
+
+某个数据并不仅限于Number类型；数组也可以的；
+
+		console.log([1,2,3,4]+"")
+
+
+再看一组的加法(将字符串转为数字,注意浮点数的运算精度)；
+
+		console.log("1.1" + 1.1);
+		console.log(+"1.1" + 1.1);
+		console.log((+"1.1") + (+1.1));//2.2 注：加入括号为清楚起见，不是必需的。
+
+
+备注：先简单的总结，后面有专门深入总结；
+
+**[↑ 返回目录](#zero)**
+
+### object型
+- 对象（object）是 JavaScript 语言的核心概念，也是最重要的数据类型。
+
+- 什么是对象？简单说，对象就是一组“键值对”（key-value）的集合，是一种无序的复合数据集合。
+
+```js
+var obj = {
+	foo: "hello", // foo 键名， hello // 键值
+	bar: "world"
+}
+```
