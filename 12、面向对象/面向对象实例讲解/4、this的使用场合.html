@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 全局环境
+    console.log(this === window);
+
+    function f() {
+      console.log(this === window);
+      
+    }
+    f() // true
+
+    // 构造函数
+    var Obj = function(p) {
+      this.p = p;
+    }
+    var obj = new Obj('hello world')
+    console.log(obj.p) // hello world
+
+    // 对象的方法
+
+    var obj1 = {
+      name: 'jack',
+      describe: function () {
+        console.log(this) // obj1
+        // return '名字' + this.name
+      }
+    }
+    console.log(obj1.describe()) // 名字Jack
+    // 下面几种方法，会改变this的指向
+    console.log( (obj1.describe = obj1.describe)() ); // window
+    console.log( (false || obj1.describe)());// window
+    console.log( (1 ,obj1.describe)());// window, 逗号运算符
+    
+  </script>
+</body>
+</html>

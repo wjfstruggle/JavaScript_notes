@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var obj = {}
+			var p = {}
+			//将p对象设为obj对象的原型
+			obj.__proto__ = p;
+			Object.getPrototypeOf(obj) == p; // true
+			
+			var A = {
+				name: '张三'
+			}
+			var B = {
+				name: '李四'
+			}
+			var C = {
+				print: function() {
+					console.log(this.name)
+				}
+			}
+			A.__proto__ = C;
+			B.__proto__ = C;
+			A.print()// 张三
+			B.print()// 李四
+			A.print === B.print// true
+			A.print === C.print// true
+			B.print === C.print// true
+		</script>
+	</body>
+</html>

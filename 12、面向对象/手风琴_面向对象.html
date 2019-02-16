@@ -98,12 +98,11 @@
 						var li_len = ul.querySelectorAll("li").length;
 						var span = this.children[0];
 						ul.style.height = li_len * 45 + "px";
-						span.innerHTML = "-";
 						this.flag = true;  // 表示展开的属性
 						var index = box.index;
+						console.log(index)
 						if (index !== undefined) {
 							box.children[index].querySelector('ul').style.height= "0px";
-							box.children[index].querySelector('.title').children[0].innerHTML = "+";
 						}
 						box.index = i; // 设置父节点一个属性
 					}

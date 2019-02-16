@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title>Document</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			.title {
+				height: 50px;
+				line-height: 50px;
+			}
+			
+			.menu_item {
+				overflow: hidden;
+				width: 200px;
+				border: 1px solid gray;
+				padding-left: 20px;
+			}
+			
+			.menu_item ul {
+				transition: all 1s;
+			}
+			
+			.menu_item li {
+				height: 50px;
+				line-height: 50px;
+			}
+			
+			.menu_item ul.hidden {
+				height: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="menu">
+
+			<div class="menu_item">
+				<h3 class="title">title</h3>
+				<ul class="hidden">
+					<li>规则</li>
+					<li>招商</li>
+					<li>链接</li>
+					<li>规则</li>
+					<li>招商</li>
+					<li>链接</li>
+				</ul>
+			</div>
+
+			<div class="menu_item">
+				<h3 class="title">title</h3>
+				<ul class="hidden">
+					<li>规则</li>
+					<li>招商</li>
+					<li>链接</li>
+				</ul>
+			</div>
+
+			<div class="menu_item">
+				<h3 class="title">title</h3>
+				<ul class="hidden">
+					<li>规则</li>
+					<li>招商</li>
+					<li>链接</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<script>
+			// var title = document.querySelectorAll(".title");
+			// for(var i = 0;i<title.length;i++){
+			//     title[i].addEventListener("click",function(){
+			//         var ul = this.nextElementSibling;
+			//         if(ul.className.indexOf("hidden") >= 0 ){
+			//             var li_len = ul.querySelectorAll("li").length;
+			//             ul.style.height = li_len * 50 + "px";
+			//             ul.classList.remove("hidden");
+			//         }else{
+			//             ul.style.height = "0px";
+			//             ul.classList.add("hidden");
+			//         }
+			//     })
+			// }
+
+			var title = document.querySelectorAll(".title");
+
+			var menu = document.querySelector(".menu");
+
+			for(let i = 0; i < title.length; i++) {
+				title[i].addEventListener("click", function() {
+
+					var ul = this.nextElementSibling;
+
+					if(this.flag) { // 已展开时，去收起
+						ul.style.height = "0px";
+						this.flag = false;
+
+					} else {
+						var li_len = ul.querySelectorAll("li").length;
+						ul.style.height = li_len * 50 + "px";
+						this.flag = true; // 表示展开的属性
+
+						var index = menu.index;
+						console.log(index)
+						if(index !== undefined) {
+							menu.children[index].querySelector("ul").style.height = "0px";
+						}
+						menu.index = i; // 设置父节点一个属性
+					}
+
+				})
+			}
+		</script>
+	</body>
+
+</html>

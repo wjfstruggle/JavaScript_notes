@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>对象的继承</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			function Cat(name, color) {
+				this.name = name;
+				this.color = color;
+			}
+
+			var cat1 = new Cat('大毛', '白色');
+
+			cat1.name // '大毛'
+			cat1.color // '白色'
+
+			function Cat(name, color) {
+				this.name = name;
+				this.color = color;
+				this.meow = function() {
+					console.log('喵喵');
+				};
+			}
+
+			var cat1 = new Cat('大毛', '白色');
+			var cat2 = new Cat('二毛', '黑色');
+
+			cat1.meow === cat2.meow
+			
+			function Animal(name) {
+				this.name = name;
+			}
+			Animal.prototype.color = "black"
+			var cat1 = new Animal("猫")
+			var cat1 = new Animal("狗")
+			cat1.color; // black
+			cat2.color; // black
+			Animal.prototype.color = "red"
+			cat1.color // red
+			cat2.color // red
+			
+			Object.getPrototypeOf(Object.prototype) // null
+			
+			// prototype对象有一个constructor属性，默认指向prototype对象所在的构造函数。
+			function P() {}
+			P.prototype.constructor === P // true
+		</script>
+	</body>
+
+</html>
