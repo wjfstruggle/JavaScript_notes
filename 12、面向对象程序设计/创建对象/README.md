@@ -72,4 +72,20 @@ person3.sayName == person4.sayName // false
 ```
 
 ### 原型模式
+- 我 们 创 建 的 每 个 函 数 都 有 一 个 prototype （原 型） 属 性， 这 个 属 性 是 一 个 指 针， 指 向 一 个 对 象， 而 这 个 对 象 的 用 途 是 包 含 可 以 由 特 定 类 型 的 所 有 实 例 共 享 的 属 性 和 方 法。 如 果 按 照 字 面 意 思 来 理 解， 那 么 prototype 就 是 通 过 调 用 构 造 函 数 而 创 建 的 那 个 对 象 实 例 的 原 型 对 象。 使 用 原 型 对 象 的 好 处 是 可 以 让 所 有 对 象 实 例 共 享 它 所 包 含 的 属 性 和 方 法。 换 句 话 说， 不 必 在 构 造 函 数 中 定 义 对 象 实 例 的 信 息， 而 是 可 以 将 这 些 信 息 直 接 添 加 到 原 型 对 象 中， 如 下 面 的 例 子 所 示。
+```js
+// 原型模式
+  function Person1() {}
+  Person1.prototype.name = 'backPok';
+  Person1.prototype.age = '23'
+  Person1.prototype.job = '飞行员';
+  Person1.prototype.sayName = function() {
+    console.log(this.name)
+  }
+  var person6 = new Person1();
+  var person7 = new Person1();
+  person6.name == person7.name // true
+```
+![JavaScript原型.png](http://edu.bluej.cn/public/uploads/JavaScript原型.png)
+
 

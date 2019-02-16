@@ -50,6 +50,16 @@
     obj4.sayName()// hello
 
     // 原型模式
+    function Person1() {}
+    Person1.prototype.name = 'backPok';
+    Person1.prototype.age = '23'
+    Person1.prototype.job = '飞行员';
+    Person1.prototype.sayName = function() {
+      console.log(this.name)
+    }
+    var person6 = new Person1();
+    var person7 = new Person1();
+    person6.name == person7.name // true
   </script>
 </body>
 </html>
