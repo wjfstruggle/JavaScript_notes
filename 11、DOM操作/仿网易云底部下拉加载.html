@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>歌单下拉加载</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				text-decoration: none;
+			}
+			
+			#wrapper {
+				position: relative;
+				width: 920px;
+				margin: 0 auto;
+				text-align: center;
+			}
+			
+			.div {
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.div span {
+				flex: 1;
+				color: #31c27c;
+				font-size: 20px;
+			}
+			
+			#ul li {
+				display: flex;
+				font-size: 14px;
+				line-height: 20px;
+				justify-content: space-between;
+			}
+			
+			#ul li:nth-of-type(2n) {
+				background: #fafafa;
+			}
+			
+			#ul li:hover {
+				/*background: #31c27c;*/
+			}
+			
+			#ul li span {
+				flex: 1;
+				display: inline-block;
+				padding: 10px 0;
+			}
+			#ul li .time {
+				color: #949494;
+				font-size: 12px;
+			}
+			input[type="text"] {
+				width: 200px;
+				outline: none;
+				border: 1px solid #ccc;
+				padding-left: 5px;
+				height: 32px;
+				line-height: 32px;
+				margin: 30px 0;
+				border-radius:5px;
+				user-select: none;
+			}
+			
+			button {
+				padding: 10px 15px;
+				background: #31c27c;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				margin-left: 10px;
+			}
+			
+			.img {
+				width: 920px;
+				bottom: 0;
+				margin: 0 auto;
+				height: 30px;
+				display: none;
+			}
+			
+			.img img,
+			.img span {
+				vertical-align: middle;
+				display: inline-block;
+			}
+			
+			.img span {
+				margin-left: 10px;
+				color: #31c27c;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<input type="text" id="search" name="" value="" placeholder="请输入搜索歌曲"><button>搜索</button>
+			<div class="div">
+				<span>歌曲</span>
+				<span>歌手</span>
+				<span>专辑</span>
+				<span>时长</span>
+			</div>
+			<ul id="ul">
+			</ul>
+			<div id="show" class="img">
+				<img src="img/loading.gif" /><span>正在加载……</span>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var offset = 0;
+			var offs = offset * 30;
+			// 搜索关键字
+			var keywords;
+			var url_search = 'https://netease2.bluej.cn/search?keywords=';
+			var url_songs = url_search + '&offset=' + offset * 30;
+			// 获取ul
+			var ul = document.getElementById("ul");
+			// 搜索value的值
+			var search = document.getElementById("search").value;
+			// loading加载图片
+			var show_loading = document.getElementById("show");
+			// 搜索按钮
+			var btn = document.getElementsByTagName("button")[0];
+			// 数据渲染 函数
+			function render(result) {
+				console.log(result);
+				for(var i = 0; i < result.songs.length; i++) {
+					var time = result.songs[i].duration;
+					// 时间的转换
+					var f = Math.floor(time / 1000 / 60);
+					var m = Math.floor(time / 1000 % 60);
+					m = m < 10 ? "0"+m : m;
+					f = f < 10 ? "0"+f : f;
+					ul.innerHTML += `<li>
+						<span>${result.songs[i].name}</span>
+						<span>${result.songs[i].artists[0].name}</span>
+						<span>${result.songs[i].album.name}</span>
+						<span class="time">${f} : ${m}</span>
+					</li>`
+					var li = document.getElementsByTagName("li");
+					console.log(li.length, result.songCount)
+					// 歌曲暂无更多时，显示更多内容
+					if ( li.length + 30 >= result.songCount) {
+						show_loading.querySelector("span").innerText = "无更多内容";
+						return false;
+					}
+				}
+			}
+			// 时间戳转换
+			function time(time) {
+				var time = 227200;
+				var f = Math.floor(time / 1000 / 60);
+				var m = Math.floor(time / 1000 % 60);
+			}
+		
+			document.addEventListener('scroll', fangdou(function() {
+				// 定时器
+				var timer;
+				// 滚动距离
+				var scrollTop = document.documentElement.scrollTop;
+				// 获取视口的高度，是不变的。
+				var ch = document.documentElement.clientHeight; //谷歌 647px
+				// 获取页面高度
+				var scrollHeight = document.documentElement.scrollHeight;
+				console.log(ch,scrollTop,scrollHeight)
+				if(scrollTop + ch+1 >= scrollHeight) {
+					show_loading.style.display = "block"
+					offset++;
+					offs = offset * 30;
+					url_songs = url_search + search + '&offset=' + offs;
+					ajax_get(url_songs);
+				}
+			}, 1000))
+			// 搜索歌曲
+			function search_song() {
+				search = document.getElementById("search").value;
+				if (search == '') {
+					alert("输入歌曲有误")
+					return;
+				}
+				url_songs = url_search + search + '&offset=' + offs;
+				ajax_get(url_songs);
+			}
+			// 点击搜索
+			btn.addEventListener("click", function() {
+				search_song();
+			})
+			// 数据获取
+			function ajax_get(url) {
+				var xhr;
+				if(window.XMLHttpRequest) {
+					xhr = new XMLHttpRequest();
+				} else {
+					// ie
+					xhr = new ActiveXObject('Microsoft.XMLHTTP');
+				}
+				xhr.open("get", url);
+				xhr.addEventListener('readystatechange', function(e) {
+					if(e.target.readyState == 4 && e.target.status == 200) {
+						var res = JSON.parse(e.target.responseText);
+						// 获取歌单数据
+						if (res.result) {
+							render(res.result);
+						}
+					}
+				})
+				xhr.send();
+			}
+			// 防抖，降低性能消耗
+			function fangdou(callback, delay) {
+				// 定时器
+				var timer;
+				return function() {
+					if(timer) { // 引用外部函数的timer
+						clearTimeout(timer)
+					}
+					timer = setTimeout(() => {
+						callback.apply(this, arguments)
+					}, delay)
+				}
+			}
+		</script>
+	</body>
+
+</html>

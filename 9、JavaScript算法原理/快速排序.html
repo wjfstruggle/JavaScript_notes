@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 快速排序
+    // 原理： 从一组数据里面，寻找一个成员为基准，基准和每个数据比较，小的放左边，大的放右边，将左右两边重复步骤一，最后将拼接
+    const arr1 = [12, 5, 23, 45, 10, 14, 2, 6, 3, 16, 27]
+    function fastSort(arr1) {
+      if (arr1.length <= 1) {
+        return arr1;
+      }
+      var baseIndex = Math.floor(arr1.length/2);
+      var mask = arr1.splice(baseIndex, 1)[0]
+      var leftArr = []
+      var rightArr = []
+      for (var i = 0; i < arr1.length; i++) {
+        if (mask > arr1[i]) {
+          leftArr.push(arr1[i])
+        } else {
+          rightArr.push(arr1[i])
+        }
+      }
+      return fastSort(leftArr).concat(mask, fastSort(rightArr));
+    }
+    console.log(fastSort(arr1))
+  </script>
+</body>
+
+</html>

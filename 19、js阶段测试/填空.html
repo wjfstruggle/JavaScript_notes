@@ -174,7 +174,25 @@ eval的理解。
     }
     console.log(clone(data));
   // 实现对数组的深度克隆2
-
+    function deepClone(obj) {
+        var newObj;
+        if (obj === 'object' || obj != null) {
+            if (obj instanceof Array) {
+                newObj = [];
+                obj.forEach( (item, index) => {
+                    newObj[index] = deepClone(obj[index])
+                })
+            } else {
+                newObj = {}
+                for( k in obj) {
+                    newObj[k] = deepClone(obj[k])
+                }
+            }
+        } else {
+            newObj = obj
+        }
+        return newObj
+    }
 
 
 

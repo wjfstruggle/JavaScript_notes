@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>输入框内容显示隐藏</title>
+	</head>
+
+	<body>
+		<input type="text" id="text" value="Search website" />
+		<script type="text/javascript">
+			window.onload = function() {
+				// 事件，输入框焦点事件
+				// onfoucs 和 onblur
+				var text1 = document.getElementById("text");
+				console.log(text1.value) // Search website
+				function textChange(obj, str) {
+					obj.onfocus = function() {
+						// 获得焦点，如果input有value值，清空
+						if(obj.value) {
+							obj.value = '';
+						}
+					};
+					// 失去焦点，如果input没有value值，添加value值
+					obj.onblur = function() {
+						if(obj.value == '') {
+							obj.value = str;
+						}
+					}
+				}
+				textChange(text1, ' Search website')
+//				text1.onfocus = function() {
+//					if(text1.value) {
+//						text1.value = ''
+//					}
+//				}
+//				text1.onblur = function() {
+//					if(text1.value == '') {
+//						text1.value = 'Search website'
+//					}
+//				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>滚动条</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			div {
+				height: 300px;
+			}
+			
+			#rocket {
+				position: fixed;
+				right: 40px;
+				bottom: 40px;
+				width: 149px;
+				height: 180px;
+				background-image: url(img/rocket_button_up.png);
+				background-repeat: no-repeat;
+				display: none;
+				background-position-x: 0;
+			}
+			
+			#rocket:hover {
+				background-position-x: -149px;
+			}
+			
+			.animate {
+				animation: run 1s step-end infinite;
+			}
+			
+			@keyframes run {
+				0%,100% {
+					background-position-x: -298px;
+				}
+				25% {
+					background-position-x: -447px;
+				}
+				50% {
+					background-position-x: -596px;
+				}
+				75% {
+					background-position-x: -745px;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--<div id="parent">-->
+		<div style="background: skyblue;"></div>
+		<div style="background: gray;"></div>
+		<div style="background: green;"></div>
+		<div style="background: orange;"></div>
+		<div style="background: sienna;"></div>
+		<div style="background: yellow;"></div>
+		<div style="background: red;"></div>
+		<span id="rocket" class="animate">
+				<img src="img/rocket_button_up.png"/>
+			</span>
+		<!--</div>-->
+		<script type="text/javascript">
+			// chrome 52
+			//			document.body.scrollTop
+			//			// chrome  70
+			//			document.documentElement.scrollTop
+			//			// 兼容写法
+			var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+			// scrollLeft 横向滚动的位置
+			// scrollHeight 页面高度
+			// scrollWidth 	页面宽度
+
+			var rocket = document.querySelector('#rocket');
+			var t = null; // 滚动定时器
+			// 获取页面高度
+			var docSH = document.body.scrollHeight || document.documentElement.scrollHeight
+			// 火箭离页面的顶部高度
+//			var rocket_height = rocket.offsetTop;
+			// 
+			var flag = false;
+//			console.log(rocket_height)
+			rocket.addEventListener('click', function() {
+				var docSH=document.body.scrollHeight || document.documentElement.scrollHeight;
+				rocket.classList.add("animate")
+				t = setInterval(function() {
+					falg = true;
+				var body; // 页面对象
+				if(document.body.scrollTop) {
+					body = document.body
+				}
+				if(document.documentElement.scrollTop) {
+					body = document.documentElement
+				}
+				// 滚动条按一定的比例递减
+				body.scrollTop -= scrollTop*0.05;
+				rocket.style.top = rocket.offsetTop - (rocket.offsetTop*0.05) + 'px'
+				}, 50)
+				
+			})
+			document.addEventListener('scroll', function() {
+				var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+				if(scrollTop <= 0) {
+					rocket.classList.remove("animate")
+					clearInterval(t)
+					rocket.style="";
+			    	flag=false ; //火箭的状态
+				}
+				if(scrollTop >= 50) {
+					rocket.style.display = "block"
+				} else if(scrollTop <= 50 || flag == false) {
+					// 隐藏
+//					rocket.style.display = "none"
+				}
+			})
+			//			var parent = document.getElementById("parent")
+			//			parent.addEventListener('scroll', function() {
+			//				console.log("容器",parent.scrollTop)
+			//			})
+		</script>
+	</body>
+
+</html>

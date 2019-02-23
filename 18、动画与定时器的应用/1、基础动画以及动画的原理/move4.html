@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            ul,li{list-style: none;}
+            #box{
+                width: 200px;height: 200px;background:red;position: absolute;left: 600px;top:0;border-radius:50%;
+            }
+            .ul{position: absolute;left: 100px;top: 300px;}
+            .ul li{float: left;margin-right: 10px;color: #FFF;cursor: pointer;}
+            #left{width: 40px;height: 40px;background:#000000;}
+            #right{width: 40px;height: 40px;background:#000000;}
+        </style>
+    </head>
+    <body>
+        <div id="box"></div>
+        <ul class="ul">
+            <li id="left">左</li>
+            <li id="right">右</li>
+        </ul>
+        <script type="text/javascript">
+
+        var left_run = document.getElementById("left");
+        var right_run = document.getElementById("right");
+        var box = document.getElementById("box");
+
+        var timer;// 定时器
+        var cw = document.body.clientWidth || document.documentElement.clientWidth; // 确定左右终点
+        var tarR = cw - box.offsetWidth // 右边终点距离
+        var tarL = 0; // 左边终点距离
+        left_run.onclick = function() {
+            Move(box, tarL)
+        }
+        right_run.onclick = function() {
+            Move(box, tarR)
+        }
+        function Move(el, target) {
+            var start = SgetStyle(box, "left"); // 获取left
+            var count = start // 位移
+            _move();
+            function _move() {
+                clearTimeout(el.timer);
+                if (start < target) {
+                    // 向右运动
+                    if (count + 10 >= target) {
+                        SgetStyle(el, 'left', target); // 当前位置大于目标距离，则停留在目标位置
+                        return;
+                    }
+                    count += 10; // 位移增加
+                    SgetStyle(el, 'left', count);
+                } else if(start > target) {
+                    // 向左运动
+                    if (count - 10 <= target) {
+                        SgetStyle(el, 'left', target); // 当前位置小于于目标距离，则停留在目标位置
+                        return;
+                    }
+                    count -= 10;// 位移递减
+                    SgetStyle(el, 'left', count);
+                } else {
+                    return;
+                }
+                el.timer = setTimeout(_move, 20);
+            }
+        }
+        // 获取和设置属性函数,两个参数时为获取，3个参数时为设置
+        function SgetStyle(curEle, attr, value) {
+            if (typeof value === "undefined") {
+                var reg = /^(?:margin|padding|float|position|display|background|backgbackgroundColor)$/;
+                var flag = "getElementsByClassName" in document;
+                var value = flag ? window.getComputedStyle(curEle, null)[attr] : curEle.currentStyle[attr];
+                return !reg.test(attr) ? parseFloat(value) : value;
+            } else {
+                switch (attr) {
+                    case 'opacity':     // 透明度
+                        curEle["style"][attr] = value;
+                        curEle["style"]['fliter'] = "alpha(opacity="+(value*100)+")";  // ie浏览器
+                        break;
+                    case 'zIndex':
+                        curEle["style"][attr] = value;    // 层级
+                        break;
+                    default:
+                        curEle["style"][attr] = !isNaN(value) ? value += "px": value;
+                }
+            }
+        }
+        </script>
+    </body>
+</html>

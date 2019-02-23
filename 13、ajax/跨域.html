@@ -5,44 +5,49 @@
 		<title></title>
 	</head>
 	<body>
-		
+
 		<!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>-->
 		<script  type="text/javascript">
-			
+
 			// 域名：  协议:// 一级域名.二级域名:端口号
 			// 只要 	   以上有任意一个不相同都可以称之为跨域
 			// 当前      http://192.168.233.1:8020
-			// 线上      
+			// 线上
 			// 浏览器的安全策略： 同源策略（协议，域名，端口都相同）
-			
+			// http去请求https，有可能报错
+			// https去请求http，提示检查数据是否安全
 			/*
 			 jsonp
 			 	将数据放在前端请求设置的回调名里面，经过函数名的包裹返回
 			 	列如： http://suggest.taobao.com/sug?code=utf-8&q=鼠标&callback=cb
 			 	返回： cb({result: [["鼠标垫", "771666"]})
 			 * */
-			
+
 			/*
 			 跨域的方式
-			 		1、jsonp （只能get请求）前端动态添加script。 后端也要响应处理
-			 		2、后端打开  Access-Control-Allow-Origin: *
-			 		3、反向代理： 让后端服务器请求别人的服务器，自己的服务器拿到数据在给回后端
-			 * 
+			 		1、jsonp （只能get请求）前端动态添加script。 后端也要响应处理。一般来说请求的回调都是设置callback参数；利用动态添加script的src属性去下载一段脚本，这个脚本就用前端传过来的callback对应的值进行封装。
+
+			 		2、后端打开 CORS允许头  Access-Control-Allow-Origin: *
+						或者
+			 		2、后端打开  Access-Control-Allow-Origin 前端自己的域名:
+
+			 		3、反向代理： 让后端服务器请求别人的服务器，自己的服务器拿到数据在给回后端。利用无需跨域的服务端A，请求到服务端A,通过服务端A和服务端B之间的链接，再返回给前端。
+			 *
 			 * */
 			var url_jsonp = "http://suggest.taobao.com/sug?code=utf-8&q=鼠标&callback=cb";
-			
+
 			var script = document.createElement("script");
 			// 加载资源
 			script.src = url_jsonp;
 			document.body.appendChild(script);
-			
+
 			// 回调函数
 			function cb(e) {
 				console.log(e)
 			}
-			// 返回的是一串代码cb( 数据 )
-			
-			
+			// 返回的是一串代码cb( 数据 )  cb({result: [["鼠标垫", "771666"]})
+
+
 			var baseUrl = "https://www.easy-mock.com/mock/5bed3df093d15a3354f97694/test";
 			var test_get = baseUrl + "/test_get"; // 基础路径 + 接口地址
 			var url = "http://api.alice.com/cors"

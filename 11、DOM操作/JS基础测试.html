@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			span {
+				display: inline-block;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				border: 1px solid #ccc;
+			}
+			
+			.board {
+				background: #000;
+			}
+			
+			#div {
+				margin: 100px;
+				text-align: center;
+				width: 150px;
+				height: 100px;
+				line-height: 100px;
+				background-color: skyblue;
+			}
+		</style>
+	</head>
+
+	<body>
+		<button id="div">点我三次触发</button>
+		<br />
+
+		<script type="text/javascript">
+			document.write('1、C' + "<br/>")
+			document.write('2、A' + "<br/>")
+			document.write('3、B' + "<br/>")
+			document.write('4、B' + "<br/>")
+			document.write('5、C' + "<br/>")
+			document.write('6、C' + "<br/>")
+			document.write('7、B' + "<br/>")
+			document.write('8、C' + "<br/>")
+			document.write('9、A' + "<br/>")
+			document.write('10、D' + "<br/>")
+			// 简答题
+			/*
+			 1、浏览器端的JavaScript包括ECMAScript(核心),dom(文档对象模型),bom(浏览器对象模型)三个部分
+			 
+			 2、JavaScript包括(string, number, null, undefined, boolean,Object)基本类型和引用类型。
+			 	其中基本类型包括(string, number, null, undefined, boolean)
+			 	引用类型是复杂类型包括(Object)
+			 
+			 3、null和undefined两者的区别
+			 	null表示一个空对象指针，需要我们设置空值。
+			 	undefined指的是未定义，变量的默认值为undefined，有值但表示为空
+			 	null == undefined  // true
+			 
+			 4、JavaScript的typeof返回(string, number,undefined, boolean,object,function)数据类型
+			 
+			 5、三种强制类型转换
+				 	1、Boolean()
+				 	2、String()
+				 	3、Number()
+			 	两种隐式转换
+			 		1、 数字 + 字符串(+号拼接)
+			 		2、数字  + 布尔值 (返回数字)
+			 		3、var i = 0; !!0 == false
+			 * 
+			 * */
+
+			// 1.用代码实现一个8*8的棋盘；
+			// 8*8棋盘，一黑一白，(奇数列 = 奇数)(偶数列=偶数)
+			function board() {
+				for(var i = 0; i < 8; i++) {
+					for(var j = 0; j < 8; j++) {
+						if((i % 2 !== 0 && j % 2 !== 0) || (i % 2 == 0 && j % 2 == 0)) {
+							document.body.innerHTML += `<span class="board"></span>`
+						} else {
+							document.body.innerHTML += `<span></span>`
+						}
+					}
+					document.write("</br>")
+				}
+			}
+			board()
+
+			// 2.用代码实现以下功能：找出数组[2,5,3,4,5,9,4,5]中的重复的数字的重复次数（两个相同数字为一次）
+			var arr = [2, 5, 3, 4, 5, 9, 4, 5]
+			var time5 = 0; // 5重复出现的次数
+			var time4 = 0; // 4重复出现的次数
+			function repeat_num(arr) {
+				for(var i = 0; i < arr.length; i++) {
+					if(arr[i] == 5) {
+						time5++;
+					} else if(arr[i] == 4) {
+						time4++
+					}
+				}
+				document.write("5重复出现的次数为", time5 - 1, "次")
+				document.write('</br>')
+				document.write("4重复出现的次数为", time4 - 1, "次")
+			}
+			repeat_num(arr);
+
+			// 冒泡排序
+			function bubbling_sort(arr) {
+				var arr = [12, 4, 5, 9, 6, 27, 23, 35, 26]
+				document.write(`<p>排序后的数组,${arr}</p>`);
+				var temp; //交换元素
+				for(var i = 0; i < arr.length; i++) {
+					for(var j = i + 1; j < arr.length; j++) {
+						// 判断前一个和后一个大小，交换位置（升序）
+						if(arr[i] > arr[j]) {
+							temp = arr[i];
+							arr[i] = arr[j];
+							arr[j] = temp;
+						}
+					}
+				}
+				document.write(`<p>排序后的数组, ${arr}</p>`);
+			}
+			bubbling_sort(arr);
+
+			// 4.用JavaScript实现鼠标三击功能
+			var btn = document.getElementById('div');
+//			var timer = null; // 定时器
+//			function clickEvent() {
+//				btn.removeEventListener('dblclick', null); // 移除双击事件
+//				var count = 0, // 记录点击次数
+//					lastTime = 0; //用于记录上次结束的时间
+//				var handler = function() {
+//					var currentTime = new Date().getTime(); //获取本次点击的时间
+//					if((currentTime - lastTime) < 300) { //如果本次点击的时间和上次结束时间相比大于300毫秒就把count置0
+//						count++
+//					} else {
+//						count = 0;
+//					}
+//					console.log(currentTime - lastTime)
+//					lastTime = new Date().getTime();
+//					if(count > 3) {
+//						alert(3, "click次数");
+//						count = 0;
+//					}
+//				}
+//				btn.addEventListener('click', handler);
+//			}
+//			clickEvent()
+
+
+			btn.addEventListener('click', function() {
+				// 保存this的指向
+				var _this = this;
+				if(this.time == undefined) {
+					// 如果btn上没有time属性，就代表这个按钮没有被点击过
+					// 按钮需要一个属相统计点击次数
+					_this.time = 0;
+				}
+				if(this.time == 0) {
+					this.t = setTimeout(function() {
+						_this.time = 0;
+					}, 600)
+				}
+				this.time++;
+				if(this.time >= 3) {
+					time = 0;
+					clearTimeout(this.t)
+					alert("三击")
+				}
+			});
+		</script>
+	</body>
+
+</html>

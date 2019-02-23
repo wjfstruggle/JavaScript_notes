@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件冒泡</title>
+		<style>
+			#top{
+				width: 500px;
+				height: 500px;
+				background: skyblue;
+			}
+			#mid{
+				width: 300px;
+				height: 300px;
+				background: green;
+			}
+			#bot{
+				width: 100px;
+				height: 100px;
+				background: yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<!--事件流
+			从外到内依次传递这个事件
+			
+			事件捕获
+			从外到内依次传递就开始触发事件  top - mid - bot
+			
+			事件冒泡
+			事件流“触发”从內到外依次传递这个事件 bot - mid - top
+		-->
+		<div id="top">
+			<div id="mid">
+				<div id="bot"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var Top = document.getElementById("top")
+			var mid = document.getElementById("mid")
+			var bot = document.getElementById("bot")
+			//addEventListener(事件名，回调函数，是否需要事件捕获)
+			Top.addEventListener("click", function(e) {
+				// e 事件对象event
+				e.stopPropagation()
+				console.log('top')
+			})
+			mid.addEventListener("click", function(e) {
+				e.stopPropagation()
+				console.log('mid')
+			})
+			bot.addEventListener("click", function(e) {
+				e.stopPropagation()
+				console.log('bot')
+			})
+		</script>
+	</body>
+</html>

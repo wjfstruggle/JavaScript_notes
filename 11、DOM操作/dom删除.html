@@ -20,6 +20,7 @@
 			<li><button onclick="del(this)">点击删除5</button></li>
 		</ul>
 		<input type="" name="username" id="username" value="username" />
+		<button id="btn">点击</button>
 		<script type="text/javascript">
 			var ul = document.getElementsByTagName("ul")[0];
 			// 删除子节点
@@ -35,6 +36,11 @@
 			}
 		var input = document.getElementsByName("username")[0]
 		console.log(input.value)
+		var btn = document.getElementById("btn")
+		var count = 0;
+		btn.addEventListener('click', function() {
+			console.log(count++)
+		})
 		</script>
 	</body>
 </html>

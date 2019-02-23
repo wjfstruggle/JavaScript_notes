@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			div {
+				position: relative;
+				/*父类容器中 perspective 子类允许透视*/
+				perspective: 1000px;
+				/*使其子类变换后得以保留 3d转换后的位置*/
+				transform-style: preserve-3d;
+			}
+			
+			img {
+				position: absolute;
+				left: 0;
+				top: 0;
+				/*背景不穿透，表示翻转后便看不到正面*/
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+				transition: all 1s ease-out;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<img src="img/mc_obj1.png" />
+			<img src="img/mc_obj0.png" />
+		</div>
+			
+		<script type="text/javascript">
+			var box_f = document.querySelectorAll("img");
+			var box_wrapper = document.querySelector("div");
+			for(let i = 0; i < box_f.length; i++) {
+				box_f[i].addEventListener("click", function() {
+					if(this.flag) {
+						box_f[i].style.transform = "rotateY(0deg)";
+						this.flag = false;
+					} else {
+						box_f[i].style.transform = "rotateY(-180deg)";
+						this.flag = true;
+						var index = box_wrapper.index;
+						console.log(index)
+						if(index != undefined) {
+							box_wrapper.children[index].style.transform = "rotateY(-180deg)";
+						}
+						box_wrapper.index = i;
+					}
+				})
+			}
+		</script>
+	</body>
+
+</html>

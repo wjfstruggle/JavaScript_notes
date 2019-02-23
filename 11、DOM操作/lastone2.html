@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>last one 游戏</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#box {
+				position: relative;
+				margin: 100px;
+				width: 375px;
+				height: 500px;
+				background-color: #000;
+			}
+			
+			#boxs {
+				position: absolute;
+				width: 375px;
+				height: 500px;
+				background-color: #000;
+				color: #fff;
+				text-align: center;
+				line-height: 500px;
+				font-size: 48px;
+				cursor: pointer;
+				z-index: 9;
+				margin-left: 100px;
+				overflow: hidden;
+				transition: all 0.8s ease-out;
+			}
+			
+			#box div {
+				position: absolute;
+				border-radius: 50%;
+				background-color: #fff;
+			}
+			
+			#game {
+				float: left;
+				width: 99999px;
+				height: 500px;
+				margin-left: 475px;
+				transition: all 0.8s ease-out;
+			}
+			
+			#game .game1,
+			#game .game2 {
+				position: relative;
+				z-index: 9;
+				float: left;
+				width: 375px;
+				height: 500px;
+				background-color: #A52A2A;
+				color: #fff;
+				text-align: center;
+				line-height: 500px;
+				font-size: 48px;
+				cursor: pointer;
+			}
+			#game .game_null {
+				background-color: goldenrod;
+				z-index: -1;
+			}
+			.opcaty {
+				animation: _opacity 2s;
+			}
+			
+			@keyframes _opacity {
+				0%,
+				100% {
+					opacity: 0;
+				}
+				25% {
+					opacity: 1;
+				}
+				50% {
+					opacity: 0;
+				}
+				75% {
+					opacity: 1;
+				}
+			}
+			@keyframes _left{
+				from{
+					
+				}
+				50%{
+					
+				}
+				to{
+					
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="boxs" onclick="next()" class="noactive">START</div>
+		<!--局数切换页面-->
+		<div id="game">
+			<div class="game1 game_null"></div>
+			<div class="game1">1</div>
+		</div>
+		<div id="box"></div>
+
+		<script type="text/javascript">
+			var div = document.getElementById("box");
+			var divs = document.getElementById("boxs");
+
+			var leftarr;
+
+			// 左边x轴距离
+			function leftnum() {
+				leftarr = [];
+				while(leftarr.length < 60) { // x轴不能超过60个
+					var bFlag = true;
+					var number = Math.floor(Math.random() * 375); //(m-n+1)+n   0~375
+					if(leftarr.length == 0) {
+						leftarr.push(number);
+					}
+					for(var i = 0; i < leftarr.length; i++) {
+						if(number == leftarr[i]) {
+							bFlag = false;
+						}
+					}
+					if(bFlag) {
+						leftarr.push(number);
+					}
+				}
+			}
+			leftnum();
+
+			var toparr;
+			// y轴距离
+			function topnum() {
+				toparr = [];
+				while(toparr.length < 60) {
+					var bFlag = true;
+					var number = Math.floor(Math.random() * 500); //(m-n+1)+n   0~500
+					if(toparr.length == 0) {
+						toparr.push(number);
+					}
+					for(var i = 0; i < toparr.length; i++) {
+						if(number == toparr[i]) {
+							bFlag = false;
+						}
+					}
+					if(bFlag) {
+						toparr.push(number);
+					}
+				}
+			}
+			topnum();
+
+			var sizearr;
+			// 随机圆大小
+			function sizenum() {
+				sizearr = [];
+				while(sizearr.length < 50) {
+					var bFlag = true;
+					var number = Math.floor(Math.random() * 51 + 20); //(m-n+1)+n   20~60
+					if(sizearr.length == 0) {
+						sizearr.push(number);
+					}
+					for(var i = 0; i < sizearr.length; i++) {
+						if(number == sizearr[i]) {
+							bFlag = false;
+						}
+					}
+					if(bFlag) {
+						sizearr.push(number);
+					}
+				}
+			}
+			sizenum();
+
+			newarr = new Array();
+
+			//随机数渲染
+			var i = 0;
+			var j = 0;
+			var z = 0;
+
+			var count = 0;
+
+			// 判断重叠
+			function innerhtml() {
+				var t = (leftarr[i] + sizearr[z]) >= 375 || (toparr[j] + sizearr[z]) >= 500;
+
+				for(var x = 0; x < newarr.length; x++) {
+					var t2 = (leftarr[i] < (newarr[x][0] + newarr[x][2]) && toparr[i] > newarr[x][0]);
+
+				}
+
+				if(t) {
+					i += 1;
+					innernum();
+				} else {
+					div.innerHTML += `
+						<div onclick='handle(this)' data='${count}' style='left: ${leftarr[i]}px;top: ${toparr[j]}px;width:${sizearr[z]}px;height: ${sizearr[z]}px;' ></div>
+					`;
+					newarr.push([leftarr[i], toparr[j], sizearr[z]]);
+					count++;
+					return count;
+				}
+			}
+			innerhtml();
+
+			function innernum() {
+
+				var t = (leftarr[i] + sizearr[z]) >= 375 || (toparr[j] + sizearr[z]) >= 500;
+				for(var x = 0; x < newarr.length; x++) {
+					var t2 = (toparr[j] < (newarr[x][1] + newarr[x][2]) && toparr[j] > newarr[x][0]);
+				}
+				if(t) {
+					j += 1;
+					innerhtml();
+				} else {
+					div.innerHTML += `
+						<div onclick='handle(this)' data='${count}' style='left: ${leftarr[i]}px;top: ${toparr[j]}px;width:${sizearr[z]}px;height: ${sizearr[z]}px;' ></div>
+					`;
+					newarr.push([
+						[leftarr[i]],
+						[toparr[j]],
+						[sizearr[z]]
+					]);
+					count++;
+					return count;
+				}
+			}
+
+			// 点击生成一个随机圆
+			function handle(e) {
+				var con = div.getElementsByTagName("div");
+				if(e.getAttribute("data") == (count - 1)) {
+					i += 1;
+					j += 1;
+					z += 1;
+					innerhtml();
+					toRight();
+				} else {
+					for(var u = 0; u < con.length; u++) {
+						if(con[u].getAttribute("data") == (count - 1)) {
+							con[u].classList.add("opcaty");
+						}
+					}
+					alert("游戏结束");
+					setTimeout(function() {
+						window.location.href = "lastone2.html";
+					}, 3000)
+				}
+
+			}
+			function next() {
+				divs.style.marginLeft = -375 + 'px';
+				divs.style.transition = "all .8s ease-out";
+			}
+			// 游戏局数切换动画
+			var game = document.querySelector("#game");
+			// 点击开始时的动画
+			
+			// 第一张图片
+			var li = document.querySelectorAll(".game1")
+			// 每一张图片宽度
+			var li_width = li[0].offsetWidth;
+			// 克隆第0张图片
+			var lastLi = li[0].cloneNode(true);
+			// 克隆最后一张图片
+			var firstLi = li[li.length - 1].cloneNode(true);
+			// 插入
+			game.appendChild(lastLi);
+			game.insertBefore(firstLi, li[0]);
+			var flag = true;
+			// 下标
+			var index = 0;
+
+			function toRight() {
+				if(flag == true) {
+					flag = false;
+					// 下标加一
+					index++
+					game.style.transition = "all .8s ease-out";
+					game.style.marginLeft = -(index * li_width) +100+ 'px';
+				}
+			}
+			// 解决边界问题，保证刚好过渡完成
+			game.addEventListener("transitionend", function() {
+				// 右边边界条件
+				if(index >= li.length+1) {
+					game.style.marginLeft = -li_width+100+ 'px';
+					game.style.transition = "none";
+					index = 1;
+				}
+				flag = true;
+			});
+		</script>
+	</body>
+
+</html>

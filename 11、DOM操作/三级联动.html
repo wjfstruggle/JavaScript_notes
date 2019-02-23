@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<!--省份 一级-->
+		<select name="" id="province">
+		</select>
+		<!--市 二级-->
+		<select name="" id="city">
+		</select>
+		<!--区 三级-->
+		<select name="" id="area">
+		</select>
+		<script type="text/javascript">
+            var province_info = [
+                {"name": "广东省","code":"GD" },
+                {"name": "湖南省","code":"HN" },
+                {"name": "湖北省","code":"HB" },
+            ];
+			var city_info = {
+				"GD": [
+					{ "name": "广州市", "code": 'GZ' },
+					{ "name": "深圳市", "code": 'SZ' },
+					{ "name": "韶关市", "code": 'SG' },
+					{ "name": "佛山市", "code": 'FS' }
+				],
+				"HN": [
+					{ "name": "长沙市", "code": 'CS' },
+					{ "name": "株洲市", "code": 'ZZ' },
+					{ "name": "衡阳市", "code": 'HY' }
+				],
+				"HB": [
+					{ "name": "宜昌市", "code": 'YC' },
+					{ "name": "武汉市", "code": 'WH' }
+				]
+			};
+			// 区
+			var area_info = {
+				"GZ": [
+					{ "name": "海珠区", "code": 001 },
+					{ "name": "番禺区", "code": 002 },
+					{ "name": "越秀区", "code": 003 }
+				],
+				"SZ": [
+					{ "name": "罗湖区", "code": 001 },
+					{ "name": "光明区", "code": 002 },
+					{ "name": "南山区", "code": 003 }
+				],
+				"SG": [
+					{ "name": "曲江区", "code": 001 },
+					{ "name": "弯头区", "code": 002 },
+					{ "name": "黄岗区", "code": 003 }
+				],
+				"FS": [
+					{ "name": "禅城区", "code": 001 },
+					{ "name": "南海区", "code": 002 },
+					{ "name": "三水区", "code": 003 }
+				],
+				"CS": [
+					{ "name": "岳麓区", "code": 001 },
+					{ "name": "开福区", "code": 002 },
+					{ "name": "雨花区", "code": 003 }
+				],
+				"ZZ": [
+					{ "name": "望城区", "code": 001 },
+					{ "name": "天心区", "code": 002 }
+				],
+				"HY": [
+					{ "name": "雁峰区 ", "code": 001 },
+					{ "name": "石鼓区", "code": 002 },
+					{ "name": "南岳", "code": 003 }
+				],
+				"YC": [
+					{ "name": "西陵区", "code": 001 },
+					{ "name": "伍家岗区", "code": 002 },
+					{ "name": "点军区", "code": 003 }
+				],
+				"WH": [
+					{ "name": "汉阳区", "code": 001 },
+					{ "name": "江夏区", "code": 002 },
+					{ "name": "东西湖区", "code": 003 }
+				]
+			}
+			//
+			var province = document.getElementById("province");
+			var city = document.getElementById("city");
+			var area = document.getElementById("area");
+			
+			// 渲染省份
+			function render_province() {
+				var option1 = "";
+				for (var i = 0; i < province_info.length; i++ ) {
+					option1 += "<option value='"+province_info[i].code+"'>"+province_info[i].name+"</option>"
+				}
+				province.innerHTML = option1;		
+			}
+			// 渲染城市
+			function render_city() {
+				var option1 = "";
+				// 获取value值
+				var prov_value = province.value;//省份的value,通过value值来串联关系
+				var city_arr = city_info[prov_value]; // 该省份所有的城市数组
+				for (var i = 0; i < city_arr.length; i++ ) {
+					option1 += "<option value='"+city_arr[i].code+"'>"+city_arr[i].name+"</option>"
+					}
+				city.innerHTML = option1;		
+			}
+			// 市区
+			function render_area() {
+				var option1 = '';
+				var city_value = city.value; // 市的value值；
+				console.log(city.value)
+				var area_arr = area_info[city_value];
+				for (var i = 0; i<area_arr.length; i++) {
+					option1 += "<option value='"+area_arr[i].code+"'>"+area_arr[i].name+"</option>"
+				}
+				area.innerHTML = option1;
+			}
+			render_province();
+			render_city();
+			render_area();
+			
+			province.addEventListener("change", function() {
+				// this指的是当前被监听的页面节点
+				render_city();
+				render_area();
+			});
+			
+			city.addEventListener("change",function() {
+				render_area();
+			})
+		</script>
+	</body>
+</html>

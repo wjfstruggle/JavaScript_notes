@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 冒泡排序
+    // 原理： 从一组数据里面，前一个的值和后一个的值进行比较，小的在前面，大的在后面，比较次数，数据长度减一
+    const arr1 = [12,5,23,45,10,14,2,6,3,16,27]
+    function sort() {
+      for (var i = 0; i < arr1.length; i ++) {
+        for (var j = i + 1; j < arr1.length; j++) {
+          var temp = []
+          if (arr1[i] > arr1[j]) {
+            temp = arr1[i];
+            arr1[i] = arr1[j];
+            arr1[j] = temp;
+          }
+        }
+      }
+      console.log(arr1);
+    }
+  </script>
+</body>
+</html>

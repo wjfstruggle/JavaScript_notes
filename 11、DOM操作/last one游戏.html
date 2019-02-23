@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>last one</title>
+		<style type="text/css">
+			.wrapper {
+				position: relative;
+				width: 375px;
+				height: 667px;
+				background: #000;
+				overflow: hidden;
+			}
+			
+			.wrapper span {
+				position: absolute;
+				display: block;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				background: #fff;
+			}
+			
+			.active {
+				left: 148px;
+				top: 200px;
+			}
+			
+			.inner {
+				width: 9999px;
+				transition: all 1.5s cubic-bezier(.15,1.12,1,-0.31);
+			}
+			
+			.inner::after {
+				content: '';
+				clear: both;
+				display: block;
+			}
+			
+			.inner img {
+				
+				width: 375px;
+				height: 667px;
+				/*left: 50%;
+				top: 50%;
+				transform: translate(-50%,-50%);*/
+			}
+			li {
+				/*margin-left: -40px;*/
+				margin-top: -16px;
+				float: left;
+				width: 375px;
+				height: 667px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<ul class="inner">
+				<li class="item"><img src="http://h5case.bluej.cn/H5-lastOne/images/btn_start.png" /></li>
+				<li class="item"><img src="http://h5case.bluej.cn/H5-lastOne/images/btn_start.png" /></li>
+				<li class="item"><img src="http://h5case.bluej.cn/H5-lastOne/images/btn_start.png" /></li>
+			</ul>
+			<span class="active" onclick="render()"></span>
+		</div>
+		<script type="text/javascript">
+			var iconWidth = 20;
+			var iconHeight = 20; // 进入游戏时的icon宽高
+			var x = Math.floor(Math.random() * 300 + 2) //随机x位置[2,400]
+			var y = Math.floor(Math.random() * 600 + 2) //随机y位置[2,400]
+			var wrapperWidth = document.querySelector(".wrapper").clientWidth; //容器宽度
+			var wrapperHeight = document.querySelector(".wrapper").clientWidth; // 容器高度
+			var arr = []; // 存放添加的元素
+			var timer = null; // 定时器
+			var spanWidth = document.querySelector("span").offsetWidth;
+			var spanHeight = document.querySelector("span").offsetHeight;
+			var span = document.querySelector("span");
+
+			function last_one(num) {
+				// 当元素大小和间隔超出容器宽高时，return
+				if(iconWidth > wrapperWidth || iconHeight > wrapperHeight) {
+					clearInterval(timer)
+				}
+				// 水平方向个数
+				var xNum = parseInt(wrapperWidth / iconWidth);
+				// 垂直方向个数
+				var yNum = parseInt(wrapperHeight / iconHeight);
+				// 容器窗口放置的个数
+				var allNum = xNum * yNum;
+				if(num > allNum) {
+					return false
+				}
+			}
+			last_one(20);
+			// 随机位置 + 随机大小
+			// 添加元素的；位置 x和y坐标
+			function render() {
+				//判断上一个出现的元素
+				template();
+				var span = document.querySelectorAll("span");
+				// 判断两个元素之间的交集
+				for(var i = 0; i < span.length; i++) {
+					var obj1top = parseInt(span[i].offsetTop);
+					var obj1left = parseInt(span[i].offsetLeft);
+					var obj1width = parseInt(span[i].offsetWidth);
+					var obj1height = parseInt(span[i].offsetHeight);
+					var obj2top = parseInt(span[i + 1].offsetTop);
+					var obj2left = parseInt(span[i + 1].offsetLeft);
+					var obj2width = parseInt(span[i + 1].offsetWidth);
+					var obj2height = parseInt(span[i + 1].offsetHeight);
+					if((obj2top + obj2height < obj1top) || (obj2top > obj1top + obj1height) || (obj2left + obj2width < obj1left) || (obj2left > obj1left + obj1width)) {
+						return true;
+					} else {
+						return render();
+					}
+				}
+			}
+			//圆点渲染到页面
+			function template() {
+				span.style.top = spanHeight + y + 'px'
+				span.style.left = spanWidth + x + 'px'
+				var scale = Math.floor(Math.random() * 50 - 10) //元素的放大倍数[2,40]
+				var x = Math.floor(Math.random() * 300 + 2) //随机x位置[2,400]
+				var y = Math.floor(Math.random() * 600 + 2) //随机y位置[2,400]
+				document.querySelector('.wrapper').innerHTML += `
+					<span  onclick="render()" style='top:${spanWidth+y}px;left:${spanHeight+x}px;width:${spanWidth + scale}px;height:${spanHeight+scale}px;'></span>`
+			}
+			function template_img() {
+				
+			}
+			var inner = document.querySelector(".inner")
+			// 第一张图片
+			var li = document.querySelectorAll(".item")
+			// 下标
+			var index = 0;
+			// 点击，右边下一张
+//			var li_width = li[0].offsetWidth;
+//			console.log(li_width)
+//			inner.style.marginLeft = -li_width + 'px';
+			for (var i = 0; i < li.length; i++) {
+				li[i].addEventListener('click', toRight)
+			}
+			function toRight() {
+				// 下标加一
+				index++
+				inner.style.transition = "all 1.5s cubic-bezier(.15,1.12,1,-0.31)";
+				inner.style.marginLeft = -(index * 375) + 'px'
+			}
+//							inner.addEventListener("transitionend", function() {
+//								// 右边边界条件
+//								if(index >= li.length + 1) {
+//									inner.style.marginLeft = -li_width + 'px';
+//									inner.style.transition = "none";
+//									index = 1
+//								}
+//								// 左边边界条件
+//								if(index <= -li.length) {
+//									index = 0
+//									console.log(index)
+//									inner.style.marginLeft = li_width + 'px';
+//									inner.style.transition = "none";
+//			
+//								}
+//								flag = true;
+//							});
+//			 自动轮播
+//							function autoPlay() {
+//								timer = setInterval(toRight, 3000)
+//							}
+//							inner.onmouseover = function() {
+//								clearInterval(timer)
+//							}
+//							inner.onmouseleave = function() {
+//								autoPlay();
+//							}
+		</script>
+	</body>
+
+</html>

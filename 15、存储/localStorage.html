@@ -10,39 +10,38 @@
 			// 永久保存 	上限5m
 			var color = ["red", "blue", "green"]
 			localStorage.setItem('color', JSON.stringify(color));
-			
-			
+
 			// 读取
 			var a = localStorage.getItem("color");
 			console.log(JSON.parse(a)) //  ["red", "blue", "green"]
-			
+
 			// 清除
 //			localStorage.removeItem("color")
 
 			/*
-			 
+
 			 * //定义一个字符串
 
 				var data='{"name":"goatling"}'
-				
+
 				//解析对象​
-				
+
 				​JSON.parse(data)
-				
+
 				结果是：
-				
+
 				​name:"goatling"
-				
+
 				JSON.stringify()【从一个对象中解析出字符串】
-				
+
 				var data={name:'goatling'}
-				
+
 				JSON.stringify(data)
-				
+
 				结果是：
-				
+
 				'{"name":"goatling"}'
-				
+
 				* */
 		</script>
 	</body>

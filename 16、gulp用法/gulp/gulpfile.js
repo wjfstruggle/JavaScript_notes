@@ -48,6 +48,7 @@ gulp.task('copy', function() {
 	// src/font/**/* */
 	gulp.src(fontSourceDir+"**/*").pipe(gulpCopy(fontTargetDir,{prefix:"2"}))//复制font文件,后面的prefix:2表示忽略前两个父目录
 	gulp.src(mediaSourceDir+"**/*").pipe(gulpCopy(mediaTargetDir,{prefix:"2"}))//复制媒体文件,后面的prefix:2表示忽略前两个父目录
+	gulp.src(jsSourceDir+"**/*.min.js").pipe(gulpCopy(jsTargetDir,{prefix:"2"}))// 复制js.min.js文件,后面的prefix:2表示忽略前两个父目录
 })
 
 /****************子任务：转变scss到css*********************/
@@ -91,7 +92,7 @@ var condition = function(f){
 };
 
 gulp.task('pro_js', function (cb) {
-    return gulp.src([sourceDir+'/**/*.js'],{base:sourceDir})
+    return gulp.src([sourceDir+'/**/*.js', '!src/**/*.min.js'],{base:sourceDir}) // !src/**/*.min.js 不压缩带.min.js后缀的js文件
         .pipe(sourcemaps.init())
 		.pipe(babel({
             presets: ['@babel/env']

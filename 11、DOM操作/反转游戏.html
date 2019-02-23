@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>反转游戏</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#wrapper {
+				width: 480px;
+				margin: 0 auto;
+			}
+			
+			#wrapper span {
+				font-size: 26px;
+				margin-left: 120px;
+				font-weight: bold;
+			}
+			
+			.box_wrapper {
+				display: flex;
+				width: 480px;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				/*父类容器中 perspective 子类允许透视*/
+				perspective: 1000px;
+				/*使其子类变换后得以保留 3d转换后的位置*/
+				transform-style: preserve-3d;
+			}
+			
+			.box_f {
+				width: 120px;
+				height: 120px;
+				position: relative;
+			}
+			
+			.box_f .box_front,
+			.box_f .box_back {
+				position: absolute;
+				top: 0;
+				left: 0;
+				/*背景不穿透，表示翻转后便看不到正面*/
+				-webkit-backface-visibility: hidden;
+				backface-visibility: hidden;
+			}
+			
+			.box_f .box_front,
+			.box_f .box_back {
+				width: 100px;
+				height: 100px;
+				background: skyblue;
+				margin: 8px;
+				border-radius: 10px;
+				transition: all 1s ease-out;
+				text-align: center;
+				font-size: 20px;
+				line-height: 100px;
+				font-weight: bold;
+			}
+			
+			.box_f .box_front {
+				background: goldenrod;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<h1>步数:</h1>
+			<span>0</span>
+			<div class="box_wrapper">
+				<div class="box_f">
+					<div class="box_back">1</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">3</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">4</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">2</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">2</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">4</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">3</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">4</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">1</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">3</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">2</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">4</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">2</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">3</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">4</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">2</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">4</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">2</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">3</div>
+					<div class="box_front"></div>
+				</div>
+				<div class="box_f">
+					<div class="box_back">1</div>
+					<div class="box_front"></div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var box_f = document.querySelectorAll(".box_f");
+			var box_wrapper = document.querySelector(".box_wrapper");
+			for(let i = 0; i < box_f.length; i++) {
+				box_f[i].addEventListener("click", function() {
+					if(this.flag) {
+						box_f[i].firstElementChild.style.transform = "rotateY(0deg)";
+						box_f[i].lastElementChild.style.transform = "rotateY(0deg)";
+						this.flag = false;
+					} else {
+						box_f[i].firstElementChild.style.transform = "rotateY(0deg)";
+						box_f[i].lastElementChild.style.transform = "rotateY(-180deg)";
+						this.flag = true;
+						var index = box_wrapper.index;
+						console.log(index)
+						if(index !== undefined) {
+							box_wrapper.children[index].firstElementChild.style.transform = "rotateY(0deg)";
+							box_wrapper.children[index].lastElementChild.style.transform = "rotateY(-180deg)";
+						}
+						box_wrapper.index = i;
+					}
+				})
+			}
+		</script>
+	</body>
+
+</html>

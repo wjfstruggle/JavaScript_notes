@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    <!-- 简单选择排序：在要排序的一组数中，选出最小（或者最大）的一个数与第1个位置的数交换；然后在剩下的数当中再找最小（或者最大）的与第2个位置的数交换，依次类推，直到第n-1个元素（倒数第二个数）和第n个元素（最后一个数）比较为止。 -->
+    <script>
+      const arr = [12, 5, 23, 45, 10, 14, 2, 6, 3, 16, 27];
+      function selectSort(arr) {
+        var minIndex, temp;
+        for( var i = 0; i < arr.length-1; i++) {
+          minIndex = i;
+          for (var j = i+ 1; j < arr.length; j++) {
+            if (arr[minIndex] > arr[j]) {
+              minIndex = j;
+            }
+          }
+          temp = arr[minIndex];
+          arr[minIndex] = arr[i]
+          arr[i] = temp;
+        }
+        return arr
+      }
+      console.log(selectSort(arr));
+      
+    </script>
+</body>
+</html>

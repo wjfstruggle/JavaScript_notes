@@ -29,14 +29,14 @@
  	4: 3 -- >66比较          [2,55,3,57,66,44,78]
  	5: 3 -- >44比较          [2,55,3,57,66,44,78]
  	6: 3 -- >78比较          [2,55,3,57,66,44,78]
- 	
+
 第1次开始循环比较后者
  	2: 55 -- >3 比较      交换位置[2,3,55,57,66,44,78]
  	3: 55 -- >57比较        [2,3,55,57,66,44,78]
  	4: 55 -- >66比较          
  	5: 55 -- >44比较          交换位置[2,3,44,57,66,55,78]
  	6: 3 -- >78比较
- 	
+
 第2次开始循环比较后者
  	3: 44 -- >57 比较      [2,3,44,57,66,55,78]
  	4: 44 -- >66比较       
@@ -63,7 +63,7 @@
 
 ```
 
-**列子2**	
+**列子2**
 ```javascrpt
 	var arr5 = [{
 					name: "111",
@@ -113,7 +113,7 @@
 
 ```JavaScript
 	// 小明去存1000钱，每天会产生1%的利息，求问，30天后，小明可以拿回多少钱
-			
+
 	function digui(day) {
 		// 第一天的钱
 		if (day == 0) {
@@ -130,7 +130,7 @@
 ```javascript
 //小明题目升级版，小明拿着1000块在周一买入基金，一开户立给10块红利，逢周六日没有利息，平时利息为1%，请问30天后，小明可以拿回多少钱？
 // 递归方法
-			
+
 function digui(day) {
 		if (day == 0) {
 			return 1010;
@@ -157,7 +157,7 @@ function digui(day) {
 			 6       8     4老4新
 			 7       8
 			 8       16    8老8新
-			 * 
+			 *
 			 * */
 	function numDigui(n) {
 		if (n == 1) {
@@ -181,7 +181,7 @@ function digui(day) {
 	-  1、先找一个成员作为基准
 	-  2、基准和其他成员比较，小的放左边，大的放右边
 	-  3、将左右两边的数据集合重复步骤1和步骤2，直到数据集合会只有一个值为止。
-	
+
 ![](http://i.imgur.com/dERn9JJ.gif)
 
 ```javascript
@@ -225,4 +225,30 @@ var arr = [10, 14, 8, 12, 5, 6, 17]
 		return quickSort(left).concat(mark, quickSort(right));
 	}
 	console.log(quickSort(arr));
+```
+### 质数
+
+- 小于2的数都不是质数，n=2是质数，且是惟一的偶数，排除2以后的倍数
+
+```js
+function isPrime(num) {
+    if (typeof num !== 'number' || !Number.isInteger(num)) {
+        return false;
+    }
+    if (num < 2) {
+        return false;
+    }
+    if (num === 2) {
+        return true;
+    } else if (num % 2 === 0) {
+        return false;
+    }
+    let squareRoot = Math.sqrt(num)
+    for (let i = 3; i <= squareRoot; i += 2) {
+        if (num % i ===0) {
+            return false
+        }
+    }
+    return true;
+}
 ```

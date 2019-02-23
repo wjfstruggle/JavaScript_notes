@@ -38,6 +38,20 @@
 				}
 			})
 			xhr.send("name='jenny'&age=18");
+
+			// ajax四步走
+			// 创建对象
+			var xhr = new XMLHttpRequest();
+			// 建立get或者post请求
+			xhr.open('get', url)
+			// 绑定监听事件，监听状态码
+			xhr.addEventListener('readystatechange', function(e) {
+				if (e.target.readyState == 4 || e.target.status == 200) {
+					var res = JSON.parse(e.target.responseText);
+				}
+			})
+			// 发送
+			xhr.send()
 		</script>
 	</body>
 </html>

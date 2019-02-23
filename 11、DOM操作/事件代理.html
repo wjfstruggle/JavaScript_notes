@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>事件代理</title>
+		<style>
+			#Top {
+				width: 500px;
+				height: 500px;
+				background: skyblue;
+			}
+			
+			#mid {
+				width: 300px;
+				height: 300px;
+				background: green;
+			}
+			
+			#bot {
+				width: 100px;
+				height: 100px;
+				background: yellow;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--
+		-->
+		<div id="Top">
+			<div id="mid">
+				<div id="bot"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var Top = document.getElementById("Top")
+			var mid = document.getElementById("mid")
+			var bot = document.getElementById("bot")
+			// 事件代理，利用事件对象可以获得子元素的方式去实现，可以节省性能消耗
+			Top.addEventListener("click", function(e) {
+				// e 事件对象event
+				if(e.target.id == "bot") {
+					debugger;
+					console.log(e.target)
+				}
+				if (e.target.id == "mid") {
+					debugger;
+					console.log('mid')
+				}
+				if (e.target.id == "Top") {
+					debugger;
+					console.log('top')
+				}
+				console.log(e.currentTarget)
+			})
+			
+			mid.addEventListener('click', handel)
+			Top.addEventListener('click', handel)
+			function handel(e) {
+				console.log(e.currentTarget)
+			}
+		</script>
+	</body>
+
+</html>
