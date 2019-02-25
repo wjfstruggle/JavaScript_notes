@@ -154,6 +154,10 @@ typeof console.log // 'function'
 
 转换为Boolean：`""空字符转`,`null`,``
 
+vue响应式原理： 当一个vue实例创建的时候，vue会遍历data选项的属性，用object.defineProperty将他们转换为getter和setter并且
+		追踪内部相关的依赖，属性被访问或者修改的时候通知变化。每个组件都有相应的watcher实列，他会在组件渲染的过程中把属性记录作为依赖，之后当依赖项
+		的setter被调用的时候，会同时watcher重新计算，关联的数据就会更新。
+
 1. JS的原型
 - 每个对象都有自己的原型对象(prototype)，任何一个对象都可以充当其他对象的原型，而且原型对象也有自己的原型，从而就会产生一条原型链。从对象到原型，再到原型的原型。所有的原型对象都可以上到顶层Object。
 > - '万物皆对象'，在js中所有的数据都基于object原型继承而来，原型对象[[proto]]属性继承方法或者属性；原型对象上的`constructor`属性表示构造函数通过`instanceof`来确认对象的来源；实例化的对象可以通过`__proto__`属性找到原型，构造函数可以通过`prototype`属性得到。
