@@ -9,6 +9,7 @@
 - [数据类型](#数据类型)
   -[typeof](#typeof)
   -[类型转换](#类型转换)
+- [原型](#原型)
 
 # css盒子模型
 
@@ -152,7 +153,42 @@ typeof console.log // 'function'
 
 ## 类型转换
 
-转换为Boolean：`""空字符转`,`null`,``
+转换为Boolean：`""空字符转`,`null`,`false`，`0 -0`, `NAN` `undefined`, 其他值都转为true，包括所有对象和数组和函数。
+
+# 原型
+
+"万物皆对象"，js的所有数据基于object原型链继承而来的。原型对象上的`__proto__`属性继承方法或属性。原型对象上的constructor属性表示构造函数通过instanceof来确认对象的来源；实列化的对象可以通过`__proto__`指向构造函数的原型，构造函数可以通过prototype属性得到。
+
+所有的函数都有一个`prorotype`属性，除了 `Function.prototype.bind()`，该属性指向原型。
+所有的对象都有一个`__proto__`,指向该实例化对象的构造函数，对象可以通过`__proto__`来确认不属于该对象的属性
+`__proto__`将对象链接起形成原型链
+![prototype](https://camo.githubusercontent.com/71cab2efcf6fb8401a2f0ef49443dd94bffc1373/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316538613962636230383732643f773d34383826683d35393026663d706e6726733d313531373232)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 vue响应式原理： 当一个vue实例创建的时候，vue会遍历data选项的属性，用object.defineProperty将他们转换为getter和setter并且
 		追踪内部相关的依赖，属性被访问或者修改的时候通知变化。每个组件都有相应的watcher实列，他会在组件渲染的过程中把属性记录作为依赖，之后当依赖项
