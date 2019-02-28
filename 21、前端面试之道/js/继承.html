@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // es5继承
+    // 从构造函数，原型对象，实例关系阐述
+    // 父函数
+    function Father(name, age) {
+      this.name = name;
+      this.age = age;
+      this.sayName = function() {
+        console.log('姓名'+this.name + ' ' + '年龄'+ this.age)
+      }
+    }
+    var fa = new Father('jack', 18)
+    console.log(fa.sayName())
+
+    function Son() {
+    }
+    Son.prototype = new Father()
+    var son = new Son()
+
+    Father.prototype.constructor === Father // 构造器
+    fa.__proto__ === Father.prototype // 实列
+    Function.prototype.__proto__ === Object.prototype
+    Object.prototype.__proto__ === null
+
+    // es6继承
+    class Animate {
+      constructor(name) {
+        this.name = name
+      }
+      sayName() {
+        console.log('do something')
+      }
+    }
+
+    // 继承
+    class Cat extends Animate {
+      constructor (name, job) {
+        super(job)
+        this.name = name
+      }
+    }
+    const cat = new Cat('jack', 'web前端开发')
+    cat.name
+    cat.sayName()
+  </script>
+</body>
+</html>

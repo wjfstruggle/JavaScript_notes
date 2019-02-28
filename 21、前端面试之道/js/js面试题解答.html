@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 获取2016-06-10格式的日期
+    function formatDate(date) {
+      if (!date) {
+        date = new Date()
+      }
+      let y = date.getFullYear()
+      let mon = date.getMonth() + 1
+      let d = date.getDate()
+      mon = mon > 10 ? mon : '0' + mon
+      d = d > 10 ? d : '0' + d
+      return y + '-' + mon + '-' + d
+    }
+    var d = new Date();
+    console.log(formatDate(d));
+    // 获取随机数，要求是长度一致的字符串格式
+  </script>
+</body>
+</html>

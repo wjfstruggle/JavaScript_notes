@@ -7,8 +7,8 @@
 # js
 
 - [数据类型](#数据类型)
-  -[typeof](#typeof)
-  -[类型转换](#类型转换)
+  - [typeof](#typeof)
+  - [类型转换](#类型转换)
 - [原型](#原型)
 
 # css盒子模型
@@ -164,46 +164,105 @@ typeof console.log // 'function'
 `__proto__`将对象链接起形成原型链
 ![prototype](https://camo.githubusercontent.com/71cab2efcf6fb8401a2f0ef49443dd94bffc1373/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316538613962636230383732643f773d34383826683d35393026663d706e6726733d313531373232)
 
+# js继承
 
+构造函数的缺点，构造函数的属性和方法不能共享，从而造成系统资源的浪费
+原型的继承主要用于一些父类需要使用时，可以继承给子类使用，节省内存和提高代码复用性。
+```js
+// es5继承
+  // 从构造函数，原型对象，实例关系阐述
+  // 父函数
+  function Father(name, age) {
+    this.name = name;
+    this.age = age;
+    this.sayName = function() {
+      console.log('姓名'+this.name + ' ' + '年龄'+ this.age)
+    }
+  }
+  var fa = new Father('jack', 18)
+  console.log(fa.sayName())
 
+  function Son() {
+  }
+  Son.prototype = new Father()
+  var son = new Son()
+  Son.prototype.__proto__ === Father.prototype // true
+  Father.prototype.constructor === Father // 构造器
+  fa.__proto__ === Father.prototype // 实列
+  Function.prototype.__proto__ === Object.prototype
+  Object.prototype.__proto__ === null
+```
+```js
+// es6继承
+    class Animate {
+      constructor(name) {
+        this.name = name
+      }
+      sayName() {
+        console.log('do something')
+      }
+    }
 
+    // 继承
+    class Cat extends Animate {
+      constructor (name, job) {
+        super(job)
+        this.name = name
+      }
+    }
+    const cat = new Cat('jack', 'web前端开发')
+    cat.name
+    cat.sayName()
+```
 
+# 闭包
 
+> 简单讲，闭包就是一个嵌套的函数有权访问另一个函数作用域的变量
 
+> MDN 上这么说，闭包是一种特殊的对象，由两部分组成，函数和函数的运行环境(也就是函数作用域)
 
+创建一个闭包最简单的方式，一个函数内部创建另一个函数
+```js
+function apple() {
+  var a = 10;
+  function add() {
+    return a
+  }
+  return add
+}
+var f = apple() // 10
+```
 
+闭包的作用域链包含着他自己的作用域以及包含他的函数作用域和全局作用域。
 
+闭包的注意事项：
+- 通常一个函数执行完毕后，变量就会被销毁。但是对于闭包来说，这个函数的作用域就会一直保存到闭包不存在为止
 
+```js
+function animate(x) {
+  return function(y) {
+    return x + y
+  }
+}
+var add1 = animate(12)
+var add2 = animate(10)
+console.log(add1(12)); // 24
+console.log(add2(1)); // 11
+//释放对闭包的引用
+add1 = null
+add2 = null
+```
+add1 和 add2 都是闭包。它们共享相同的函数定义，但是保存了不同的环境。在 add1 的环境中，x 为 12。而在 add2 中，x 则为 10。最后通过 null 释放了 add1 和 add2 对闭包的引用。
 
+闭包的缺陷
+- 闭包的缺点就是常驻内存会增大内存使用量，并且使用不当很容易造成内存泄露。
 
-
-
-
-
-
-
-
-
-
-
-
-
+- 如果不是因为某些特殊任务而需要闭包，在没有必要的情况下，在其它函数中创建函数是不明智的，因为闭包对脚本性能具有负面影响，包括处理速度和内存消耗。
 
 
 vue响应式原理： 当一个vue实例创建的时候，vue会遍历data选项的属性，用object.defineProperty将他们转换为getter和setter并且
 		追踪内部相关的依赖，属性被访问或者修改的时候通知变化。每个组件都有相应的watcher实列，他会在组件渲染的过程中把属性记录作为依赖，之后当依赖项
 		的setter被调用的时候，会同时watcher重新计算，关联的数据就会更新。
-
-1. JS的原型
-- 每个对象都有自己的原型对象(prototype)，任何一个对象都可以充当其他对象的原型，而且原型对象也有自己的原型，从而就会产生一条原型链。从对象到原型，再到原型的原型。所有的原型对象都可以上到顶层Object。
-> - '万物皆对象'，在js中所有的数据都基于object原型继承而来，原型对象[[proto]]属性继承方法或者属性；原型对象上的`constructor`属性表示构造函数通过`instanceof`来确认对象的来源；实例化的对象可以通过`__proto__`属性找到原型，构造函数可以通过`prototype`属性得到。
-
-原型的继承主要用于一些父类需要使用时，可以继承给子类使用，节省内存和提高代码复用性。
-```js
- function Animate() {}
- let ani = new Animate()
- Animate.prototype === ani.__proto__;
-```
 
 2. 变量作用域链
 - 作用域链是在函数定义的时候产生的，而不是函数运行时，作用域链由内而外开始寻找变量，直到最顶层window才结束。
