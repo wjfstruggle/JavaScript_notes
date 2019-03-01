@@ -9,6 +9,9 @@
 - [数据类型](#数据类型)
   - [typeof](#typeof)
   - [类型转换](#类型转换)
+  - [四则运算符](#四则运算符)
+- [this](#this)
+- [== vs ===](#== vs ===)
 - [原型](#原型)
 
 # css盒子模型
@@ -129,7 +132,7 @@ js一共有7种数据类型：`null`，`number`，`undefined`，`string`，`bool
 
 数据类型又分为基本类型（`null`，`number`，`undefined`，`string`，`boolean`， `Symbol`）和对象（，`Object`）。基本类型存放在栈内存，对象（引用类型）存放在堆内存。
 
-## typeof
+## typeof VS instanceof
 
 typeof可以检测基本类型，除了null之外
 
@@ -150,10 +153,146 @@ typeof [] // 'object'
 typeof {} // 'object'
 typeof console.log // 'function'
 ```
+### instanceof 能正确判断对象的原理是什么
+- 内部机制是通过原型链来判断的。
+```js
+ function Person() {
+
+    }
+  const p1 = new Person()
+  p1 instanceof Person // true
+
+  var str = 'hello world'
+  str instanceof String // false
+
+  var str = new String('hello world')
+  str instanceof String // true
+```
+- 对于原始类型来说，想直接通过instanceof来判断是不行的
 
 ## 类型转换
 
-转换为Boolean：`""空字符转`,`null`,`false`，`0 -0`, `NAN` `undefined`, 其他值都转为true，包括所有对象和数组和函数。
+![](https://user-gold-cdn.xitu.io/2018/11/15/16716dec14421e47?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+转换为Boolean：`""空字符转`,`null`,`false`，`0 -0`, `NaN` `undefined`, 其他值都转为true，包括所有对象
+
+# 四则运算符
+
+加法运算符不等同于其他几个运算符，他有以下几个特点。
+
+- 运行中一方是自字符串，就换把另一方转为字符串
+
+- 如果一方不是字符串或者数字，那么会将它转换为数字或者字符串
+
+```js
+1 + "1" = "11"
+true + true = 2
+1 + false = 1;
+1 + NaN = NaN
+1 + [1,2,3] = "11, 2, 3"
+'a' + + 'b' // -> "aNaN"
+4 * '3' // 12
+4 * [] // 0
+4 * [1, 2] // NaN
+```
+因为 + 'b' 等于 NaN，所以结果为 "aNaN"，你可能也会在一些代码中看到过 + '1' 的形式来快速获取 number 类型。
+
+# this
+
+> 涉及面试题：如何正确判断 this？箭头函数的 this 是什么？
+
+来看几个函数调用的场景
+
+```js
+function foo() {
+  var a = 0;
+  console.log(this.a);// 10      
+}
+var a = 10;
+foo()
+const obj = {
+  a: 2,
+  foo: foo
+}
+obj.foo() // 2
+const o = new foo();
+```
+
+- 对于直接调用`foo`来说，不管foo函数被放在了哪个地方， `this`一定是`window`
+
+- 对于`obj.foo()`来说，我们只需要记住，水调用函数，谁就是`this`，所以在这个场景这下`foo`函数中的this就是`obj`对象
+
+- 对于`new`的方式来说，`this`永远被绑定在`o`上面，不会被任何方式改变`this`
+
+```js
+function bar() {
+  return (() => {
+    return (() => {
+      console.log(this)
+    })
+  })
+}
+bar()()() // window
+```
+首先箭头函数其实是没有` this` 的，箭头函数中的 `this` 只取决包裹箭头函数的第一个普通函数的 `this`。在这个例子中，因为包裹箭头函数的第一个普通函数是 `a`，所以此时的 `this` 是 `window`。另外对箭头函数使用 `bind` 这类函数是无效的。
+
+最后种情况也就是 `bind` 这些改变上下文的 `API` 了，对于这些函数来说，`this` 取决于第一个参数，如果第一个参数为空，那么就是 `window。`
+```js
+let b = {};
+let fn = function() {
+  console.log(this)
+}
+fn.bind().bind(b)() // window
+fn.bind(b)() // {}
+```
+
+如果你认为输出结果是 `b`，那么你就错了，其实我们可以把上述代码转换成另一种形式
+
+```js
+// fn.bind().bind(a) 等于
+let fn2 = function fn1() {
+  return function() {
+    return fn.apply()
+  }.apply(a)
+}
+fn2()
+```
+
+可以从上述代码中发现，不管我们给函数 `bind` 几次，`fn` 中的 this 永远由第一次 `bind` 决定，所以结果永远是 `window。`
+
+首先，new 的方式优先级最高，接下来是 bind 这些函数，然后是 obj.foo() 这种调用方式，最后是 foo 这种调用方式，同时，箭头函数的 this 一旦被绑定，就不会再被任何方式所改变。
+
+如果你还是觉得有点绕，那么就看以下的这张流程图吧，图中的流程只针对于单个规则。
+
+![](https://user-gold-cdn.xitu.io/2018/11/15/16717eaf3383aae8?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+# == vs ===
+
+> 涉及面试题：== 和 === 有什么区别？
+
+对于 `==` 来说，如果对比上方的类型不一致的话，就会进行**类型转换**
+
+1、首先会判断两者类型是否相同。相同的话就是比大小了
+2、类型不相同的话，那么就会进行类型转换
+3、会先判断是否在对比 `null` 和 `undefined`，是的话就会返回 `true`
+4、判断两者类型是否为 `string` 和 `number`，是的话就会将字符串转换为 `number`
+
+```js
+1 == '1'
+      ↓
+1 == 1
+```
+5、判断其中一方是否为` boolean`，是的话就会把 `boolean` 转为 `number` 再进行判断
+
+6、判断其中一方是否为 `object` 且另一方为 `string、number` 或者 `symbol`，是的话就会把 `object` 转为原始类型再进行判断
+```js
+'1' == { name: 'yck' }
+        ↓
+'1' == '[object Object]'
+```
+![](https://user-gold-cdn.xitu.io/2018/12/19/167c4a2627fe55f1?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+
 
 # 原型
 
@@ -263,67 +402,3 @@ add1 和 add2 都是闭包。它们共享相同的函数定义，但是保存了
 vue响应式原理： 当一个vue实例创建的时候，vue会遍历data选项的属性，用object.defineProperty将他们转换为getter和setter并且
 		追踪内部相关的依赖，属性被访问或者修改的时候通知变化。每个组件都有相应的watcher实列，他会在组件渲染的过程中把属性记录作为依赖，之后当依赖项
 		的setter被调用的时候，会同时watcher重新计算，关联的数据就会更新。
-
-2. 变量作用域链
-- 作用域链是在函数定义的时候产生的，而不是函数运行时，作用域链由内而外开始寻找变量，直到最顶层window才结束。
-
-3. call、apply、bind的区别
-- 相同点，都可以改变this的指向。函数.call(this, 参数1，参数2)， call方法接收多个参数， apply(this, [...]) apply方法后面可接多个参数，以数组形式。bind(函数的某个对象) 返回的是一个新函数。bind改变指向后的那个函数不能再次改变指向。
-4. 防抖和节流的区别
-- 防抖：一定时间内，只让函数触发一次，（后做）
-- 节流：在一定时间间隔后才能触发函数（先做）
-
-5. 介绍下浏览器跨域
-- 由于浏览器的同源策略，只要是协议，域名，端口号任意一个不相同，就会造成浏览器的跨域
-
-6. 怎么去解决跨域问题
-- jsonp跨域，（只能get请求）前端动态创建script标签，后端也要响应处理，前端呀设置callback参数，利用script的src去下载一段脚本，这个脚本就用前端传过来的callback的值进行封装。
-- 后端打开CORS允许头， Access-Control-Allow-Origin: *
-- 反向代理：让后端服务器去请求别人的服务器，自己的服务器拿到的数据返回给后端，利用无需跨域的服务端A，请求到服务端A,通过服务端A和服务端B之间的链接，再返回给前端。
-7. jsonp方案需要服务端怎么配合
-- jsonp跨域，（只能get请求）客户端传一个callback参数指定回调的函数，服务端将函数名包裹返回数据并返回客户端。
-8. Ajax发生跨域要设置什么（前端）
-- 需要设置请求头： setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-9. Javascript作用域链?
-- JavaScript有两种作用域，一个是全局作用域，一个是函数作用域。函数本身也是一个值，也有自己的作用域。它的作用域与变量一样，就是其声明时所在的作用域，与其运行时所在的作用域无关。由内而外，就会形成一条作用域链。
-10. JavaScript 中，调用函数有哪几种方式？
-- 调用函数名
-- 自执行函数
-- call/apply
-- 方法调用(调用对象方法)
-11. JavaScript 对象生命周期的理解？
-
-开辟内存空间
-声明变量，并赋值 (确认变量的作用域)
-作用域使用完成以后，变量也去除标记
-根据垃圾回收机制，处理无用的变量和对应的数据
-
-12. cookie的作用和特点 [cookie](http://bubkoo.com/2014/04/21/http-cookies-explained/)
-> 由于http协议是一种无状态，无连接的通信协议，通过cookie的传输来确认
-- 用于存储数据，可以作为登录凭证的标识： 特点：可以被http传输，服务端可以主动向客户端设置。 有大小限制，上限为4kb, 数量在30 ~ 50个左右。
-13. 一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？
-- 1、域名解析
-- 2、发起TCP三次握手
-- 3、建立TCP连接后发起http请求
-- 4、服务端响应http请求，向浏览器得到HTML代码
-- 5、浏览器解析HTML代码，请求HTML代码中的资源
-- 6、浏览器对页面进行渲染，呈现给用户
-14. vue的优点是什么？
-- vue两大特点：响应式编程、组件化
-- vue的优势：轻量级框架、简单易学、双向数据绑定、组件化、视图、数据和结构的分离、虚拟DOM、运行速度快
-15. 请详细说下你对vue生命周期的理解
-- 8个生命周期
-- beforeCreate() created() 创建前后，create阶段，初始化，data和methods
-- beforeMount mounted() mounted阶段， 将data和函数等渲染到页面，数据驱动视图
-- beforeUpdate updated ，更新模板上的数据和data一致
-- beforeDestroy destroyed 移除监听事件，数据的绑定
-16. 组件之间的传值？(代码说明)
-- 父传子，子传父
-- 非父子通信 另一个实例一个vue对象，该对象作为 监听/ 触发自定义事件的使用。
-17. vuex是什么？怎么使用？哪种功能场景使用它？
-- vuex是vue状态管理。使用： 在main.js中引入store，new vue中挂载，使用场景：多个共享共同状态的组件时，登录状态，用户权限分类，跨组件的数据依赖
-18. Vue computed 实现
-- 1、初始化时，遍历computed的属性，并且计算结果
-- 2、依赖收集（依赖那些数据 ， 在这些数据上增加watcher， 当这些依赖数据发生变化 `setter`, 再次触发计算属性函数， 更新对应的值）
-19. Vue 组件 data 为什么必须是函数
-- 组件的data数据变成一个独立的对象，避免多个组件共用同一个对象。

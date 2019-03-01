@@ -23,6 +23,41 @@
     var d = new Date();
     console.log(formatDate(d));
     // 获取随机数，要求是长度一致的字符串格式
+    // 将一下函数补充完成
+    function sum(a ,b ,c){
+      return a + b + c;
+    }
+    function currying(fn){
+      var slice = Array.prototype.slice;
+      var len = fn.length;
+      var arg = slice.call(arguments,1);
+      if(typeof fn !== "function")return ;
+      function cry(arg){
+        if(arg.length==len){
+          return fn.apply(this,arg);
+        }else{
+          return function (){
+            var args = arg.concat(slice.call(arguments));
+            if(args.length<len)return cry(args);
+            return fn.apply(this,args);
+          }
+        }
+      }
+    return cry(arg);            
+}
+
+    var curry = currying( sum );
+
+    console.log( currying(sum, 1, 2, 3) );      // 6
+                    
+    console.log( curry(1)(2)(3) );              // 6
+
+    console.log( curry(1 ,2)(3) );              // 6
+
+    console.log( curry()(1)(2)(3) );            // 6
+
+    console.log( curry(1 ,2, 3) );              // 6
+
   </script>
 </body>
 </html>

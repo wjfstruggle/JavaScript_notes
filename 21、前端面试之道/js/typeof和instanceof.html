@@ -15,6 +15,17 @@
     typeof(false);//boolean
     typeof(Symbol());//Symbol
     
+    function Person() {
+
+    }
+    const p1 = new Person()
+    p1 instanceof Person // true
+
+    var str = 'hello world'
+    str instanceof String // false
+
+    var str = new String('hello world')
+    str instanceof String // true
   </script>
 </body>
 </html>
