@@ -11,8 +11,9 @@
   - [类型转换](#类型转换)
   - [四则运算符](#四则运算符)
 - [this](#this)
-- [== vs ===](#== vs ===)
 - [原型](#原型)
+- [es6](#基础知识点)
+- [继承](#原型继承和继承)
 
 # css盒子模型
 
@@ -273,8 +274,11 @@ fn2()
 对于 `==` 来说，如果对比上方的类型不一致的话，就会进行**类型转换**
 
 1、首先会判断两者类型是否相同。相同的话就是比大小了
+
 2、类型不相同的话，那么就会进行类型转换
+
 3、会先判断是否在对比 `null` 和 `undefined`，是的话就会返回 `true`
+
 4、判断两者类型是否为 `string` 和 `number`，是的话就会将字符串转换为 `number`
 
 ```js
@@ -361,6 +365,7 @@ fn2()
 > MDN 上这么说，闭包是一种特殊的对象，由两部分组成，函数和函数的运行环境(也就是函数作用域)
 
 创建一个闭包最简单的方式，一个函数内部创建另一个函数
+
 ```js
 function apple() {
   var a = 10;
@@ -371,7 +376,6 @@ function apple() {
 }
 var f = apple() // 10
 ```
-
 闭包的作用域链包含着他自己的作用域以及包含他的函数作用域和全局作用域。
 
 闭包的注意事项：
@@ -398,7 +402,231 @@ add1 和 add2 都是闭包。它们共享相同的函数定义，但是保存了
 
 - 如果不是因为某些特殊任务而需要闭包，在没有必要的情况下，在其它函数中创建函数是不明智的，因为闭包对脚本性能具有负面影响，包括处理速度和内存消耗。
 
+# 基础知识点
 
-vue响应式原理： 当一个vue实例创建的时候，vue会遍历data选项的属性，用object.defineProperty将他们转换为getter和setter并且
-		追踪内部相关的依赖，属性被访问或者修改的时候通知变化。每个组件都有相应的watcher实列，他会在组件渲染的过程中把属性记录作为依赖，之后当依赖项
-		的setter被调用的时候，会同时watcher重新计算，关联的数据就会更新。
+## var、let 及 const 区别
+
+> 涉及面试题：什么是提升？什么是暂时性死区？var、let 及 const 区别？
+
+对于这个问题，我们应该先来了解提升（hoisting）这个概念。
+
+```js
+console.log(a) // undefined
+var a = 1;
+```
+从上述代码中我们可以发现，虽然变量还没有被声明，但是我们却可以使用这个未被声明的变量，这种情况就叫做提升，并且提升的是声明。
+
+从上述代码中我们可以发现，虽然变量还没有被声明，但是我们却可以使用这个未被声明的变量，这种情况就叫做提升，并且提升的是声明。
+
+对于这种情况，我们可以把代码这样来看
+
+```js
+var a
+console.log(a) // undefined
+a = 1
+```
+
+接下来我们再来看一个例子
+
+```js
+var a = 10
+var a
+console.log(a)
+```
+
+对于这个例子，如果你认为打印的值为 undefined 那么就错了，答案应该是 10，对于这种情况，我们这样来看代码
+
+```js
+var a
+var a
+a = 10
+console.log(a)
+```
+到这里为止，我们已经了解了 var 声明的变量会发生提升的情况，其实不仅变量会提升函数也会被提升。
+
+```js
+console.log(a) // ƒ a() {}
+function a() {}
+var a = 1
+```
+
+对于上述代码，打印结果会是 `ƒ a() {}`，即使变量声明在函数之后，这也说明了函数会被提升，并且优先于变量提升。
+
+说完了这些，想必大家也知道 `var` 存在的问题了，使用 `var` 声明的变量会被提升到作用域的顶部，接下来我们再来看 `let` 和 `const` 。
+
+```js
+var a = 1
+let b = 1
+const c = 1
+console.log(window.b) // undefined
+console.log(window. c) // undefined
+
+function test(){
+  console.log(a)
+  let a
+}
+test()
+```
+首先在全局作用域下使用 `let` 和 `const` 声明变量，变量并不会被挂载到 `window` 上，这一点就和 `var` 声明有了区别。
+
+> 那么最后我们总结下这小节的内容：
+
+- 函数提升优先于变量提升，函数提升会把整个函数挪到作用域顶部，变量提升只会把声明挪到作用域顶部
+
+- `var` 存在提升，我们能在声明之前使用。`let、const` 因为暂时性死区的原因，不能在声明前使用
+
+- `var` 在全局作用域下声明变量会导致变量挂载在 `window` 上，其他两者不会
+
+- `let` 和 `const` 作用基本一致，但是后者声明的变量不能再次赋值
+
+# 原型继承和 Class 继承
+
+> 涉及面试题：原型如何实现继承？Class 如何实现继承？Class 本质是什么？
+
+首先先来讲下 `class`，其实在 `JS` 中并不存在类，`class` 只是语法糖，本质还是函数。
+
+```js
+class Person {}
+Person instanceof Function // true
+```
+### 组合继承
+
+```js
+function Foo(name) {
+  this.name = name
+}
+Foo.prototype.getValue = function() {
+  console.log(this.name)
+}
+function Bar(value) {
+  Foo.call(this, value)
+}
+Bar.prototype = new Foo();
+const bar = new Bar("jack")
+bar.getValue() // jack
+bar instanceof Foo; // true
+```
+
+以上继承的方式核心是在子类的构造函数中通过 `Parent.call(this)` 继承父类的属性，然后改变子类的原型为 `new Parent()` 来继承父类的函数。
+
+## 寄生式组合继承
+```js
+function Foo(name) {
+  this.name = name
+}
+Foo.prototype.getValue = function() {
+  console.log(this.name)
+}
+function Bar(value) {
+  Foo.call(this, value)
+}
+Bar.prototype = Object.create(Foo.prototype, {
+  constructor: {
+    value: Bar,
+    enumerable: false,
+    writable: true,
+    configurable: true
+  }
+});
+const bar = new Bar("jack")
+bar.getValue() // jack
+bar instanceof Foo; // true
+```
+以上继承实现的核心就是将父类的原型赋值给了子类，并且将构造函数设置为子类，这样既解决了无用的父类属性问题，还能正确的找到子类的构造函数。
+
+## class继承
+
+```js
+class Parent {
+  constructor(name) {
+    this.name = name
+  }
+  getValue() {
+    console.log(this.name)
+  }
+}
+class Son extends Parent {
+  constructor(job, name) {
+    super(name)
+    this.name = name
+  }
+}
+let son = new Son('jenny')
+son.getValue() // jenny
+son instanceof Parent
+```
+
+`class` 实现继承的核心在于使用 `extends` 表明继承自哪个父类，并且在子类构造函数中必须调用 `super`，因为这段代码可以看成 `Parent.call(this, value)。`
+
+## map, filter, reduce
+
+> 涉及面试题：map, filter, reduce 各自有什么作用？
+
+`map `作用是生成一个新数组，遍历原数组，将每个元素拿出来做一些变换然后放入到新的数组中。
+
+`[1, 2, 3].map(v => v + 1) // -> [2, 3, 4]`
+另外 map 的回调函数接受三个参数，分别是当前索引元素，索引，原数组
+
+```js
+['1','2','3'].map(parseInt)
+第一轮遍历 parseInt('1', 0) -> 1
+第二轮遍历 parseInt('2', 1) -> NaN
+第三轮遍历 parseInt('3', 2) -> NaN
+```
+
+filter 的作用也是生成一个新数组，在遍历数组的时候将返回值为 true 的元素放入新数组，我们可以利用这个函数删除一些不需要的元素
+
+```js
+let array = [1, 2, 4, 6]
+let newArray = array.filter(item => item !== 6)
+console.log(newArray) // [1, 2, 4]
+```
+
+和 `map `一样，`filter` 的回调函数也接受三个参数，用处也相同。
+
+最后我们来讲解 `reduce` 这块的内容，同时也是最难理解的一块内容。`reduce` 可以将数组中的元素通过回调函数最终转换为一个值。
+
+如果我们想实现一个功能将函数里的元素全部相加得到一个值，可能会这样写代码
+
+```js
+const arr = [1, 2, 3]
+let total = 0
+for (let i = 0; i < arr.length; i++) {
+  total += arr[i]
+}
+console.log(total) //6 
+```
+
+但是如果我们使用 `reduce` 的话就可以将遍历部分的代码优化为一行代码
+
+```js
+const arr = [1, 2, 3]
+const sum = arr.reduce((acc, current) => acc + current, 0)
+console.log(sum)
+```
+
+对于 `reduce` 来说，它接受两个参数，分别是回调函数和初始值，接下来我们来分解上述代码中 `reduce` 的过程
+
+- 首先初始值为 0，该值会在执行第一次回调函数时作为第一个参数传入
+
+- 回调函数接受四个参数，分别为累计值、当前元素、当前索引、原数组，后三者想必大家都可以明白作用，这里着重分析第一个参数
+
+- 在一次执行回调函数时，当前值和初始值相加得出结果 1，该结果会在第二次执行回调函数时当做第一个参数传入
+
+- 所以在第二次执行回调函数时，相加的值就分别是 1 和 2，以此类推，循环结束后得到结果 `6`
+
+- 想必通过以上的解析大家应该明白 `reduce` 是如何通过回调函数将所有元素最终转换为一个值的，当然 `reduce` 还可以实现很多功能，接下来我们就通过 `reduce` 来实现 `map` 函数
+
+```js
+const arr = [1, 2, 3]
+const mapArray = arr.map(value => value * 2)
+const reduceArray = arr.reduce((acc, current) => {
+  acc.push(current * 2)
+  return acc
+}, [])
+console.log(mapArray, reduceArray) // [2, 4, 6]
+```
+
+`vue`响应式原理： 当一个`vue`实例创建的时候，`vue`会遍历`data`选项的属性，用`object.defineProperty`将他们转换为`getter`和`setter`并且
+追踪内部相关的依赖，属性被访问或者修改的时候通知变化。每个组件都有相应的`watcher`实列，他会在组件渲染的过程中把属性记录作为依赖，之后当依赖项
+的`setter`被调用的时候，会同时`watcher`重新计算，关联的数据就会更新。

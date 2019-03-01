@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    class Person {}
+    Person instanceof Function // true
+
+    // 组合继承
+    // function Foo(name) {
+    //   this.name = name
+    // }
+    // Foo.prototype.getValue = function() {
+    //   console.log(this.name)
+    // }
+    // function Bar(value) {
+    //   Foo.call(this, value)
+    // }
+    // Bar.prototype = new Foo();
+    // const bar = new Bar("jack")
+    // bar.getValue() // jack
+    // bar instanceof Foo; // true
+
+    // 寄生组合继承
+
+    function Foo(name) {
+      this.name = name
+    }
+    Foo.prototype.getValue = function() {
+      console.log(this.name)
+    }
+    function Bar(value) {
+      Foo.call(this, value)
+    }
+    Bar.prototype = Object.create(Foo.prototype, {
+      constructor: {
+        value: Bar,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    const bar = new Bar("jack")
+    bar.getValue() // jack
+    bar instanceof Foo; // true
+
+    // class继承
+
+    class Parent {
+      constructor(name) {
+        this.name = name
+      }
+      getValue() {
+        console.log(this.name)
+      }
+    }
+    class Son extends Parent {
+      constructor(job, name) {
+        super(name)
+        this.name = name
+      }
+    }
+    let son = new Son('jenny')
+    son.getValue() // jenny
+    son instanceof Parent
+  </script>
+</body>
+</html>
