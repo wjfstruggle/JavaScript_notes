@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>三角形箭头,直角三角形</title>
+  <style>
+    div {
+      width: 0px;
+      height: 0px;
+      border-width:16px 16px 0 0 ;
+      border-color: transparent #6db6ff;
+      border-style: solid;
+    }
+    .b {
+      width: 0px;
+      height: 0px;
+      border: 16px;
+      border-color: transparent transparent #6db6ff #6db6ff;
+      border-style: solid;
+    }
+    .trangle {
+      margin: 0 auto;
+      position: relative;
+      width: 0px;
+      height: 0px;
+      border: 10px;
+      border-color: transparent transparent transparent #6db6ff;
+      border-style: solid;
+    }
+    .trangle div {
+      position: absolute;
+      width: 20px;
+      height: 4px;
+      border: 1px solid #ccc;
+      left: -32px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <!-- 直角三角形 -->
+  </div>
+  <div class="b">
+
+  </div>
+  <div class="trangle">
+    <div></div>
+  </div>
+</body>
+
+</html>

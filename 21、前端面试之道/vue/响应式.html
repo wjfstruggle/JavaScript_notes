@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+  <script src="vue.js"></script>
+  <script>
+    var data = {
+      name: 'zt'
+    }
+    function update() {
+      console.log('更新视图', data)
+    }
+    // obj代表监听对象， key对象上的属性， value初始值
+    function defineReacite(obj, key, value) {
+      Object.defineProperty(obj, key, {
+        enumerable: true,
+        configurable: true,
+        get() {
+          console.log('set')
+          return value
+        },
+        set(newValue) {
+          if (newValue === value) {
+            return;
+          }
+          update(newValue)
+          value = newValue
+        }
+      })
+    }
+    // 观察值， 表示data的所有属性都应该被观察
+    function Observer() {
+      // 获取所有的属性名，自身属性
+      Object.keys(data).forEach(function(key) {
+        defineReacite(data, key, data[key])
+      })
+    }
+
+    class Vue {
+      constructor(options) {
+        this._data = options.data
+        // 将data內的所有属性变成可观察模式
+        Observer(this._data) 
+      }
+    }
+    const app = new Vue({
+      el: "#app",
+      data: {
+        name: 'zt'
+      }
+    })
+
+    console.log(app._data)
+    //  通过data.name set设置值。watch就会重新计算
+  </script>
+</body>
+</html>

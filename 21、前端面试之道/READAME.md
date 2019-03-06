@@ -3,6 +3,7 @@
 - [css盒子模型](#css盒子模型)
 - [BFC](#BFC)
 - [布局居中](#布局居中)
+- [css继承的属性](#css继承的属性)
 
 # js
 
@@ -11,10 +12,14 @@
   - [类型转换](#类型转换)
   - [四则运算符](#四则运算符)
 - [this](#this)
+- [克隆](#克隆)
+- [去重](#去重)
 - [原型](#原型)
 - [es6](#基础知识点)
 - [继承](#原型继承和继承)
 - [异步编程](#异步编程)
+- [Vue常考基础知识点](#Vue常考基础知识点)
+- [Vue常考进阶知识点](#Vue常考进阶知识点)
 
 # css盒子模型
 
@@ -127,6 +132,22 @@ ul {
 - 水平垂直居中
   - `absolute + transform`
     `flex + justify-content + align-items`
+
+# css继承的属性
+
+css继承的属性有：
+
+字体相关：
+```css
+line-height font-size font-family font-style font-weight font
+```
+
+文本相关：
+```css
+text-indent letter-spacing text-align word-spacing
+```
+
+还有一个比较重要的 `color`
 
 # 数据类型
 
@@ -267,6 +288,142 @@ fn2()
 如果你还是觉得有点绕，那么就看以下的这张流程图吧，图中的流程只针对于单个规则。
 
 ![](https://user-gold-cdn.xitu.io/2018/11/15/16717eaf3383aae8?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+# 克隆
+
+```js
+// 对string， number，array，Boolean，object数据类型克隆
+
+    function deepClone(obj) {
+      let objClone = Array.isArray(obj) ? [] : {};
+      if (obj !== null && typeof obj === 'object') {
+        for (var key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (obj[key] && typeof obj[key] === 'object') {
+              objClone[key] = deepClone(obj[key])
+            } else if (obj instanceof Array){
+              objClone[key] = obj[key]
+            } else {
+              return obj
+            }
+          }
+        }
+      }
+      return objClone
+    }
+    console.log(deepClone())
+
+
+    // 对string， number，array，Boolean，object数据类型克隆
+    // 方法一
+    Object.prototype.clone = function() {
+      var o = this.constructor === Array ? [] : {};
+      for (var e in this) {
+        o[e] = typeof this[e] === "object" ? this[e].clone() : this[e];
+      }
+      return o;
+    };
+
+    // 方法二， 遍历一个对象
+    function clone(Obj) {
+      var buf;
+      if (Obj instanceof Array) {
+        buf = []; //创建一个空的数组
+        var i = Obj.length;
+        while (i--) {
+          buf[i] = clone(Obj[i]);
+        }
+        return buf;
+      } else if (Obj instanceof Object) {
+        buf = {}; //创建一个空对象
+        for (var k in Obj) {
+          //为这个对象添加新的属性
+          buf[k] = clone(Obj[k]);
+        }
+        return buf;
+      } else {
+        //普通变量直接赋值
+        return Obj;
+      }
+    }
+    var obj = {
+      a: 12
+    }
+    console.log(clone(obj))
+```
+# 去重
+
+```js
+var arr = [1,2,3,4,4,5,1,8,8,9,9, -1, -1, '1']
+    // indexof判断去重
+    function indexofDel(arr) {
+      var res = []
+      for (var i = 0; i < arr.length; i++) {
+        if (res.indexOf(arr[i]) === -1 ) {
+          res.push(arr[i])
+        }
+      }
+      return res;
+    }
+    console.log('indexof判断去重',indexofDel(arr))
+
+    // 双循环去重
+    function uniqe(arr) {
+      var res = []
+      for (var i =0;i < arr.length; i++) {
+        for (var j = 0; j < res.length; j++) {
+          if (arr[i] === res[j]) {
+            break;
+          }
+        }
+        // 如果arr[i]是唯一的，那么执行完循环，res.length
+        if (j === res.length) {
+          res.push(arr[i])
+        }
+      }
+      return res
+    }
+    console.log('双循环去重',uniqe(arr))
+
+    // object去重
+    function objDel(arr) {
+      var obj = {};
+      return arr.filter(( item, index, arr) => {
+        return obj.hasOwnProperty(typeof item + item) ? false : obj[typeof item + item] = true
+      })
+    }
+    console.log('object去重',objDel(arr))
+
+    // es6 set数据结构
+    function setData(arr) {
+      return [... new Set(arr)]
+    }
+    console.log('es6 set数据结构',setData(arr))
+
+    // 排序后去重
+    // 试想我们先将要去重的数组使用 sort 方法排序后，相同的值就会被排在一起，然后我们就可以只判断当前元素与上一个元素是否相同，相同就说明重复，不相同就添加进 res
+    function sortdel(arr) {
+      var res = [];
+      var sortArray = arr.concat().sort();
+      var seen;
+      for (var i = 0; i < sortArray.length; i++ ) {
+        if (!i || seen !== sortArray[i]) {
+          res.push(sortArray[i])
+        }
+        seen = sortArray[i]
+      }
+      return res;
+    }
+    console.log('排序后去重',sortdel(arr))
+
+    // filter + indexOf 简化内层循环
+    function del(arr) {
+      return arr.filter( (item, index, arr) => {
+        return arr.indexOf(item) === index
+      })
+    }
+    console.log('filter + indexOf 简化内层循环',del(arr))
+```
 
 # == vs ===
 
@@ -868,6 +1025,78 @@ setInterval(timer => {
 
 首先 `requestAnimationFrame` 自带函数节流功能，基本可以保证在 16.6 毫秒内只执行一次（不掉帧的情况下），并且该函数的延时效果是精确的，没有其他定时器时间不准的问题，当然你也可以通过该函数来实现 setTimeout。
 
+# Vue常考基础知识点
+
+## 10个生命周期的理解
+
+- `created`阶段  数据`data`和`methods`的初始化
+
+- `mounted`阶段  `vue`实列的挂载，将`data`数据和函数的调用，渲染到页面上，数据驱动视图
+
+- `updated`阶段  更新模板上的数据和`data`一致。
+
+- `destoryed`阶段 移除监听事件，数据的绑定
+
+- `activated`阶段 用 `keep-alive` 包裹的组件在切换时不会进行销毁，而是缓存到内存中并执行 `deactivated` 钩子函数，命中缓存渲染后会执行 `actived` 钩子函数。
+
+## 组件间的通信
+
+父子组件通信
+
+# Vue常考进阶知识点
+
 `vue`响应式原理： 当一个`vue`实例创建的时候，`vue`会遍历`data`选项的属性，用`object.defineProperty`将他们转换为`getter`和`setter`并且
 追踪内部相关的依赖，属性被访问或者修改的时候通知变化。每个组件都有相应的`watcher`实列，他会在组件渲染的过程中把属性记录作为依赖，之后当依赖项
 的`setter`被调用的时候，会同时`watcher`重新计算，关联的数据就会更新。
+
+```js
+var data = {
+  name: 'zt'
+}
+function update() {
+  console.log('更新视图', data)
+}
+// obj代表监听对象， key对象上的属性， value初始值
+function defineReacite(obj, key, value) {
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get() {
+      console.log('get')
+      return value
+    },
+    set(newValue) {
+      console.log('set')
+      if (newValue === value) {
+        return;
+      }
+      update(newValue)
+      value = newValue
+    }
+  })
+}
+// 观察值， 表示data的所有属性都应该被观察
+function Observer() {
+  // 获取所有的属性名，自身属性
+  Object.keys(data).forEach(function(key) {
+    defineReacite(data, key, data[key])
+  })
+}
+
+class Vue {
+  constructor(options) {
+    this._data = options.data
+    // 将data內的所有属性变成可观察模式
+    Observer(this._data) 
+  }
+}
+const app = new Vue({
+  el: "#app",
+  data: {
+    name: 'zt'
+  }
+})
+
+console.log(app._data)
+//  通过data.name set设置值。watch就会重新计算
+```

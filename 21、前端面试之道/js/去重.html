@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>去重</title>
+</head>
+<body>
+  <script>
+    var arr = [1,2,3,4,4,5,1,8,8,9,9, -1, -1, '1']
+    // indexof判断去重
+    function indexofDel(arr) {
+      var res = []
+      for (var i = 0; i < arr.length; i++) {
+        if (res.indexOf(arr[i]) === -1 ) {
+          res.push(arr[i])
+        }
+      }
+      return res;
+    }
+    console.log('indexof判断去重',indexofDel(arr))
+
+    // 双循环去重
+    function uniqe(arr) {
+      var res = []
+      for (var i =0;i < arr.length; i++) {
+        for (var j = 0; j < res.length; j++) {
+          if (arr[i] === res[j]) {
+            break;
+          }
+        }
+        // 如果arr[i]是唯一的，那么执行完循环，res.length
+        if (j === res.length) {
+          res.push(arr[i])
+        }
+      }
+      return res
+    }
+    console.log('双循环去重',uniqe(arr))
+
+    // object去重
+    function objDel(arr) {
+      var obj = {};
+      return arr.filter(( item, index, arr) => {
+        return obj.hasOwnProperty(typeof item + item) ? false : obj[typeof item + item] = true
+      })
+    }
+    console.log('object去重',objDel(arr))
+
+    // es6 set数据结构
+    function setData(arr) {
+      return [... new Set(arr)]
+    }
+    console.log('es6 set数据结构',setData(arr))
+
+    // 排序后去重
+    // 试想我们先将要去重的数组使用 sort 方法排序后，相同的值就会被排在一起，然后我们就可以只判断当前元素与上一个元素是否相同，相同就说明重复，不相同就添加进 res
+    function sortdel(arr) {
+      var res = [];
+      var sortArray = arr.concat().sort();
+      var seen;
+      for (var i = 0; i < sortArray.length; i++ ) {
+        if (!i || seen !== sortArray[i]) {
+          res.push(sortArray[i])
+        }
+        seen = sortArray[i]
+      }
+      return res;
+    }
+    console.log('排序后去重',sortdel(arr))
+
+    // filter + indexOf 简化内层循环
+    function del(arr) {
+      return arr.filter( (item, index, arr) => {
+        return arr.indexOf(item) === index
+      })
+    }
+    console.log('filter + indexOf 简化内层循环',del(arr))
+  </script>
+</body>
+</html>
