@@ -1100,3 +1100,6 @@ const app = new Vue({
 console.log(app._data)
 //  通过data.name set设置值。watch就会重新计算
 ```
+
+## vuex原理
+
