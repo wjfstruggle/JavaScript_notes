@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    Function.prototype.myCall = function(context) {
+      if (typeof this !== 'function') {
+        throw new TypeError('error')
+      }
+      context = context || window; // 如果不传默认为window
+      context.fn = this;// context 创建一个 fn 属性，并将值设置为需要调用的函数
+      const args = [...arguments].slice(1)// 传入多个参数
+      const result = context.fn(...args)
+      delete context.fn;
+      return result;
+    }
+
+    Function.prototype.myApply = function(context) {
+      if (typeof this !== 'function') {
+        throw new TypeError('Error')
+      }
+      context = context || window
+      context.fn = this
+      let result
+      // 处理参数和 call 有区别
+      if (arguments[1]) {
+        result = context.fn(...arguments[1])
+      } else {
+        result = context.fn()
+      }
+      delete context.fn
+      return result
+    }
+
+//     在调用 new 的过程中会发生以上四件事情：
+
+// 新生成了一个对象
+// 链接到原型
+// 绑定 this
+// 返回新对象
+// 根据以上几个过程，我们也可以试着来自己实现一个 new
+
+    function create() {
+      let obj = {}
+      let Con = [].shift.call(arguments)
+      obj.__proto__ = Con.prototype
+      let result = Con.apply(obj, arguments)
+      return result instanceof Object ? result : obj
+    }
+  </script>
+</body>
+</html>
